@@ -1,5 +1,6 @@
 import asyncio
 import os
+import uuid
 
 from _decimal import Decimal
 
@@ -30,6 +31,7 @@ async def main():
                 from_account_id=from_account_id,
                 to_account_id=to_account_id,
                 amount=decimal_to_money(Decimal(1), "rub"),
+                transaction_id=str(uuid.uuid4()),
             )
         )
         print("Перевод выполнен")
