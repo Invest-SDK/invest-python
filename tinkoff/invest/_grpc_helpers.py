@@ -21,6 +21,7 @@ from typing import (
 )
 
 from google.protobuf import symbol_database
+from google.protobuf.message_factory import GetMessageClass
 from google.protobuf.timestamp_pb2 import Timestamp
 
 _sym_db = symbol_database.Default()
@@ -450,7 +451,7 @@ def dataclass_to_protobuff(dataclass_obj: Any, protobuff_obj: T) -> T:  # noqa:C
             elif dataclasses.is_dataclass(first_arg):
                 descriptor = protobuff_obj.DESCRIPTOR  # type:ignore
                 field_descriptor = descriptor.fields_by_name[field_name].message_type
-                type_ = _sym_db.GetPrototype(field_descriptor)
+                type_ = GetMessageClass(field_descriptor)
                 pb_value.extend(
                     dataclass_to_protobuff(item, type_()) for item in field_value
                 )
