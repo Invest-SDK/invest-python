@@ -66,6 +66,11 @@ class SandboxServiceStub(object):
                 request_serializer=tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderStateRequest.SerializeToString,
                 response_deserializer=tinkoff_dot_invest_dot_grpc_dot_orders__pb2.OrderState.FromString,
                 )
+        self.GetSandboxOrderPrice = channel.unary_unary(
+                '/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOrderPrice',
+                request_serializer=tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderPriceRequest.SerializeToString,
+                response_deserializer=tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderPriceResponse.FromString,
+                )
         self.GetSandboxPositions = channel.unary_unary(
                 '/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxPositions',
                 request_serializer=tinkoff_dot_invest_dot_grpc_dot_operations__pb2.PositionsRequest.SerializeToString,
@@ -181,6 +186,13 @@ class SandboxServiceServicer(object):
 
     def GetSandboxOrderState(self, request, context):
         """GetSandboxOrderState — получить статус торгового поручения
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetSandboxOrderPrice(self, request, context):
+        """GetSandboxOrderPrice — получить предварительную стоимость для лимитной заявки
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -305,6 +317,11 @@ def add_SandboxServiceServicer_to_server(servicer, server):
                     servicer.GetSandboxOrderState,
                     request_deserializer=tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderStateRequest.FromString,
                     response_serializer=tinkoff_dot_invest_dot_grpc_dot_orders__pb2.OrderState.SerializeToString,
+            ),
+            'GetSandboxOrderPrice': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSandboxOrderPrice,
+                    request_deserializer=tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderPriceRequest.FromString,
+                    response_serializer=tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderPriceResponse.SerializeToString,
             ),
             'GetSandboxPositions': grpc.unary_unary_rpc_method_handler(
                     servicer.GetSandboxPositions,
@@ -517,6 +534,23 @@ class SandboxService(object):
         return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOrderState',
             tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderStateRequest.SerializeToString,
             tinkoff_dot_invest_dot_grpc_dot_orders__pb2.OrderState.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetSandboxOrderPrice(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOrderPrice',
+            tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderPriceRequest.SerializeToString,
+            tinkoff_dot_invest_dot_grpc_dot_orders__pb2.GetOrderPriceResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

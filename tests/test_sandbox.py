@@ -5,8 +5,10 @@ import uuid
 from datetime import datetime
 
 import pytest
+from _decimal import Decimal
 
 from examples.sandbox.sandbox_cancel_stop_order import cancel_stop_order
+from examples.sandbox.sandbox_get_order_price import get_order_price
 from examples.sandbox.sandbox_get_stop_orders import get_stop_orders
 from examples.sandbox.sandbox_post_stop_order import post_stop_order
 from tests.utils import skip_when
@@ -19,9 +21,11 @@ from tinkoff.invest import (
     OrderType,
     Quotation,
     RequestError,
+    utils,
 )
 from tinkoff.invest.sandbox.client import SandboxClient
 from tinkoff.invest.schemas import (
+    GetOrderPriceResponse,
     OrderExecutionReportStatus,
     PostOrderAsyncRequest,
     StopOrderDirection,
@@ -323,3 +327,8 @@ class TestSandboxOperations:
             stop_order_id = stop_orders.stop_orders[0].stop_order_id
             response = cancel_stop_order(sandbox_service, account_id, stop_order_id)
             assert isinstance(response.time, datetime)
+
+    def test_sandbox_get_order_prices(self, sandbox_service, account_id, instrument_id):
+        response = get_order_price(sandbox_service, account_id, instrument_id, 100)
+        assert isinstance(response, GetOrderPriceResponse)
+        assert utils.money_to_decimal(response.total_order_amount) == Decimal(100)

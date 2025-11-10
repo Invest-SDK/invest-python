@@ -849,6 +849,7 @@ class PortfolioPosition(google.protobuf.message.Message):
     EXPECTED_YIELD_FIFO_FIELD_NUMBER: builtins.int
     DAILY_YIELD_FIELD_NUMBER: builtins.int
     TICKER_FIELD_NUMBER: builtins.int
+    CLASS_CODE_FIELD_NUMBER: builtins.int
     figi: builtins.str
     """FIGI-идентификатор инструмента."""
     instrument_type: builtins.str
@@ -861,6 +862,8 @@ class PortfolioPosition(google.protobuf.message.Message):
     """Уникальный идентификатор инструмента."""
     ticker: builtins.str
     """Тикер инструмента."""
+    class_code: builtins.str
+    """Класс-код (секция торгов)."""
     @property
     def quantity(self) -> tinkoff.invest.grpc.common_pb2.Quotation:
         """Количество инструмента в портфеле в штуках."""
@@ -930,9 +933,10 @@ class PortfolioPosition(google.protobuf.message.Message):
         expected_yield_fifo: tinkoff.invest.grpc.common_pb2.Quotation | None = ...,
         daily_yield: tinkoff.invest.grpc.common_pb2.MoneyValue | None = ...,
         ticker: builtins.str = ...,
+        class_code: builtins.str = ...,
     ) -> None: ...
     def HasField(self, field_name: typing.Literal["average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "average_position_price_pt", b"average_position_price_pt", "blocked_lots", b"blocked_lots", "current_nkd", b"current_nkd", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "quantity", b"quantity", "quantity_lots", b"quantity_lots", "var_margin", b"var_margin"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "average_position_price_pt", b"average_position_price_pt", "blocked", b"blocked", "blocked_lots", b"blocked_lots", "current_nkd", b"current_nkd", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "figi", b"figi", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "quantity", b"quantity", "quantity_lots", b"quantity_lots", "ticker", b"ticker", "var_margin", b"var_margin"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "average_position_price_pt", b"average_position_price_pt", "blocked", b"blocked", "blocked_lots", b"blocked_lots", "class_code", b"class_code", "current_nkd", b"current_nkd", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "figi", b"figi", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "quantity", b"quantity", "quantity_lots", b"quantity_lots", "ticker", b"ticker", "var_margin", b"var_margin"]) -> None: ...
 
 global___PortfolioPosition = PortfolioPosition
 
@@ -953,6 +957,7 @@ class VirtualPortfolioPosition(google.protobuf.message.Message):
     AVERAGE_POSITION_PRICE_FIFO_FIELD_NUMBER: builtins.int
     DAILY_YIELD_FIELD_NUMBER: builtins.int
     TICKER_FIELD_NUMBER: builtins.int
+    CLASS_CODE_FIELD_NUMBER: builtins.int
     position_uid: builtins.str
     """Уникальный идентификатор позиции."""
     instrument_uid: builtins.str
@@ -963,6 +968,8 @@ class VirtualPortfolioPosition(google.protobuf.message.Message):
     """Тип инструмента."""
     ticker: builtins.str
     """Тикер инструмента."""
+    class_code: builtins.str
+    """Класс-код (секция торгов)."""
     @property
     def quantity(self) -> tinkoff.invest.grpc.common_pb2.Quotation:
         """Количество инструмента в портфеле в штуках."""
@@ -1011,9 +1018,10 @@ class VirtualPortfolioPosition(google.protobuf.message.Message):
         average_position_price_fifo: tinkoff.invest.grpc.common_pb2.MoneyValue | None = ...,
         daily_yield: tinkoff.invest.grpc.common_pb2.MoneyValue | None = ...,
         ticker: builtins.str = ...,
+        class_code: builtins.str = ...,
     ) -> None: ...
     def HasField(self, field_name: typing.Literal["average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "expire_date", b"expire_date", "quantity", b"quantity"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "expire_date", b"expire_date", "figi", b"figi", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "quantity", b"quantity", "ticker", b"ticker"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "class_code", b"class_code", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "expire_date", b"expire_date", "figi", b"figi", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "quantity", b"quantity", "ticker", b"ticker"]) -> None: ...
 
 global___VirtualPortfolioPosition = VirtualPortfolioPosition
 
@@ -1029,6 +1037,7 @@ class PositionsSecurities(google.protobuf.message.Message):
     POSITION_UID_FIELD_NUMBER: builtins.int
     INSTRUMENT_UID_FIELD_NUMBER: builtins.int
     TICKER_FIELD_NUMBER: builtins.int
+    CLASS_CODE_FIELD_NUMBER: builtins.int
     EXCHANGE_BLOCKED_FIELD_NUMBER: builtins.int
     INSTRUMENT_TYPE_FIELD_NUMBER: builtins.int
     figi: builtins.str
@@ -1043,6 +1052,8 @@ class PositionsSecurities(google.protobuf.message.Message):
     """Уникальный идентификатор инструмента."""
     ticker: builtins.str
     """Тикер инструмента."""
+    class_code: builtins.str
+    """Класс-код (секция торгов)."""
     exchange_blocked: builtins.bool
     """Заблокировано на бирже."""
     instrument_type: builtins.str
@@ -1056,10 +1067,11 @@ class PositionsSecurities(google.protobuf.message.Message):
         position_uid: builtins.str = ...,
         instrument_uid: builtins.str = ...,
         ticker: builtins.str = ...,
+        class_code: builtins.str = ...,
         exchange_blocked: builtins.bool = ...,
         instrument_type: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["balance", b"balance", "blocked", b"blocked", "exchange_blocked", b"exchange_blocked", "figi", b"figi", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "ticker", b"ticker"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["balance", b"balance", "blocked", b"blocked", "class_code", b"class_code", "exchange_blocked", b"exchange_blocked", "figi", b"figi", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "ticker", b"ticker"]) -> None: ...
 
 global___PositionsSecurities = PositionsSecurities
 
@@ -1075,6 +1087,7 @@ class PositionsFutures(google.protobuf.message.Message):
     POSITION_UID_FIELD_NUMBER: builtins.int
     INSTRUMENT_UID_FIELD_NUMBER: builtins.int
     TICKER_FIELD_NUMBER: builtins.int
+    CLASS_CODE_FIELD_NUMBER: builtins.int
     figi: builtins.str
     """FIGI-идентификатор фьючерса."""
     blocked: builtins.int
@@ -1087,6 +1100,8 @@ class PositionsFutures(google.protobuf.message.Message):
     """Уникальный идентификатор  инструмента."""
     ticker: builtins.str
     """Тикер инструмента."""
+    class_code: builtins.str
+    """Класс-код (секция торгов)."""
     def __init__(
         self,
         *,
@@ -1096,8 +1111,9 @@ class PositionsFutures(google.protobuf.message.Message):
         position_uid: builtins.str = ...,
         instrument_uid: builtins.str = ...,
         ticker: builtins.str = ...,
+        class_code: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["balance", b"balance", "blocked", b"blocked", "figi", b"figi", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "ticker", b"ticker"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["balance", b"balance", "blocked", b"blocked", "class_code", b"class_code", "figi", b"figi", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "ticker", b"ticker"]) -> None: ...
 
 global___PositionsFutures = PositionsFutures
 
@@ -1110,6 +1126,7 @@ class PositionsOptions(google.protobuf.message.Message):
     POSITION_UID_FIELD_NUMBER: builtins.int
     INSTRUMENT_UID_FIELD_NUMBER: builtins.int
     TICKER_FIELD_NUMBER: builtins.int
+    CLASS_CODE_FIELD_NUMBER: builtins.int
     BLOCKED_FIELD_NUMBER: builtins.int
     BALANCE_FIELD_NUMBER: builtins.int
     position_uid: builtins.str
@@ -1118,6 +1135,8 @@ class PositionsOptions(google.protobuf.message.Message):
     """Уникальный идентификатор  инструмента."""
     ticker: builtins.str
     """Тикер инструмента."""
+    class_code: builtins.str
+    """Класс-код (секция торгов)."""
     blocked: builtins.int
     """Количество бумаг, заблокированных выставленными заявками."""
     balance: builtins.int
@@ -1128,10 +1147,11 @@ class PositionsOptions(google.protobuf.message.Message):
         position_uid: builtins.str = ...,
         instrument_uid: builtins.str = ...,
         ticker: builtins.str = ...,
+        class_code: builtins.str = ...,
         blocked: builtins.int = ...,
         balance: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["balance", b"balance", "blocked", b"blocked", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "ticker", b"ticker"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["balance", b"balance", "blocked", b"blocked", "class_code", b"class_code", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "ticker", b"ticker"]) -> None: ...
 
 global___PositionsOptions = PositionsOptions
 
@@ -1874,6 +1894,8 @@ class OperationItem(google.protobuf.message.Message):
     INSTRUMENT_TYPE_FIELD_NUMBER: builtins.int
     INSTRUMENT_KIND_FIELD_NUMBER: builtins.int
     POSITION_UID_FIELD_NUMBER: builtins.int
+    TICKER_FIELD_NUMBER: builtins.int
+    CLASS_CODE_FIELD_NUMBER: builtins.int
     PAYMENT_FIELD_NUMBER: builtins.int
     PRICE_FIELD_NUMBER: builtins.int
     COMMISSION_FIELD_NUMBER: builtins.int
@@ -1914,6 +1936,10 @@ class OperationItem(google.protobuf.message.Message):
     """Тип инструмента."""
     position_uid: builtins.str
     """Уникальный идентификатор позиции."""
+    ticker: builtins.str
+    """Тикер инструмента."""
+    class_code: builtins.str
+    """Класс-код (секция торгов)."""
     quantity: builtins.int
     """Количество единиц инструмента."""
     quantity_rest: builtins.int
@@ -1977,6 +2003,8 @@ class OperationItem(google.protobuf.message.Message):
         instrument_type: builtins.str = ...,
         instrument_kind: tinkoff.invest.grpc.common_pb2.InstrumentType.ValueType = ...,
         position_uid: builtins.str = ...,
+        ticker: builtins.str = ...,
+        class_code: builtins.str = ...,
         payment: tinkoff.invest.grpc.common_pb2.MoneyValue | None = ...,
         price: tinkoff.invest.grpc.common_pb2.MoneyValue | None = ...,
         commission: tinkoff.invest.grpc.common_pb2.MoneyValue | None = ...,
@@ -1992,7 +2020,7 @@ class OperationItem(google.protobuf.message.Message):
         child_operations: collections.abc.Iterable[global___ChildOperationItem] | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing.Literal["accrued_int", b"accrued_int", "cancel_date_time", b"cancel_date_time", "commission", b"commission", "date", b"date", "payment", b"payment", "price", b"price", "trades_info", b"trades_info", "yield", b"yield", "yield_relative", b"yield_relative"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["accrued_int", b"accrued_int", "asset_uid", b"asset_uid", "broker_account_id", b"broker_account_id", "cancel_date_time", b"cancel_date_time", "cancel_reason", b"cancel_reason", "child_operations", b"child_operations", "commission", b"commission", "cursor", b"cursor", "date", b"date", "description", b"description", "figi", b"figi", "id", b"id", "instrument_kind", b"instrument_kind", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "name", b"name", "parent_operation_id", b"parent_operation_id", "payment", b"payment", "position_uid", b"position_uid", "price", b"price", "quantity", b"quantity", "quantity_done", b"quantity_done", "quantity_rest", b"quantity_rest", "state", b"state", "trades_info", b"trades_info", "type", b"type", "yield", b"yield", "yield_relative", b"yield_relative"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["accrued_int", b"accrued_int", "asset_uid", b"asset_uid", "broker_account_id", b"broker_account_id", "cancel_date_time", b"cancel_date_time", "cancel_reason", b"cancel_reason", "child_operations", b"child_operations", "class_code", b"class_code", "commission", b"commission", "cursor", b"cursor", "date", b"date", "description", b"description", "figi", b"figi", "id", b"id", "instrument_kind", b"instrument_kind", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "name", b"name", "parent_operation_id", b"parent_operation_id", "payment", b"payment", "position_uid", b"position_uid", "price", b"price", "quantity", b"quantity", "quantity_done", b"quantity_done", "quantity_rest", b"quantity_rest", "state", b"state", "ticker", b"ticker", "trades_info", b"trades_info", "type", b"type", "yield", b"yield", "yield_relative", b"yield_relative"]) -> None: ...
 
 global___OperationItem = OperationItem
 

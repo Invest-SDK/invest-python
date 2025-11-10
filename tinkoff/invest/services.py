@@ -2113,6 +2113,19 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "CancelSandboxStopOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, CancelStopOrderResponse)
 
+    @handle_request_error("GetSandboxOrderPrice")
+    def get_sandbox_order_price(
+        self, request: GetOrderPriceRequest
+    ) -> GetOrderPriceResponse:
+        response, call = self.stub.GetSandboxOrderPrice.with_call(
+            request=_grpc_helpers.dataclass_to_protobuff(
+                request, orders_pb2.GetOrderPriceRequest()
+            ),
+            metadata=self.metadata,
+        )
+        log_request(get_tracking_id_from_call(call), "GetSandboxOrderPrice")
+        return _grpc_helpers.protobuf_to_dataclass(response, GetOrderPriceResponse)
+
 
 class StopOrdersService(_grpc_helpers.Service):
     _stub_factory = stoporders_pb2_grpc.StopOrdersServiceStub
