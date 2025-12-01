@@ -34,14 +34,18 @@ def parse_version(version: str) -> Version:
 def next_beta_version(version: Version) -> Version:
     major, minor, patch, prerelease, buildmetadata = version
     if not prerelease:
-        return major, minor, patch, prerelease, buildmetadata
+        return major, minor, str(int(patch) + 1), prerelease, buildmetadata
     prerelease_n = int(remove_prefix(prerelease, "beta"))
     return (major, minor, patch, "beta" + str(prerelease_n + 1), buildmetadata)
 
 
 def version_to_str(version: Version) -> str:
     major, minor, patch, prerelease, _ = version
-    return f"{major}.{minor}.{patch}-{prerelease}"
+    return (
+        f"{major}.{minor}.{patch}-{prerelease}"
+        if prerelease
+        else f"{major}.{minor}.{patch}"
+    )
 
 
 def remove_prefix(text: str, prefix: str) -> str:
