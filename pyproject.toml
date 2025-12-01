@@ -9,8 +9,8 @@ description = "Tinkoff Python SDK"
 authors = ["Tinkoff Team <python@tinkoff.ru>"]
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/RussianInvestments/invest-python"
-homepage = "https://github.com/RussianInvestments/invest-python"
+repository = "https://opensource.tbank.ru/invest/invest-python"
+homepage = "https://developer.tbank.ru/invest/intro/intro"
 packages = [
   {include = "tinkoff"}
 ]

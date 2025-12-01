@@ -8,7 +8,7 @@ from zipfile import ZipFile
 import requests
 
 BRANCH = "main"
-
+#https://gitlab.tcsbank.ru/invest-piapi/public-invest-api-contract/-/archive/{BRANCH}/public-invest-api-contract-{BRANCH}.zip
 URL = f"https://github.com/RussianInvestments/investAPI/archive/refs/heads/{BRANCH}.zip"
 OUTPUT_PATH = "protos/tinkoff/invest/grpc"
 PROTOS_TMP_ZIP = "protos.zip"

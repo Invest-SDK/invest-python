@@ -5,10 +5,10 @@
 ![GitHub](https://img.shields.io/github/license/tinkoff/invest-python)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/tinkoff-investments)
 
-Данный репозиторий предоставляет клиент для взаимодействия с торговой платформой [Тинькофф Инвестиции](https://www.tinkoff.ru/invest/) на языке Python.
+Данный репозиторий предоставляет клиент для взаимодействия с торговой платформой [Т-Инвестиции](https://www.tbank.ru/invest/) на языке Python.
 
 - [Документация](https://RussianInvestments.github.io/invest-python/)
-- [Документация по Invest API](https://RussianInvestments.github.io/investAPI/)
+- [Документация по Invest API](https://developer.tbank.ru/invest/intro/intro)
 
 ## Начало работы
 
@@ -41,7 +41,7 @@ with Client(TOKEN) as client:
 
 ### Переопределить target
 
-В Tinkoff Invest API есть два контура - "боевой", предназначенный для исполнения ордеров на бирже и "песочница", предназначенный для тестирования API и торговых гипотез, заявки с которого не выводятся на биржу, а исполняются в эмуляторе.
+В T-Invest API есть два контура - "боевой", предназначенный для исполнения ордеров на бирже и "песочница", предназначенный для тестирования API и торговых гипотез, заявки с которого не выводятся на биржу, а исполняются в эмуляторе.
 
 Переключение между контурами реализовано через target, INVEST_GRPC_API - "боевой", INVEST_GRPC_API_SANDBOX - "песочница"
 
@@ -58,14 +58,14 @@ with Client(TOKEN, target=INVEST_GRPC_API) as client:
 > :warning: **Не публикуйте токены в общедоступные репозитории**
 <br/>
 
-Остальные примеры доступны в [examples](https://github.com/RussianInvestments/invest-python/tree/main/examples).
+Остальные примеры доступны в [examples](https://opensource.tbank.ru/invest/invest-python/-/tree/main/examples).
 
 ## Contribution
 
 Для тех, кто хочет внести свои изменения в проект.
 
-- [CONTRIBUTING](https://github.com/RussianInvestments/invest-python/blob/main/CONTRIBUTING.md)
+- [CONTRIBUTING](https://opensource.tbank.ru/invest/invest-python/-/blob/main/CONTRIBUTING.md)
 
 ## License
 
-Лицензия [The Apache License](https://github.com/RussianInvestments/invest-python/blob/main/LICENSE).
+Лицензия [The Apache License](https://opensource.tbank.ru/invest/invest-python/-/blob/main/LICENSE).

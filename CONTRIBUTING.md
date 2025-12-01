@@ -1,13 +1,13 @@
 # Contributing
 
-Спасибо за участие в проекте Tinkoff Invest!
+Спасибо за участие в проекте T-Invest!
 
 ## Быстрый старт
 
-1. Сделайте [fork](https://github.com/RussianInvestments/invest-python/fork) проекта
+1. Сделайте [fork](https://opensource.tbank.ru/invest/invest-python/-/forks/new) проекта
 2. Склонируйте репозиторий на свой локальный компьютер
     ```bash
-    git clone https://github.com/username/invest-python.git
+    git clone https://opensource.tbank.ru/<username>/invest-python.git
     ```
     > Вы должны использовать свой username вместо `username`
 3. Создайте новую ветку для ваших изменений
