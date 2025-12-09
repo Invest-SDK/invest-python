@@ -5,8 +5,10 @@ from grpc.aio import ClientInterceptor
 
 from .async_services import AsyncServices
 from .channels import create_channel
+from .constants import INVEST_GRPC_API
 from .services import Services
 from .typedefs import ChannelArgumentType
+from ._error_hub import async_init_error_hub, init_error_hub
 
 __all__ = ("Client", "AsyncClient")
 
@@ -41,7 +43,7 @@ class Client:
         self._sandbox_token = sandbox_token
         self._options = options
         self._app_name = app_name
-
+        self._target = target or INVEST_GRPC_API
         self._channel = create_channel(target=target, options=options)
         if interceptors is None:
             interceptors = []
@@ -49,6 +51,7 @@ class Client:
             self._channel = grpc.intercept_channel(self._channel, interceptor)
 
     def __enter__(self) -> Services:
+        init_error_hub(self)
         channel = self._channel.__enter__()
         return Services(
             channel,
@@ -98,11 +101,13 @@ class AsyncClient:
         self._sandbox_token = sandbox_token
         self._options = options
         self._app_name = app_name
+        self._target = target or INVEST_GRPC_API
         self._channel = create_channel(
             target=target, force_async=True, options=options, interceptors=interceptors
         )
 
     async def __aenter__(self) -> AsyncServices:
+        await async_init_error_hub(self)
         channel = await self._channel.__aenter__()
         return AsyncServices(
             channel,

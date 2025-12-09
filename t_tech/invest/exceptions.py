@@ -6,6 +6,8 @@ __all__ = (
     "InvestError",
     "RequestError",
     "AioRequestError",
+    "UnauthenticatedError",
+    "AioUnauthenticatedError"
 )
 
 

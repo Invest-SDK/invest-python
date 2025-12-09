@@ -1,5 +1,6 @@
 import asyncio
 import os
+from typing import AsyncIterable
 
 from t_tech.invest import (
     AsyncClient,
