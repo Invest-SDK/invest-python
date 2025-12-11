@@ -1,7 +1,7 @@
 import datetime
 import re
 from functools import wraps
-from typing import Callable, Any, cast
+from typing import Any, Callable, cast
 
 import sentry_sdk
 from grpc import StatusCode
@@ -10,16 +10,16 @@ from sentry_sdk.types import Event
 
 from ._errors import TFunc
 from .constants import PACKAGE_NAME
-from .exceptions import RequestError, AioRequestError
+from .exceptions import AioRequestError, RequestError
 
 __all__ = (
     "init_error_hub",
     "async_init_error_hub",
     "handle_error_hub_gen",
-    "handle_aio_error_hub_gen"
+    "handle_aio_error_hub_gen",
 )
 
-BEARER_PATTERN = re.compile(r'Bearer\s+[a-zA-Z0-9\-_\.]+', re.IGNORECASE)
+BEARER_PATTERN = re.compile(r"Bearer\s+[a-zA-Z0-9\-_\.]+", re.IGNORECASE)
 
 
 def sanitize_bearer_tokens(event, hint) -> Event | None:
@@ -51,8 +51,7 @@ def init_error_hub(client):
     sentry_sdk.init(
         dsn="https://invest-piapi-errorhub@error-hub.tbank.ru/00000000",
         send_default_pii=False,
-        integrations=[
-        ],
+        integrations=[],
         disabled_integrations=[ModulesIntegration(), ExcepthookIntegration()],
         before_send=sanitize_bearer_tokens,
         release=PACKAGE_NAME,

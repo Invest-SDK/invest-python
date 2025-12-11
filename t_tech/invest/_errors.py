@@ -128,8 +128,7 @@ def handle_aio_request_error_gen(name: str) -> Callable[[TFunc], TFunc]:
                 details = e.details()  # type:ignore
 
                 if status_code == StatusCode.UNAUTHENTICATED:
-                    raise AioUnauthenticatedError(status_code, details,
-                                                  metadata) from e
+                    raise AioUnauthenticatedError(status_code, details, metadata) from e
 
                 raise AioRequestError(status_code, details, metadata) from e
 

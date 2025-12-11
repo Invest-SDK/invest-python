@@ -3,12 +3,12 @@ from typing import List, Optional
 import grpc
 from grpc.aio import ClientInterceptor
 
+from ._error_hub import async_init_error_hub, init_error_hub
 from .async_services import AsyncServices
 from .channels import create_channel
 from .constants import INVEST_GRPC_API
 from .services import Services
 from .typedefs import ChannelArgumentType
-from ._error_hub import async_init_error_hub, init_error_hub
 
 __all__ = ("Client", "AsyncClient")
 

@@ -7,7 +7,7 @@ __all__ = (
     "RequestError",
     "AioRequestError",
     "UnauthenticatedError",
-    "AioUnauthenticatedError"
+    "AioUnauthenticatedError",
 )
 
 

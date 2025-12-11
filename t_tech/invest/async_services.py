@@ -164,6 +164,7 @@ from .schemas import (
     LastPriceType,
     MarketDataRequest,
     MarketDataResponse,
+    MarketDataServerSideStreamRequest,
     MoneyValue,
     OpenSandboxAccountRequest,
     OpenSandboxAccountResponse,
@@ -218,7 +219,7 @@ from .schemas import (
     TradingSchedulesRequest,
     TradingSchedulesResponse,
     WithdrawLimitsRequest,
-    WithdrawLimitsResponse, MarketDataServerSideStreamRequest,
+    WithdrawLimitsResponse,
 )
 from .typedefs import AccountId
 from .utils import get_intervals, now
@@ -1298,7 +1299,7 @@ class MarketDataStreamService(_grpc_helpers.Service):
 
     @staticmethod
     async def _convert_market_data_server_side_stream_request(
-            request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
+        request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
     ) -> AsyncIterable[marketdata_pb2.MarketDataServerSideStreamRequest]:
         async for request in request_iterator:
             yield _grpc_helpers.dataclass_to_protobuff(
@@ -1320,13 +1321,14 @@ class MarketDataStreamService(_grpc_helpers.Service):
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("MarketDataServerSideStream")
     async def market_data_server_side_stream(
-            self,
-            request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
+        self,
+        request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
     ) -> AsyncIterable[MarketDataResponse]:
         async for response in self.stub.MarketDataServerSideStream(
-                request_iterator=self._convert_market_data_server_side_stream_request(
-                    request_iterator),
-                metadata=self.metadata,
+            request_iterator=self._convert_market_data_server_side_stream_request(
+                request_iterator
+            ),
+            metadata=self.metadata,
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, MarketDataResponse)
 
