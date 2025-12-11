@@ -3,8 +3,8 @@ from datetime import datetime
 
 import pytest
 
-from tinkoff.invest.schemas import CandleInterval
-from tinkoff.invest.utils import empty_or_uuid, get_intervals
+from t_tech.invest.schemas import CandleInterval
+from t_tech.invest.utils import empty_or_uuid, get_intervals
 
 
 @pytest.mark.parametrize(

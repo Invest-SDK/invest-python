@@ -3,8 +3,8 @@ import os
 from datetime import timedelta
 from decimal import Decimal
 
-from tinkoff.invest import AsyncClient
-from tinkoff.invest.schemas import (
+from t_tech.invest import AsyncClient
+from t_tech.invest.schemas import (
     Deviation,
     GetTechAnalysisRequest,
     IndicatorInterval,
@@ -12,7 +12,7 @@ from tinkoff.invest.schemas import (
     Smoothing,
     TypeOfPrice,
 )
-from tinkoff.invest.utils import decimal_to_quotation, now
+from t_tech.invest.utils import decimal_to_quotation, now
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

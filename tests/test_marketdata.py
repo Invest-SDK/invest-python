@@ -5,16 +5,16 @@ from unittest import mock
 import pytest
 from google.protobuf.json_format import MessageToDict
 
-from tinkoff.invest._grpc_helpers import dataclass_to_protobuff
-from tinkoff.invest.grpc import marketdata_pb2
-from tinkoff.invest.schemas import (
+from t_tech.invest._grpc_helpers import dataclass_to_protobuff
+from t_tech.invest.grpc import marketdata_pb2
+from t_tech.invest.schemas import (
     GetMySubscriptions,
     MarketDataRequest,
     SubscribeTradesRequest,
     SubscriptionAction,
     TradeInstrument,
 )
-from tinkoff.invest.services import MarketDataService
+from t_tech.invest.services import MarketDataService
 
 
 @pytest.fixture()

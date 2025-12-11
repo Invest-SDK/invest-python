@@ -5,14 +5,14 @@ from datetime import timedelta
 
 import pytest
 
-from tinkoff.invest.schemas import (
+from t_tech.invest.schemas import (
     CandleInterval,
     GetCandlesResponse,
     HistoricCandle,
     Quotation,
 )
-from tinkoff.invest.services import MarketDataService, Services
-from tinkoff.invest.utils import now
+from t_tech.invest.services import MarketDataService, Services
+from t_tech.invest.utils import now
 
 
 @pytest.fixture()

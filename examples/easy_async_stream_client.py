@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from tinkoff.invest import (
+from t_tech.invest import (
     AsyncClient,
     CandleInstrument,
     InfoInstrument,
@@ -9,7 +9,7 @@ from tinkoff.invest import (
     SubscriptionInterval,
     TradeInstrument,
 )
-from tinkoff.invest.async_services import AsyncMarketDataStreamManager
+from t_tech.invest.async_services import AsyncMarketDataStreamManager
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

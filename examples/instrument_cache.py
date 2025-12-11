@@ -2,9 +2,9 @@ import logging
 import os
 from pprint import pprint
 
-from tinkoff.invest import Client, InstrumentIdType
-from tinkoff.invest.caching.instruments_cache.instruments_cache import InstrumentsCache
-from tinkoff.invest.caching.instruments_cache.settings import InstrumentsCacheSettings
+from t_tech.invest import Client, InstrumentIdType
+from t_tech.invest.caching.instruments_cache.instruments_cache import InstrumentsCache
+from t_tech.invest.caching.instruments_cache.settings import InstrumentsCacheSettings
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

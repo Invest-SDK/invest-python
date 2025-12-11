@@ -1,9 +1,9 @@
-# Tinkoff Invest
+# T-Invest
 
-[![PyPI](https://img.shields.io/pypi/v/tinkoff-investments)](https://pypi.org/project/tinkoff-investments/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/tinkoff-investments)](https://www.python.org/downloads/)
-![GitHub](https://img.shields.io/github/license/tinkoff/invest-python)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/tinkoff-investments)
+[//]: # ([![PyPI]&#40;https://img.shields.io/pypi/v/t-tech-investments&#41;]&#40;https://pypi.org/project/t-tech-investments/&#41;)
+[//]: # (#[![PyPI - Python Version]&#40;https://img.shields.io/pypi/pyversions/t-tech-investments&#41;]&#40;https://www.python.org/downloads/&#41;)
+[//]: # (#![GitHub]&#40;https://img.shields.io/github/license/tinkoff/invest-python&#41;)
+[//]: # (#![PyPI - Downloads]&#40;https://img.shields.io/pypi/dm/t-tech-investments&#41;)
 
 Данный репозиторий предоставляет клиент для взаимодействия с торговой платформой [Т-Инвестиции](https://www.tbank.ru/invest/) на языке Python.
 
@@ -15,7 +15,7 @@
 <!-- termynal -->
 
 ```
-$ pip install tinkoff-investments
+$ pip install t-tech-investments
 ```
 
 ## Возможности
@@ -31,7 +31,7 @@ $ pip install tinkoff-investments
 ### Получить список аккаунтов
 
 ```python
-from tinkoff.invest import Client
+from t_tech.invest import Client
 
 TOKEN = 'token'
 
@@ -46,8 +46,8 @@ with Client(TOKEN) as client:
 Переключение между контурами реализовано через target, INVEST_GRPC_API - "боевой", INVEST_GRPC_API_SANDBOX - "песочница"
 
 ```python
-from tinkoff.invest import Client
-from tinkoff.invest.constants import INVEST_GRPC_API
+from t_tech.invest import Client
+from t_tech.invest.constants import INVEST_GRPC_API
 
 TOKEN = 'token'
 

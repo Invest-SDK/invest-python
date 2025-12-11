@@ -3,8 +3,8 @@ from typing import Tuple
 
 import pytest
 
-from tinkoff.invest import CandleInterval
-from tinkoff.invest.utils import round_datetime_range
+from t_tech.invest import CandleInterval
+from t_tech.invest.utils import round_datetime_range
 
 
 @pytest.mark.parametrize(

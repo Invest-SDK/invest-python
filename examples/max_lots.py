@@ -3,7 +3,7 @@
 import logging
 import os
 
-from tinkoff.invest import Client, GetMaxLotsRequest
+from t_tech.invest import Client, GetMaxLotsRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

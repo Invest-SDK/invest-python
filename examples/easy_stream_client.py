@@ -1,12 +1,7 @@
 import os
 
-from tinkoff.invest import (
-    CandleInstrument,
-    Client,
-    InfoInstrument,
-    SubscriptionInterval,
-)
-from tinkoff.invest.services import MarketDataStreamManager
+from t_tech.invest import CandleInstrument, Client, InfoInstrument, SubscriptionInterval
+from t_tech.invest.services import MarketDataStreamManager
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

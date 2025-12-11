@@ -11,9 +11,9 @@ import os
 from datetime import timedelta
 from typing import List, Optional
 
-from tinkoff.invest import AioRequestError, AsyncClient, CandleInterval, HistoricCandle
-from tinkoff.invest.async_services import AsyncServices
-from tinkoff.invest.utils import now
+from t_tech.invest import AioRequestError, AsyncClient, CandleInterval, HistoricCandle
+from t_tech.invest.async_services import AsyncServices
+from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

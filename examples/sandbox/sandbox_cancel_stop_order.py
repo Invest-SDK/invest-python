@@ -1,7 +1,7 @@
 import os
 
-from tinkoff.invest.sandbox.client import SandboxClient
-from tinkoff.invest.schemas import (
+from t_tech.invest.sandbox.client import SandboxClient
+from t_tech.invest.schemas import (
     CancelStopOrderRequest,
     CancelStopOrderResponse,
     GetStopOrdersRequest,

@@ -1,6 +1,6 @@
 import os
 
-from tinkoff.invest.sandbox.client import SandboxClient
+from t_tech.invest.sandbox.client import SandboxClient
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

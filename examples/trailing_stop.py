@@ -8,7 +8,7 @@ import logging
 import os
 from decimal import Decimal
 
-from tinkoff.invest import (
+from t_tech.invest import (
     Client,
     ExchangeOrderType,
     GetStopOrdersRequest,
@@ -20,8 +20,8 @@ from tinkoff.invest import (
     StopOrderType,
     TakeProfitType,
 )
-from tinkoff.invest.schemas import TrailingValueType
-from tinkoff.invest.utils import decimal_to_quotation
+from t_tech.invest.schemas import TrailingValueType
+from t_tech.invest.utils import decimal_to_quotation
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -3,8 +3,8 @@
 import os
 from uuid import uuid4
 
-from tinkoff.invest import Client, OrderDirection, OrderType
-from tinkoff.invest.sandbox.client import SandboxClient
+from t_tech.invest import Client, OrderDirection, OrderType
+from t_tech.invest.sandbox.client import SandboxClient
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

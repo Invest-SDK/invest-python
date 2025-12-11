@@ -1,7 +1,7 @@
 import logging
 import os
 
-from tinkoff.invest import Client, RequestError
+from t_tech.invest import Client, RequestError
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

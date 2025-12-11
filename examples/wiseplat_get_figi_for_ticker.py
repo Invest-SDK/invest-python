@@ -4,9 +4,9 @@ import os
 
 from pandas import DataFrame
 
-from tinkoff.invest import Client, SecurityTradingStatus
-from tinkoff.invest.services import InstrumentsService
-from tinkoff.invest.utils import quotation_to_decimal
+from t_tech.invest import Client, SecurityTradingStatus
+from t_tech.invest.services import InstrumentsService
+from t_tech.invest.utils import quotation_to_decimal
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

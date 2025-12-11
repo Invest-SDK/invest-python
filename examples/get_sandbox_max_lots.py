@@ -1,7 +1,7 @@
 import os
 
-from tinkoff.invest import GetMaxLotsRequest
-from tinkoff.invest.sandbox.client import SandboxClient
+from t_tech.invest import GetMaxLotsRequest
+from t_tech.invest.sandbox.client import SandboxClient
 
 TOKEN = os.environ["INVEST_SANDBOX_TOKEN"]
 

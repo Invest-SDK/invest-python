@@ -3,12 +3,12 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-from tinkoff.invest import CandleInterval, Client
-from tinkoff.invest.caching.market_data_cache.cache import MarketDataCache
-from tinkoff.invest.caching.market_data_cache.cache_settings import (
+from t_tech.invest import CandleInterval, Client
+from t_tech.invest.caching.market_data_cache.cache import MarketDataCache
+from t_tech.invest.caching.market_data_cache.cache_settings import (
     MarketDataCacheSettings,
 )
-from tinkoff.invest.utils import now
+from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.DEBUG)

@@ -1,7 +1,7 @@
 import os
 
-from tinkoff.invest import Client
-from tinkoff.invest.schemas import InstrumentIdType, InstrumentRequest
+from t_tech.invest import Client
+from t_tech.invest.schemas import InstrumentIdType, InstrumentRequest
 
 
 def main():

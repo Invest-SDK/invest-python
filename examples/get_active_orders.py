@@ -3,7 +3,7 @@
 import logging
 import os
 
-from tinkoff.invest import Client
+from t_tech.invest import Client
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -3,7 +3,7 @@ from datetime import timedelta
 from cachetools import TTLCache as StandardTTLCache
 from pytest_freezegun import freeze_time
 
-from tinkoff.invest.caching.overrides import TTLCache as OverridenTTLCache
+from t_tech.invest.caching.overrides import TTLCache as OverridenTTLCache
 
 
 class TestTTLCache:

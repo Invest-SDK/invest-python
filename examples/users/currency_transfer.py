@@ -3,9 +3,9 @@ import uuid
 
 from _decimal import Decimal
 
-from tinkoff.invest import AccountType, Client
-from tinkoff.invest.schemas import CurrencyTransferRequest
-from tinkoff.invest.utils import decimal_to_money
+from t_tech.invest import AccountType, Client
+from t_tech.invest.schemas import CurrencyTransferRequest
+from t_tech.invest.utils import decimal_to_money
 
 
 def main():

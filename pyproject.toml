@@ -3,18 +3,18 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "tinkoff-investments"
-version = "0.3.0-beta0"
-description = "Tinkoff Python SDK"
-authors = ["Tinkoff Team <python@tinkoff.ru>"]
+name = "t-tech-investments"
+version = "0.3.0"
+description = "T-Invest Python SDK"
+authors = ["Invest Public API Team <t-tech.python@ya.ru>"]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://opensource.tbank.ru/invest/invest-python"
 homepage = "https://developer.tbank.ru/invest/intro/intro"
 packages = [
-  {include = "tinkoff"}
+  {include = "t_tech"}
 ]
-exclude = ["tinkoff/__init__.py"]
+exclude = ["t_tech/__init__.py"]
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
@@ -22,7 +22,6 @@ cachetools = "^5.2.0"
 grpcio = "^1.59.3"
 protobuf = "^4.25.1"
 python-dateutil = "^2.8.2"
-tinkoff = "^0.1.1"
 deprecation = "^2.1.0"
 matplotlib = {version = "^3.5.1", optional = true}
 numpy = {version = "^1.22.2", optional = true}
@@ -102,12 +101,12 @@ ignore = [
   "Q000"
 ]
 exclude = [
-  "tinkoff/invest/grpc",
+  "t_tech/invest/grpc",
   "examples/*"
 ]
 
 [tool.black]
-exclude = "tinkoff/invest/grpc"
+exclude = "t_tech/invest/grpc"
 
 [tool.coverage.report]
 show_missing = true
@@ -124,7 +123,7 @@ omit = [
   "**/__main__.py"
 ]
 branch = true
-source = "tinkoff"
+source = "t_tech"
 
 [tool.isort]
 profile = "black"
@@ -142,5 +141,5 @@ module = ["tests.*", "examples.*"]
 check_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = ["tinkoff.invest.caching.instruments_cache.*", "tinkoff.invest.mock_services.*"]
+module = ["t_tech.invest.caching.instruments_cache.*", "t_tech.invest.mock_services.*"]
 ignore_errors = true

@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from tinkoff.invest import AsyncClient, InstrumentType
-from tinkoff.invest.schemas import EventType, GetBondEventsRequest
+from t_tech.invest import AsyncClient, InstrumentType
+from t_tech.invest.schemas import EventType, GetBondEventsRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

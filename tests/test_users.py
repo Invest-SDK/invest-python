@@ -4,7 +4,7 @@ from unittest import mock
 
 import pytest
 
-from tinkoff.invest.services import UsersService
+from t_tech.invest.services import UsersService
 
 
 @pytest.fixture()

@@ -7,9 +7,9 @@ import os
 from datetime import datetime
 from decimal import Decimal
 
-from tinkoff.invest import MoneyValue
-from tinkoff.invest.sandbox.client import SandboxClient
-from tinkoff.invest.utils import decimal_to_quotation, quotation_to_decimal
+from t_tech.invest import MoneyValue
+from t_tech.invest.sandbox.client import SandboxClient
+from t_tech.invest.utils import decimal_to_quotation, quotation_to_decimal
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

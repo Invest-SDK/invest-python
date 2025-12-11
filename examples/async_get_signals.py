@@ -3,8 +3,8 @@ import asyncio
 import datetime
 import os
 
-from tinkoff.invest import AsyncClient
-from tinkoff.invest.schemas import GetSignalsRequest, SignalState
+from t_tech.invest import AsyncClient
+from t_tech.invest.schemas import GetSignalsRequest, SignalState
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

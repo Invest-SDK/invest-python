@@ -4,8 +4,8 @@ import datetime
 import logging
 import os
 
-from tinkoff.invest import AsyncClient
-from tinkoff.invest.schemas import OrderExecutionReportStatus
+from t_tech.invest import AsyncClient
+from t_tech.invest.schemas import OrderExecutionReportStatus
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

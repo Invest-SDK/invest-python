@@ -3,9 +3,9 @@ import os
 
 from _decimal import Decimal
 
-from tinkoff.invest import utils
-from tinkoff.invest.sandbox.async_client import AsyncSandboxClient
-from tinkoff.invest.schemas import (
+from t_tech.invest import utils
+from t_tech.invest.sandbox.async_client import AsyncSandboxClient
+from t_tech.invest.schemas import (
     GetOrderPriceRequest,
     GetOrderPriceResponse,
     OrderDirection,

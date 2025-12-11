@@ -4,15 +4,15 @@ from unittest import mock
 
 import pytest
 
-from tinkoff.invest import (
+from t_tech.invest import (
     Client,
     InstrumentIdType,
     InstrumentRequest,
     InstrumentsRequest,
     InstrumentStatus,
 )
-from tinkoff.invest.schemas import StructuredNote
-from tinkoff.invest.services import InstrumentsService
+from t_tech.invest.schemas import StructuredNote
+from t_tech.invest.services import InstrumentsService
 
 
 @pytest.fixture()

@@ -2367,17 +2367,6 @@ markdown = "*"
 mkdocs = ["mkdocs (>=1.4,<2.0)"]
 
 [[package]]
-name = "tinkoff"
-version = "0.1.1"
-description = ""
-optional = false
-python-versions = ">=3.6,<4.0"
-files = [
-    {file = "tinkoff-0.1.1-py3-none-any.whl", hash = "sha256:971ec61e7a00c44deab5a959df93207dc7ff7b499ba335ead05ed9f974418ec1"},
-    {file = "tinkoff-0.1.1.tar.gz", hash = "sha256:c947cb253f16cc3bf17c74b69c4236695850e42deffa69e5a3bb4089d2e3cdc7"},
-]
-
-[[package]]
 name = "tokenize-rt"
 version = "6.0.0"
 description = "A wrapper around the stdlib `tokenize` which roundtrips."
@@ -2619,4 +2608,4 @@ all = ["matplotlib", "mplfinance", "numpy", "pandas"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "b078b53342acf82cd8d0d2bd39dfe24fd9837484d22ea6bef965f05bad92d3c3"
+content-hash = "a026d093ab22561c674840d4c969e251638523cd317b7178eecbd3cf6d5cc1fc"

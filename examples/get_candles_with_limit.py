@@ -1,7 +1,7 @@
 import os
 
-from tinkoff.invest import CandleInterval, Client
-from tinkoff.invest.utils import now
+from t_tech.invest import CandleInterval, Client
+from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

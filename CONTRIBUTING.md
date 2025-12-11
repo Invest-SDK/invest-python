@@ -125,10 +125,10 @@ make gen-grpc
 ```
 
 Затем, добавить изменения в модули:
-- tinkoff/invest/\_\_init__.py
-- tinkoff/invest/async_services.py
-- tinkoff/invest/schemas.py
-- tinkoff/invest/services.py
+- t_tech/invest/\_\_init__.py
+- t_tech/invest/async_services.py
+- t_tech/invest/schemas.py
+- t_tech/invest/services.py
 
 ### Загрузка proto файлов и генерация клиента
 

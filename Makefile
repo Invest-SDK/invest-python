@@ -1,13 +1,13 @@
 PYTHONPATH = PYTHONPATH=./
 POETRY_RUN = poetry run
 
-PROTO_DIR = protos/tinkoff/invest/grpc
-PACKAGE_PROTO_DIR = tinkoff/invest/grpc
+PROTO_DIR = protos/t_tech/invest/grpc
+PACKAGE_PROTO_DIR = t_tech/invest/grpc
 OUT = .
 PROTOS = protos
 
 TEST = $(POETRY_RUN) pytest $(args)
-MAIN_CODE = tinkoff examples scripts
+MAIN_CODE = t_tech examples scripts
 CODE = tests $(MAIN_CODE)
 
 .PHONY: test

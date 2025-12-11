@@ -11,8 +11,7 @@ from examples.sandbox.sandbox_cancel_stop_order import cancel_stop_order
 from examples.sandbox.sandbox_get_order_price import get_order_price
 from examples.sandbox.sandbox_get_stop_orders import get_stop_orders
 from examples.sandbox.sandbox_post_stop_order import post_stop_order
-from tests.utils import skip_when
-from tinkoff.invest import (
+from t_tech.invest import (
     Account,
     CloseSandboxAccountResponse,
     MoneyValue,
@@ -23,15 +22,16 @@ from tinkoff.invest import (
     RequestError,
     utils,
 )
-from tinkoff.invest.sandbox.client import SandboxClient
-from tinkoff.invest.schemas import (
+from t_tech.invest.sandbox.client import SandboxClient
+from t_tech.invest.schemas import (
     GetOrderPriceResponse,
     OrderExecutionReportStatus,
     PostOrderAsyncRequest,
     StopOrderDirection,
     StopOrderStatusOption,
 )
-from tinkoff.invest.utils import money_to_decimal
+from t_tech.invest.utils import money_to_decimal
+from tests.utils import skip_when
 
 
 @pytest.fixture()
@@ -138,7 +138,7 @@ def async_order(
 
 skip_when_exchange_closed = skip_when(
     RequestError,
-    lambda msg: "instrument is not available for trading" in msg,
+    lambda msg: "Instrument is not available for trading" in msg,
     reason="Skipping during closed exchange",
 )
 

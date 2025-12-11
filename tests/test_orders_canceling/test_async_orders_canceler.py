@@ -5,18 +5,14 @@ from unittest.mock import call
 import pytest
 import pytest_asyncio
 
-from tinkoff.invest import (
+from t_tech.invest import (
     GetOrdersResponse,
     GetStopOrdersResponse,
     OrderState,
     StopOrder,
 )
-from tinkoff.invest.async_services import (
-    AsyncServices,
-    OrdersService,
-    StopOrdersService,
-)
-from tinkoff.invest.typedefs import AccountId
+from t_tech.invest.async_services import AsyncServices, OrdersService, StopOrdersService
+from t_tech.invest.typedefs import AccountId
 
 
 @pytest_asyncio.fixture()

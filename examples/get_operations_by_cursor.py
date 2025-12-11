@@ -1,7 +1,7 @@
 import os
 from pprint import pprint
 
-from tinkoff.invest import Client, GetOperationsByCursorRequest
+from t_tech.invest import Client, GetOperationsByCursorRequest
 
 token = os.environ["INVEST_TOKEN"]
 

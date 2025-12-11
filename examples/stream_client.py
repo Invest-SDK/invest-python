@@ -1,7 +1,7 @@
 import os
 import time
 
-from tinkoff.invest import (
+from t_tech.invest import (
     CandleInstrument,
     Client,
     MarketDataRequest,
@@ -9,7 +9,7 @@ from tinkoff.invest import (
     SubscriptionAction,
     SubscriptionInterval,
 )
-from tinkoff.invest.schemas import CandleSource
+from t_tech.invest.schemas import CandleSource
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -5,25 +5,23 @@ from decimal import Decimal
 
 from matplotlib import pyplot as plt
 
-from tinkoff.invest import CandleInterval, Client
-from tinkoff.invest.strategies.base.account_manager import AccountManager
-from tinkoff.invest.strategies.moving_average.plotter import (
-    MovingAverageStrategyPlotter,
-)
-from tinkoff.invest.strategies.moving_average.signal_executor import (
+from t_tech.invest import CandleInterval, Client
+from t_tech.invest.strategies.base.account_manager import AccountManager
+from t_tech.invest.strategies.moving_average.plotter import MovingAverageStrategyPlotter
+from t_tech.invest.strategies.moving_average.signal_executor import (
     MovingAverageSignalExecutor,
 )
-from tinkoff.invest.strategies.moving_average.strategy import MovingAverageStrategy
-from tinkoff.invest.strategies.moving_average.strategy_settings import (
+from t_tech.invest.strategies.moving_average.strategy import MovingAverageStrategy
+from t_tech.invest.strategies.moving_average.strategy_settings import (
     MovingAverageStrategySettings,
 )
-from tinkoff.invest.strategies.moving_average.strategy_state import (
+from t_tech.invest.strategies.moving_average.strategy_state import (
     MovingAverageStrategyState,
 )
-from tinkoff.invest.strategies.moving_average.supervisor import (
+from t_tech.invest.strategies.moving_average.supervisor import (
     MovingAverageStrategySupervisor,
 )
-from tinkoff.invest.strategies.moving_average.trader import MovingAverageStrategyTrader
+from t_tech.invest.strategies.moving_average.trader import MovingAverageStrategyTrader
 
 logging.basicConfig(format="%(asctime)s %(levelname)s:%(message)s", level=logging.INFO)
 logger = logging.getLogger(__name__)

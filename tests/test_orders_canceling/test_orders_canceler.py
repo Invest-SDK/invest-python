@@ -4,14 +4,14 @@ from unittest.mock import call
 
 import pytest
 
-from tinkoff.invest import (
+from t_tech.invest import (
     GetOrdersResponse,
     GetStopOrdersResponse,
     OrderState,
     StopOrder,
 )
-from tinkoff.invest.services import OrdersService, Services, StopOrdersService
-from tinkoff.invest.typedefs import AccountId
+from t_tech.invest.services import OrdersService, Services, StopOrdersService
+from t_tech.invest.typedefs import AccountId
 
 
 @pytest.fixture()

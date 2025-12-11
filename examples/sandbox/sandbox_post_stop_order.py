@@ -3,16 +3,16 @@ import uuid
 
 from _decimal import Decimal
 
-from tinkoff.invest import (
+from t_tech.invest import (
     PostStopOrderRequest,
     PostStopOrderRequestTrailingData,
     PostStopOrderResponse,
     StopOrderExpirationType,
     StopOrderType,
 )
-from tinkoff.invest.sandbox.client import SandboxClient
-from tinkoff.invest.schemas import Quotation, StopOrderDirection, TrailingValueType
-from tinkoff.invest.utils import decimal_to_quotation
+from t_tech.invest.sandbox.client import SandboxClient
+from t_tech.invest.schemas import Quotation, StopOrderDirection, TrailingValueType
+from t_tech.invest.utils import decimal_to_quotation
 
 
 def main():

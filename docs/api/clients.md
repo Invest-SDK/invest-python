@@ -1,4 +1,4 @@
 
 # Clients
 
-::: tinkoff.invest.clients
+::: t_tech.invest.clients

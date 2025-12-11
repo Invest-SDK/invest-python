@@ -19,7 +19,7 @@ import uuid
 from datetime import timedelta
 from decimal import Decimal
 
-from tinkoff.invest import (
+from t_tech.invest import (
     Client,
     OrderDirection,
     OrderExecutionReportStatus,
@@ -29,8 +29,8 @@ from tinkoff.invest import (
     StopOrderExpirationType,
     StopOrderType,
 )
-from tinkoff.invest.services import Services
-from tinkoff.invest.utils import decimal_to_quotation, money_to_decimal, now
+from t_tech.invest.services import Services
+from t_tech.invest.utils import decimal_to_quotation, money_to_decimal, now
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

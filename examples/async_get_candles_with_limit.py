@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from tinkoff.invest import AsyncClient, CandleInterval
-from tinkoff.invest.utils import now
+from t_tech.invest import AsyncClient, CandleInterval
+from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

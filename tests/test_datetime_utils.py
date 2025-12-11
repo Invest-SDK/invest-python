@@ -2,8 +2,8 @@ from datetime import timedelta
 
 import pytest
 
-from tinkoff.invest import CandleInterval
-from tinkoff.invest.utils import (
+from t_tech.invest import CandleInterval
+from t_tech.invest.utils import (
     candle_interval_to_timedelta,
     ceil_datetime,
     floor_datetime,

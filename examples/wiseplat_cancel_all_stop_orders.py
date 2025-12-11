@@ -2,8 +2,8 @@
 import logging
 import os
 
-from tinkoff.invest import Client
-from tinkoff.invest.exceptions import InvestError
+from t_tech.invest import Client
+from t_tech.invest.exceptions import InvestError
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

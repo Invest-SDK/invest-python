@@ -2,8 +2,8 @@
 import asyncio
 import os
 
-from tinkoff.invest import AsyncClient
-from tinkoff.invest.schemas import GetStrategiesRequest
+from t_tech.invest import AsyncClient
+from t_tech.invest.schemas import GetStrategiesRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -4,8 +4,8 @@ from unittest.mock import ANY, call
 import pytest
 import pytest_asyncio
 
-from tinkoff.invest import CandleInterval, GetCandlesResponse
-from tinkoff.invest.async_services import AsyncServices, MarketDataService
+from t_tech.invest import CandleInterval, GetCandlesResponse
+from t_tech.invest.async_services import AsyncServices, MarketDataService
 
 
 @pytest_asyncio.fixture
