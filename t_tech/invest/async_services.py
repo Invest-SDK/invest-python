@@ -7,6 +7,7 @@ import grpc
 from deprecation import deprecated
 
 from . import _grpc_helpers, utils
+from ._error_hub import handle_aio_error_hub_gen
 from ._errors import handle_aio_request_error, handle_aio_request_error_gen
 from .exceptions import RequestError
 from .grpc import (
@@ -217,7 +218,7 @@ from .schemas import (
     TradingSchedulesRequest,
     TradingSchedulesResponse,
     WithdrawLimitsRequest,
-    WithdrawLimitsResponse,
+    WithdrawLimitsResponse, MarketDataServerSideStreamRequest,
 )
 from .typedefs import AccountId
 from .utils import get_intervals, now
@@ -1295,6 +1296,16 @@ class MarketDataStreamService(_grpc_helpers.Service):
                 request, marketdata_pb2.MarketDataRequest()
             )
 
+    @staticmethod
+    async def _convert_market_data_server_side_stream_request(
+            request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
+    ) -> AsyncIterable[marketdata_pb2.MarketDataServerSideStreamRequest]:
+        async for request in request_iterator:
+            yield _grpc_helpers.dataclass_to_protobuff(
+                request, marketdata_pb2.MarketDataServerSideStreamRequest()
+            )
+
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("MarketDataStream")
     async def market_data_stream(
         self,
@@ -1303,6 +1314,19 @@ class MarketDataStreamService(_grpc_helpers.Service):
         async for response in self.stub.MarketDataStream(
             request_iterator=self._convert_market_data_stream_request(request_iterator),
             metadata=self.metadata,
+        ):
+            yield _grpc_helpers.protobuf_to_dataclass(response, MarketDataResponse)
+
+    @handle_aio_error_hub_gen()
+    @handle_aio_request_error_gen("MarketDataServerSideStream")
+    async def market_data_server_side_stream(
+            self,
+            request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
+    ) -> AsyncIterable[MarketDataResponse]:
+        async for response in self.stub.MarketDataServerSideStream(
+                request_iterator=self._convert_market_data_server_side_stream_request(
+                    request_iterator),
+                metadata=self.metadata,
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, MarketDataResponse)
 
@@ -1459,6 +1483,7 @@ class OperationsService(_grpc_helpers.Service):
 class OperationsStreamService(_grpc_helpers.Service):
     _stub_factory = operations_pb2_grpc.OperationsStreamServiceStub
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("PortfolioStream")
     async def portfolio_stream(
         self,
@@ -1483,6 +1508,7 @@ class OperationsStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, PortfolioStreamResponse)
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("PositionsStream")
     async def positions_stream(
         self,
@@ -1515,6 +1541,7 @@ class OperationsStreamService(_grpc_helpers.Service):
 class OrdersStreamService(_grpc_helpers.Service):
     _stub_factory = orders_pb2_grpc.OrdersStreamServiceStub
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("TradesStream")
     async def trades_stream(
         self, *, accounts: Optional[List[str]] = None
@@ -1532,6 +1559,7 @@ class OrdersStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, TradesStreamResponse)
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("OrderStateStream")
     async def order_state_stream(
         self, *, request: OrderStateStreamRequest

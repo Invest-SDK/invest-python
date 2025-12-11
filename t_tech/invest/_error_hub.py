@@ -1,14 +1,22 @@
+import datetime
 import re
+from functools import wraps
+from typing import Callable, Any, cast
 
+import sentry_sdk
 from grpc import StatusCode
+from sentry_sdk.integrations.excepthook import ExcepthookIntegration
 from sentry_sdk.types import Event
 
-from .exceptions import RequestError, AioRequestError
+from ._errors import TFunc
 from .constants import PACKAGE_NAME
+from .exceptions import RequestError, AioRequestError
 
 __all__ = (
     "init_error_hub",
-    "async_init_error_hub"
+    "async_init_error_hub",
+    "handle_error_hub_gen",
+    "handle_aio_error_hub_gen"
 )
 
 BEARER_PATTERN = re.compile(r'Bearer\s+[a-zA-Z0-9\-_\.]+', re.IGNORECASE)
@@ -37,7 +45,6 @@ def sanitize_bearer_tokens(event, hint) -> Event | None:
 
 def init_error_hub(client):
     import sentry_sdk
-    from sentry_sdk.integrations.grpc import GRPCIntegration
     from sentry_sdk.integrations.modules import ModulesIntegration
 
     # noinspection PyProtectedMember
@@ -45,16 +52,63 @@ def init_error_hub(client):
         dsn="https://invest-piapi-errorhub@error-hub.tbank.ru/00000000",
         send_default_pii=False,
         integrations=[
-            GRPCIntegration(),
         ],
-        disabled_integrations=[ModulesIntegration()],
+        disabled_integrations=[ModulesIntegration(), ExcepthookIntegration()],
         before_send=sanitize_bearer_tokens,
         release=PACKAGE_NAME,
         environment=client._target,
-        max_breadcrumbs=10,
+        max_breadcrumbs=3,
         enable_logs=False,
     )
 
 
 async def async_init_error_hub(client):
     init_error_hub(client)
+
+
+def handle_error_hub_gen() -> Callable[[TFunc], TFunc]:
+    def decorator(func: TFunc) -> TFunc:
+        # noinspection DuplicatedCode
+        @wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            with sentry_sdk.new_scope() as scope:
+                stream_start = datetime.datetime.now()
+                scope.set_extra("stream_start", stream_start)
+                try:
+                    for message in func(*args, **kwargs):
+                        scope.set_extra("last_message", message)
+                        yield message
+                except RequestError as e:
+                    metadata = e.metadata
+                    tracking_id = metadata.tracking_id if metadata else None
+                    scope.set_extra("tracking_id", tracking_id)
+                    sentry_sdk.capture_exception(e)
+                    raise
+
+        return cast(TFunc, wrapper)
+
+    return decorator
+
+
+def handle_aio_error_hub_gen() -> Callable[[TFunc], TFunc]:
+    def decorator(func: TFunc) -> TFunc:
+        # noinspection DuplicatedCode
+        @wraps(func)
+        async def wrapper(*args: Any, **kwargs: Any) -> Any:
+            with sentry_sdk.new_scope() as scope:
+                stream_start = datetime.datetime.now()
+                scope.set_extra("stream_start", stream_start)
+                try:
+                    async for message in func(*args, **kwargs):
+                        scope.set_extra("last_message", message)
+                        yield message
+                except AioRequestError as e:
+                    metadata = e.metadata
+                    tracking_id = metadata.tracking_id if metadata else None
+                    scope.set_extra("tracking_id", tracking_id)
+                    sentry_sdk.capture_exception(e)
+                    raise
+
+        return cast(TFunc, wrapper)
+
+    return decorator
