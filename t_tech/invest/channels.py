@@ -6,7 +6,7 @@ from grpc.aio import ClientInterceptor
 
 from .constants import (
     INVEST_GRPC_API,
-    KEEPALIVE_PERMIT_WITHOUT_CALLS,
+    KEEPALIVE_MAX_PINGS,
     KEEPALIVE_TIME_MS,
     KEEPALIVE_TIMEOUT_MS,
     MAX_RECEIVE_MESSAGE_LENGTH,
@@ -19,7 +19,7 @@ _required_options: ChannelArgumentType = [
     ("grpc.max_receive_message_length", MAX_RECEIVE_MESSAGE_LENGTH),
     ("grpc.keepalive_time_ms", KEEPALIVE_TIME_MS),
     ("grpc.keepalive_timeout_ms", KEEPALIVE_TIMEOUT_MS),
-    ("grpc.keepalive_permit_without_calls", KEEPALIVE_PERMIT_WITHOUT_CALLS),
+    ("grpc.http2.max_pings_without_data", KEEPALIVE_MAX_PINGS),
 ]
 
 
