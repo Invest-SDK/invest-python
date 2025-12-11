@@ -15,8 +15,8 @@ def set_version(new_value: str, constant_name: str, file_path: str) -> None:
 
 def main() -> None:
     version = sys.argv[1]
-    set_version(version, "__version__", "tinkoff/invest/__init__.py")
-    set_version(version, "APP_VERSION", "tinkoff/invest/constants.py")
+    set_version(version, "__version__", "t_tech/invest/__init__.py")
+    set_version(version, "APP_VERSION", "t_tech/invest/constants.py")
 
 
 if __name__ == "__main__":
