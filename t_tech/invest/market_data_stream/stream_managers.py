@@ -1,7 +1,7 @@
 import abc
 from typing import Generic, List, TypeVar
 
-from t_tech.invest.schemas import (
+from t_tech.invest.grpc.marketdata import (
     CandleInstrument,
     InfoInstrument,
     LastPriceInstrument,
