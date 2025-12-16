@@ -5,7 +5,7 @@ from unittest import mock
 import pytest
 from google.protobuf.json_format import MessageToDict
 
-from t_tech.invest._grpc_helpers import dataclass_to_protobuff
+from t_tech.invest._grpc_helpers import dataclass_to_protobuf
 from t_tech.invest.grpc import marketdata_pb2
 from t_tech.invest.schemas import (
     GetMySubscriptions,
@@ -58,7 +58,7 @@ def test_subscribe_trades_request():
         )
     )
 
-    result = dataclass_to_protobuff(
+    result = dataclass_to_protobuf(
         MarketDataRequest(
             subscribe_trades_request=SubscribeTradesRequest(
                 instruments=[TradeInstrument(figi="figi")],
@@ -77,7 +77,7 @@ def test_market_data_request_get_my_subscriptions():
         get_my_subscriptions=marketdata_pb2.GetMySubscriptions()
     )
 
-    result = dataclass_to_protobuff(
+    result = dataclass_to_protobuf(
         MarketDataRequest(get_my_subscriptions=GetMySubscriptions()),
         marketdata_pb2.MarketDataRequest(),
     )

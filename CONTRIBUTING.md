@@ -48,10 +48,9 @@ Body и Footer можно указать по желанию.
   └─⫸ Commit Type: feat|fix|build|ci|docs|perf|refactor|test|chore
 ```
 
-#### Type
-
-| feat     | Features                 | A new feature                                                                                          |
+| Type     |                          |                                                                                                        |
 |----------|--------------------------|--------------------------------------------------------------------------------------------------------|
+| feat     | Features                 | A new feature                                                                                          |
 | fix      | Bug Fixes                | A bug fix                                                                                              |
 | docs     | Documentation            | Documentation only changes                                                                             |
 | style    | Styles                   | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc) |
@@ -120,6 +119,12 @@ make download-protos
 
 ### Генерация клиента
 
+Генерация классов из proto-файлов:
+```
+make gen-models
+```
+
+Генерация стабов (_deprecated_, так как код классов запросов, ответов и обращений к сервису надо прописывать отдельно):
 ```
 make gen-grpc
 ```

@@ -102,5 +102,10 @@ gen-grpc:
 	$(POETRY_RUN) python -m grpc_tools.protoc -I${PROTOS} --python_out=${OUT} --mypy_out=${OUT} --grpc_python_out=${OUT} ${PROTO_DIR}/*.proto
 	touch ${PACKAGE_PROTO_DIR}/__init__.py
 
+.PHONY: gen-models
+gen-models:
+	$(POETRY_RUN) python -X utf8 -m scripts.generate_models
+	$(MAKE) format
+
 .PHONY: gen-client
-gen-client: download-protos gen-grpc
+gen-client: download-protos gen-models
