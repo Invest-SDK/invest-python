@@ -56,6 +56,8 @@ def init_error_hub(client):
         before_send=sanitize_bearer_tokens,
         release=PACKAGE_NAME,
         environment=client._target,
+        add_full_stack=False,
+        max_stack_frames=3,
         max_breadcrumbs=3,
         enable_logs=False,
     )
@@ -81,6 +83,9 @@ def handle_error_hub_gen() -> Callable[[TFunc], TFunc]:
                     metadata = e.metadata
                     tracking_id = metadata.tracking_id if metadata else None
                     scope.set_extra("tracking_id", tracking_id)
+                    scope.set_extra(
+                        "stream_duration", datetime.datetime.now() - stream_start
+                    )
                     sentry_sdk.capture_exception(e)
                     raise
 
@@ -105,6 +110,9 @@ def handle_aio_error_hub_gen() -> Callable[[TFunc], TFunc]:
                     metadata = e.metadata
                     tracking_id = metadata.tracking_id if metadata else None
                     scope.set_extra("tracking_id", tracking_id)
+                    scope.set_extra(
+                        "stream_duration", datetime.datetime.now() - stream_start
+                    )
                     sentry_sdk.capture_exception(e)
                     raise
 
