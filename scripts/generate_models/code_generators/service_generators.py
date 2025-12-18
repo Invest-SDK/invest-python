@@ -1,3 +1,4 @@
+import ast
 from ast import ClassDef
 
 from iprotopy.service_generator import ServiceGenerator as DefaultServiceGenerator
@@ -18,7 +19,7 @@ class ServiceGenerator(DefaultServiceGenerator):
     def _process_service(
         self, service: Service, generator_cls: type[DefaultServiceMethodGenerator]
     ) -> ClassDef:
-        body = []
+        body: list[ast.stmt] = []
 
         self._try_add_docstring(body, service)
 

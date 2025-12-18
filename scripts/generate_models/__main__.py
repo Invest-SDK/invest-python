@@ -6,6 +6,8 @@ from iprotopy import protos_generator
 
 from scripts.generate_models.code_generators.package_generator import PackageGenerator
 
+from .code_generators.constants import BASE_LIB_RELATIVE_PATH
+
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -27,4 +29,5 @@ if __name__ == "__main__":
     generator.generate_sources(
         proto_dir=base_dir / "protos",
         out_dir=base_dir,
+        base_lib_dir=Path().absolute() / BASE_LIB_RELATIVE_PATH,
     )

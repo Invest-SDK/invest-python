@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import AsyncIterable, Iterable, List, Optional
 
-from base_service import BaseService
 from t_tech.invest import _grpc_helpers
 from t_tech.invest._errors import (
     handle_aio_request_error,
@@ -11,6 +10,7 @@ from t_tech.invest._errors import (
     handle_request_error_gen,
 )
 from t_tech.invest.grpc import operations_pb2, operations_pb2_grpc
+from t_tech.invest.grpc.base_service import BaseService
 from t_tech.invest.grpc.common import (
     InstrumentType,
     MoneyValue,

@@ -2,10 +2,10 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional
 
-from base_service import BaseService
 from t_tech.invest import _grpc_helpers
 from t_tech.invest._errors import handle_aio_request_error, handle_request_error
 from t_tech.invest.grpc import stoporders_pb2, stoporders_pb2_grpc
+from t_tech.invest.grpc.base_service import BaseService
 from t_tech.invest.grpc.common import MoneyValue, PriceType, Quotation, ResponseMetadata
 from t_tech.invest.logging import (
     get_tracking_id_from_call,

@@ -29,9 +29,6 @@ from .grpc import (
     users_pb2_grpc,
 )
 from .logging import get_tracking_id_from_coro, log_request
-from .market_data_stream.async_market_data_stream_manager import (
-    AsyncMarketDataStreamManager,
-)
 from .metadata import get_metadata
 from .schemas import (
     AssetRequest,
@@ -271,7 +268,11 @@ class AsyncServices:
         self.stop_orders = StopOrdersService(channel, metadata)
         self.signals = SignalsService(channel, metadata)
 
-    def create_market_data_stream(self) -> AsyncMarketDataStreamManager:
+    def create_market_data_stream(self):
+        from .market_data_stream.async_market_data_stream_manager import (
+            AsyncMarketDataStreamManager,
+        )
+
         return AsyncMarketDataStreamManager(market_data_stream=self.market_data_stream)
 
     async def cancel_all_orders(self, account_id: AccountId) -> None:

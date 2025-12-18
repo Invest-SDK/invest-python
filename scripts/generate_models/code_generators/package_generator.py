@@ -5,6 +5,8 @@ from typing import Dict
 
 import astor
 from iprotopy import PackageGenerator as DefaultPackageGenerator
+from iprotopy.base_service_source_generator import BaseServiceSourceGenerator
+from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.protos_generator import ProtosGenerator
 
 from scripts.generate_models.code_generators.file_generator import SourceGenerator
@@ -39,7 +41,8 @@ class PackageGenerator(DefaultPackageGenerator):
             }
         )
 
-    def generate_sources(self, proto_dir: Path, out_dir: Path):
+    # noinspection PyMethodOverriding
+    def generate_sources(self, proto_dir: Path, out_dir: Path, base_lib_dir: Path):
         importer = Importer()
         protos_generator = ProtosGenerator(importer)
         protos_generator.generate_protos(proto_dir, out_dir)
@@ -48,7 +51,7 @@ class PackageGenerator(DefaultPackageGenerator):
         proto_files = list(proto_dir.rglob("*.proto"))
         modules: Dict[Path, Module] = {}
 
-        self._create_lib_dependencies(out_dir, importer)
+        self._create_lib_dependencies(base_lib_dir, importer)
 
         for proto_file in proto_files:
             pyfile = proto_file.relative_to(proto_dir).with_suffix(".py")
@@ -71,3 +74,21 @@ class PackageGenerator(DefaultPackageGenerator):
             filepath.parent.mkdir(parents=True, exist_ok=True)
             with open(filepath, "w") as f:
                 f.write(result_src)
+
+    def _create_base_service(self, importer, out_dir):
+        pyfile = (
+            Path(out_dir / "base_service")
+            .relative_to(Path().absolute())
+            .with_suffix(".py")
+        )
+        base_service_source_generator = BaseServiceSourceGenerator(
+            DomesticImporter(importer, pyfile)
+        )
+        module = base_service_source_generator.create_source()
+        filepath = pyfile
+        imports = importer.get_imports(filepath)
+        self._insert_imports(module, imports)
+        result_src = astor.to_source(module)
+        filepath.parent.mkdir(parents=True, exist_ok=True)
+        with open(filepath, "w") as f:
+            f.write(result_src)

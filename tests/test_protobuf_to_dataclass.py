@@ -7,8 +7,8 @@ from t_tech.invest import (
     EditFavoritesActionType,
     EditFavoritesRequest as DataclassModel,
 )
-from t_tech.invest._grpc_helpers import protobuf_to_dataclass
 from t_tech.invest.grpc.instruments_pb2 import EditFavoritesRequest as ProtoModel
+from t_tech.invest.helpers._grpc_helpers import protobuf_to_dataclass
 
 logging.basicConfig(level=logging.DEBUG)
 

@@ -28,6 +28,8 @@ from proto_schema_parser.ast import Comment, Enum, OneOf, Reserved
 from scripts.generate_models.code_generators.enum_generator import EnumGenerator
 from t_tech.invest import _grpc_helpers
 
+from .constants import MODULE_NAME
+
 
 class ClassFieldGenerator:
     _mapped_field_helpers = {
@@ -78,7 +80,7 @@ class ClassFieldGenerator:
         ).__name__
         self._importer.add_import(
             ImportFrom(
-                module="t_tech.invest",
+                module=MODULE_NAME,
                 names=[
                     alias(name="_grpc_helpers"),
                 ],
@@ -173,7 +175,7 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
         )
         self._importer.add_import(
             ImportFrom(
-                module="t_tech.invest",
+                module=MODULE_NAME,
                 names=[
                     alias(name="_grpc_helpers"),
                 ],

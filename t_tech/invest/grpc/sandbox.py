@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from base_service import BaseService
 from t_tech.invest import _grpc_helpers
 from t_tech.invest._errors import handle_aio_request_error, handle_request_error
 from t_tech.invest.grpc import sandbox_pb2, sandbox_pb2_grpc
+from t_tech.invest.grpc.base_service import BaseService
 from t_tech.invest.grpc.common import MoneyValue
 from t_tech.invest.grpc.operations import (
     GetOperationsByCursorRequest,

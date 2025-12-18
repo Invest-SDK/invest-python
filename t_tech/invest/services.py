@@ -29,7 +29,6 @@ from .grpc import (
     users_pb2_grpc,
 )
 from .logging import get_tracking_id_from_call, log_request
-from .market_data_stream.market_data_stream_manager import MarketDataStreamManager
 from .metadata import get_metadata
 from .schemas import (
     AssetRequest,
@@ -271,7 +270,11 @@ class Services:
         self.stop_orders = StopOrdersService(channel, metadata)
         self.signals = SignalService(channel, metadata)
 
-    def create_market_data_stream(self) -> MarketDataStreamManager:
+    def create_market_data_stream(self):
+        from t_tech.invest.market_data_stream.market_data_stream_manager import (
+            MarketDataStreamManager,
+        )
+
         return MarketDataStreamManager(
             market_data_stream_service=self.market_data_stream
         )

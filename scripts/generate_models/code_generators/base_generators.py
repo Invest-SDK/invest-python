@@ -11,6 +11,7 @@ from ast import (
     arguments,
     expr,
 )
+from typing import Optional
 
 from iprotopy.imports import ImportFrom
 from iprotopy.service_method_generator import (
@@ -18,9 +19,11 @@ from iprotopy.service_method_generator import (
 )
 
 
+
+# noinspection PyAbstractClass
 class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
     tracking_id_getter: str | None = None
-    error_handler: str = ...
+    error_handler: Optional[str] = None
     is_async: bool = False
 
     def _add_function_body_imports(self):
@@ -107,13 +110,15 @@ class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
         body = self._get_function_body(method)
         self._add_function_body_imports()
 
-        decorator_list = [
+        decorator_list: list[expr] = []
+
+        decorator_list.append(
             Call(
-                func=Name(id=self.error_handler, ctx=Load()),
+                func=Name(id=str(self.error_handler), ctx=Load()),
                 args=[Constant(value=method.name)],
                 keywords=[],
             )
-        ]
+        )
         if self.is_async:
             return AsyncFunctionDef(
                 name=method.name,
