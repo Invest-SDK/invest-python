@@ -613,18 +613,6 @@ class GetTechAnalysisRequest(_grpc_helpers.Message):
     smoothing: 'Smoothing' = _grpc_helpers.message_field(9)
 
 
-    @dataclass
-    class Smoothing(_grpc_helpers.Message):
-        fast_length: int = _grpc_helpers.int32_field(1)
-        slow_length: int = _grpc_helpers.int32_field(2)
-        signal_smoothing: int = _grpc_helpers.int32_field(3)
-
-
-    @dataclass
-    class Deviation(_grpc_helpers.Message):
-        deviation_multiplier: 'Quotation' = _grpc_helpers.message_field(1)
-
-
     class IndicatorInterval(_grpc_helpers.Enum):
         INDICATOR_INTERVAL_UNSPECIFIED = 0
         INDICATOR_INTERVAL_ONE_MINUTE = 1
@@ -658,6 +646,18 @@ class GetTechAnalysisRequest(_grpc_helpers.Message):
         INDICATOR_TYPE_RSI = 3
         INDICATOR_TYPE_MACD = 4
         INDICATOR_TYPE_SMA = 5
+
+
+    @dataclass
+    class Smoothing(_grpc_helpers.Message):
+        fast_length: int = _grpc_helpers.int32_field(1)
+        slow_length: int = _grpc_helpers.int32_field(2)
+        signal_smoothing: int = _grpc_helpers.int32_field(3)
+
+
+    @dataclass
+    class Deviation(_grpc_helpers.Message):
+        deviation_multiplier: 'Quotation' = _grpc_helpers.message_field(1)
 
 
 @dataclass

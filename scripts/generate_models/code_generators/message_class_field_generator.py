@@ -1,4 +1,5 @@
 import keyword as default_keyword
+import logging
 from ast import (
     AnnAssign,
     Attribute,
@@ -13,8 +14,8 @@ from ast import (
     alias,
     keyword,
 )
+from typing import List
 
-from iprotopy.annotation_generator import AnnotationGenerator
 from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.imports import ImportFrom
 from iprotopy.message_class_generator import (
@@ -25,10 +26,15 @@ from iprotopy.type_mapper import TypeMapper
 from proto_schema_parser import Field, FieldCardinality, Message
 from proto_schema_parser.ast import Comment, Enum, OneOf, Reserved
 
+from scripts.generate_models.code_generators.annotation_generator import (
+    AnnotationGenerator,
+)
 from scripts.generate_models.code_generators.enum_generator import EnumGenerator
 from t_tech.invest import _grpc_helpers
 
 from .constants import MODULE_NAME
+
+logger = logging.getLogger(__name__)
 
 
 class ClassFieldGenerator:
@@ -55,13 +61,13 @@ class ClassFieldGenerator:
         self._type_mapper = type_mapper
         self._annotation_generator = AnnotationGenerator(importer, type_mapper)
 
-    def process_field(self, field: Field) -> AnnAssign:
+    def process_field(self, field: Field, **kwargs) -> AnnAssign:
         if field.cardinality == FieldCardinality.REPEATED:
-            return self._process_repeated_field(field)
+            return self._process_repeated_field(field, **kwargs)
         elif field.cardinality == FieldCardinality.OPTIONAL:
-            return self._process_single_field(field, is_optional=True)
+            return self._process_single_field(field, is_optional=True, **kwargs)
         else:
-            return self._process_single_field(field)
+            return self._process_single_field(field, **kwargs)
 
     def _safe_field_name(self, unsafe_field_name: str) -> str:
         if default_keyword.iskeyword(unsafe_field_name):
@@ -111,11 +117,19 @@ class ClassFieldGenerator:
             simple=1,
         )
 
-    def _process_repeated_field(self, field: Field):
+    def _process_repeated_field(self, field: Field, **kwargs):
         self._importer.add_import(
             ImportFrom(module="typing", names=[alias(name="List")], level=0)
         )
-        field_type = self._annotation_generator.process_annotation(field.type)
+        outer_class_name = kwargs.get("outer_class_name")
+        inner_classes = kwargs.get("inner_classes") or []
+        field_type = (
+            self._annotation_generator.process_annotation(field.type)
+            if field.type not in inner_classes
+            else self._annotation_generator.process_annotation(
+                field.type, outer_class_name=outer_class_name
+            )
+        )
         annotation = Subscript(
             value=Name(id="List", ctx=Load()),
             slice=Name(id=field_type, ctx=Load()),
@@ -124,9 +138,17 @@ class ClassFieldGenerator:
         return self._construct_field(field, annotation)
 
     def _process_single_field(
-        self, field: Field, is_optional: bool = False
+        self, field: Field, is_optional: bool = False, **kwargs
     ) -> AnnAssign:
-        field_type = self._annotation_generator.process_annotation(field.type)
+        outer_class_name = kwargs.get("outer_class_name")
+        inner_classes = kwargs.get("inner_classes") or []
+        field_type = (
+            self._annotation_generator.process_annotation(field.type)
+            if field.type not in inner_classes
+            else self._annotation_generator.process_annotation(
+                field.type, outer_class_name=outer_class_name
+            )
+        )
         annotation = Name(id=field_type, ctx=Load())
         return self._construct_field(field, annotation, is_optional)
 
@@ -140,20 +162,44 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
         )
         self._one_of_generator = OneOfGenerator(self._class_field_generator)
 
-    def process_proto_message(self, current_element) -> ClassDef:
+    def process_proto_message(self, current_element, **kwargs) -> ClassDef:
         class_body = []
-        for element in current_element.elements:
+        elements = current_element.elements
+        elements.sort(
+            key=lambda x: 0
+            if isinstance(x, Enum)
+            else 1
+            if isinstance(x, Message)
+            else 2
+        )
+        class_name = current_element.name
+        inner_classes: List[str] = kwargs.get("inner_classes") or []
+        for element in elements:
             if isinstance(element, Field):
-                class_body.append(self._class_field_generator.process_field(element))
+                class_body.append(
+                    self._class_field_generator.process_field(
+                        element,
+                        outer_class_name=kwargs.get("outer_class_name"),
+                        inner_classes=inner_classes,
+                    )
+                )
             elif isinstance(element, Comment):
                 continue
             elif isinstance(element, Enum):
                 proto_enum_processor = EnumGenerator(self._importer)
                 class_body.append(proto_enum_processor.process_enum(element))
+                inner_classes.append(element.name)
             elif isinstance(element, OneOf):
                 class_body.extend(self._one_of_generator.process(element))
             elif isinstance(element, Message):
-                class_body.append(self.process_proto_message(element))
+                class_body.append(
+                    self.process_proto_message(
+                        element,
+                        outer_class_name=class_name,
+                        inner_classes=inner_classes,
+                    )
+                )
+                inner_classes.append(element.name)
             elif isinstance(element, Reserved):
                 continue
             else:
@@ -163,7 +209,6 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
         self._importer.add_import(
             ImportFrom(module="dataclasses", names=[alias(name="dataclass")], level=0)
         )
-        class_name = current_element.name
         class_body = self._reorder_fields(class_body)
         self._importer.define_dependency(class_name)
         message = ClassDef(

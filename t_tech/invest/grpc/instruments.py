@@ -693,19 +693,6 @@ class StructuredNote(_grpc_helpers.Message):
     required_tests: List[str] = _grpc_helpers.string_field(53)
 
 
-    @dataclass
-    class BasicAsset(_grpc_helpers.Message):
-        uid: str = _grpc_helpers.string_field(1)
-        type: 'AssetType' = _grpc_helpers.message_field(2)
-        initial_price: 'Quotation' = _grpc_helpers.message_field(3)
-
-
-    @dataclass
-    class Yield(_grpc_helpers.Message):
-        type: 'YieldType' = _grpc_helpers.message_field(1)
-        value: 'Quotation' = _grpc_helpers.message_field(2)
-
-
     class LogicPortfolio(_grpc_helpers.Enum):
         LOGIC_PORTFOLIO_UNSPECIFIED = 0
         LOGIC_PORTFOLIO_VOLATILITY = 1
@@ -725,6 +712,19 @@ class StructuredNote(_grpc_helpers.Message):
         YIELD_TYPE_GUARANTED_COUPON = 1
         YIELD_TYPE_CONDITIONAL_COUPON = 2
         YIELD_TYPE_PARTICIPATION = 3
+
+
+    @dataclass
+    class BasicAsset(_grpc_helpers.Message):
+        uid: str = _grpc_helpers.string_field(1)
+        type: 'AssetType' = _grpc_helpers.message_field(2)
+        initial_price: 'Quotation' = _grpc_helpers.message_field(3)
+
+
+    @dataclass
+    class Yield(_grpc_helpers.Message):
+        type: 'StructuredNote.YieldType' = _grpc_helpers.message_field(1)
+        value: 'Quotation' = _grpc_helpers.message_field(2)
 
 
 @dataclass
@@ -1317,21 +1317,22 @@ class GetAssetReportsResponse(_grpc_helpers.Message):
     events: List['GetAssetReportsEvent'] = _grpc_helpers.message_field(1)
 
 
+    class AssetReportPeriodType(_grpc_helpers.Enum):
+        PERIOD_TYPE_UNSPECIFIED = 0
+        PERIOD_TYPE_QUARTER = 1
+        PERIOD_TYPE_SEMIANNUAL = 2
+        PERIOD_TYPE_ANNUAL = 3
+
+
     @dataclass
     class GetAssetReportsEvent(_grpc_helpers.Message):
         instrument_id: str = _grpc_helpers.string_field(1)
         report_date: datetime = _grpc_helpers.message_field(2)
         period_year: int = _grpc_helpers.int32_field(3)
         period_num: int = _grpc_helpers.int32_field(4)
-        period_type: 'AssetReportPeriodType' = _grpc_helpers.message_field(5)
+        period_type: 'GetAssetReportsResponse.AssetReportPeriodType' = (
+            _grpc_helpers.message_field(5))
         created_at: datetime = _grpc_helpers.message_field(6)
-
-
-    class AssetReportPeriodType(_grpc_helpers.Enum):
-        PERIOD_TYPE_UNSPECIFIED = 0
-        PERIOD_TYPE_QUARTER = 1
-        PERIOD_TYPE_SEMIANNUAL = 2
-        PERIOD_TYPE_ANNUAL = 3
 
 
 @dataclass
@@ -1455,10 +1456,19 @@ class GetInsiderDealsResponse(_grpc_helpers.Message):
     next_cursor: Optional[str] = _grpc_helpers.string_field(2, optional=True)
 
 
+    class TradeDirection(_grpc_helpers.Enum):
+        TRADE_DIRECTION_UNSPECIFIED = 0
+        TRADE_DIRECTION_BUY = 1
+        TRADE_DIRECTION_SELL = 2
+        TRADE_DIRECTION_INCREASE = 3
+        TRADE_DIRECTION_DECREASE = 4
+
+
     @dataclass
     class InsiderDeal(_grpc_helpers.Message):
         trade_id: int = _grpc_helpers.int64_field(1)
-        direction: 'TradeDirection' = _grpc_helpers.message_field(2)
+        direction: 'GetInsiderDealsResponse.TradeDirection' = (_grpc_helpers
+            .message_field(2))
         currency: str = _grpc_helpers.string_field(3)
         date: datetime = _grpc_helpers.message_field(4)
         quantity: int = _grpc_helpers.int64_field(5)
@@ -1470,14 +1480,6 @@ class GetInsiderDealsResponse(_grpc_helpers.Message):
         percentage: float = _grpc_helpers.float_field(11)
         is_option_execution: bool = _grpc_helpers.bool_field(12)
         disclosure_date: datetime = _grpc_helpers.message_field(13)
-
-
-    class TradeDirection(_grpc_helpers.Enum):
-        TRADE_DIRECTION_UNSPECIFIED = 0
-        TRADE_DIRECTION_BUY = 1
-        TRADE_DIRECTION_SELL = 2
-        TRADE_DIRECTION_INCREASE = 3
-        TRADE_DIRECTION_DECREASE = 4
 
 
 class InstrumentsService(BaseService):

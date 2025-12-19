@@ -346,42 +346,6 @@ class OrderStateStreamResponse(_grpc_helpers.Message):
         ] = _grpc_helpers.message_field(3, optional=True)
 
 
-    @dataclass
-    class OrderState(_grpc_helpers.Message):
-        order_id: str = _grpc_helpers.string_field(1)
-        order_request_id: Optional[str] = _grpc_helpers.string_field(2,
-            optional=True)
-        client_code: str = _grpc_helpers.string_field(3)
-        created_at: datetime = _grpc_helpers.message_field(4)
-        execution_report_status: 'OrderExecutionReportStatus' = (_grpc_helpers
-            .message_field(5))
-        status_info: Optional['StatusCauseInfo'] = _grpc_helpers.message_field(
-            6, optional=True)
-        ticker: str = _grpc_helpers.string_field(7)
-        class_code: str = _grpc_helpers.string_field(8)
-        lot_size: int = _grpc_helpers.int32_field(9)
-        direction: 'OrderDirection' = _grpc_helpers.message_field(10)
-        time_in_force: 'TimeInForceType' = _grpc_helpers.message_field(11)
-        order_type: 'OrderType' = _grpc_helpers.message_field(12)
-        account_id: str = _grpc_helpers.string_field(13)
-        initial_order_price: 'MoneyValue' = _grpc_helpers.message_field(22)
-        order_price: 'MoneyValue' = _grpc_helpers.message_field(23)
-        amount: Optional['MoneyValue'] = _grpc_helpers.message_field(24,
-            optional=True)
-        executed_order_price: 'MoneyValue' = _grpc_helpers.message_field(25)
-        currency: str = _grpc_helpers.string_field(26)
-        lots_requested: int = _grpc_helpers.int64_field(27)
-        lots_executed: int = _grpc_helpers.int64_field(28)
-        lots_left: int = _grpc_helpers.int64_field(29)
-        lots_cancelled: int = _grpc_helpers.int64_field(30)
-        marker: Optional['MarkerType'] = _grpc_helpers.message_field(31,
-            optional=True)
-        trades: List['OrderTrade'] = _grpc_helpers.message_field(33)
-        completion_time: datetime = _grpc_helpers.message_field(35)
-        exchange: str = _grpc_helpers.string_field(36)
-        instrument_uid: str = _grpc_helpers.string_field(41)
-
-
     class MarkerType(_grpc_helpers.Enum):
         MARKER_UNKNOWN = 0
         MARKER_BROKER = 1
@@ -403,6 +367,42 @@ class OrderStateStreamResponse(_grpc_helpers.Message):
         CAUSE_REJECTED_BY_BROKER = 4
         CAUSE_REJECTED_BY_EXCHANGE = 5
         CAUSE_CANCELLED_BY_BROKER = 6
+
+
+    @dataclass
+    class OrderState(_grpc_helpers.Message):
+        order_id: str = _grpc_helpers.string_field(1)
+        order_request_id: Optional[str] = _grpc_helpers.string_field(2,
+            optional=True)
+        client_code: str = _grpc_helpers.string_field(3)
+        created_at: datetime = _grpc_helpers.message_field(4)
+        execution_report_status: 'OrderExecutionReportStatus' = (_grpc_helpers
+            .message_field(5))
+        status_info: Optional['OrderStateStreamResponse.StatusCauseInfo'
+            ] = _grpc_helpers.message_field(6, optional=True)
+        ticker: str = _grpc_helpers.string_field(7)
+        class_code: str = _grpc_helpers.string_field(8)
+        lot_size: int = _grpc_helpers.int32_field(9)
+        direction: 'OrderDirection' = _grpc_helpers.message_field(10)
+        time_in_force: 'TimeInForceType' = _grpc_helpers.message_field(11)
+        order_type: 'OrderType' = _grpc_helpers.message_field(12)
+        account_id: str = _grpc_helpers.string_field(13)
+        initial_order_price: 'MoneyValue' = _grpc_helpers.message_field(22)
+        order_price: 'MoneyValue' = _grpc_helpers.message_field(23)
+        amount: Optional['MoneyValue'] = _grpc_helpers.message_field(24,
+            optional=True)
+        executed_order_price: 'MoneyValue' = _grpc_helpers.message_field(25)
+        currency: str = _grpc_helpers.string_field(26)
+        lots_requested: int = _grpc_helpers.int64_field(27)
+        lots_executed: int = _grpc_helpers.int64_field(28)
+        lots_left: int = _grpc_helpers.int64_field(29)
+        lots_cancelled: int = _grpc_helpers.int64_field(30)
+        marker: Optional['OrderStateStreamResponse.MarkerType'
+            ] = _grpc_helpers.message_field(31, optional=True)
+        trades: List['OrderTrade'] = _grpc_helpers.message_field(33)
+        completion_time: datetime = _grpc_helpers.message_field(35)
+        exchange: str = _grpc_helpers.string_field(36)
+        instrument_uid: str = _grpc_helpers.string_field(41)
 
 
 class OrdersStreamService(BaseService):

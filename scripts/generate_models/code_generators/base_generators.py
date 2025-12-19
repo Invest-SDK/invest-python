@@ -19,7 +19,6 @@ from iprotopy.service_method_generator import (
 )
 
 
-
 # noinspection PyAbstractClass
 class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
     tracking_id_getter: str | None = None
