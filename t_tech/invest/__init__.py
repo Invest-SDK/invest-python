@@ -248,7 +248,7 @@ from .schemas import (
     WithdrawLimitsResponse,
 )
 
-__version__ = "0.2.0-beta118"
+__version__ = "0.3.1"
 
 __all__ = (
     "__version__",
