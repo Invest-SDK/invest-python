@@ -4,11 +4,11 @@ from typing import AsyncIterable, AsyncIterator, Awaitable, Dict, List, Optional
 
 from grpc import RpcError, aio
 
-from t_tech.invest.grpc.marketdata import (
+from t_tech.invest.grpc.marketdata import AsyncMarketDataStreamService
+from t_tech.invest.grpc.schemas import (
     CandleInstrument,
     MarketDataRequest,
     MarketDataResponse,
-    MarketDataStreamService,
     SubscriptionAction,
 )
 from t_tech.invest.market_data_stream.market_data_stream_interface import (
@@ -20,8 +20,10 @@ from t_tech.invest.market_data_stream.stream_managers import CandlesStreamManage
 class AsyncMarketDataStreamManager(
     BaseMarketDataStreamManager["AsyncMarketDataStreamManager"]
 ):
-    def __init__(self, market_data_stream: MarketDataStreamService):
-        self._market_data_stream_service: MarketDataStreamService = market_data_stream
+    def __init__(self, market_data_stream: AsyncMarketDataStreamService):
+        self._market_data_stream_service: AsyncMarketDataStreamService = (
+            market_data_stream
+        )
 
         self._requests: "Queue[MarketDataRequest]" = Queue()
         self._stop_event = asyncio.Event()

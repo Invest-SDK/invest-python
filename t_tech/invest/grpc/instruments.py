@@ -1416,12 +1416,14 @@ class RiskRatesResponse(_grpc_helpers.Message):
     @dataclass
     class RiskRateResult(_grpc_helpers.Message):
         instrument_uid: str = _grpc_helpers.string_field(1)
-        short_risk_rate: Optional['RiskRate'] = _grpc_helpers.message_field(
-            2, optional=True)
-        long_risk_rate: Optional['RiskRate'] = _grpc_helpers.message_field(
-            3, optional=True)
-        short_risk_rates: List['RiskRate'] = _grpc_helpers.message_field(5)
-        long_risk_rates: List['RiskRate'] = _grpc_helpers.message_field(6)
+        short_risk_rate: Optional['RiskRatesResponse.RiskRate'
+            ] = _grpc_helpers.message_field(2, optional=True)
+        long_risk_rate: Optional['RiskRatesResponse.RiskRate'
+            ] = _grpc_helpers.message_field(3, optional=True)
+        short_risk_rates: List['RiskRatesResponse.RiskRate'
+            ] = _grpc_helpers.message_field(5)
+        long_risk_rates: List['RiskRatesResponse.RiskRate'
+            ] = _grpc_helpers.message_field(6)
         error: Optional[str] = _grpc_helpers.string_field(9, optional=True)
 
 

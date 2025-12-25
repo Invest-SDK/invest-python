@@ -2,20 +2,14 @@ import asyncio
 import logging
 from dataclasses import dataclass, fields
 from datetime import datetime
-from typing import AsyncGenerator, Generator, Optional
+from typing import Any, AsyncGenerator, Generator, Optional
 
 import grpc
 
-from t_tech.invest.grpc.common import Quotation as BaseQuotation
 from t_tech.invest.grpc.instruments import AsyncInstrumentsService, InstrumentsService
 from t_tech.invest.grpc.marketdata import (
     AsyncMarketDataService,
     AsyncMarketDataStreamService,
-    CandleInterval,
-    CandleSource,
-    GetCandlesRequest,
-    GetCandlesResponse,
-    HistoricCandle,
     MarketDataService,
     MarketDataStreamService,
 )
@@ -34,6 +28,14 @@ from t_tech.invest.grpc.orders import (
     OrdersStreamService,
 )
 from t_tech.invest.grpc.sandbox import AsyncSandboxService, SandboxService
+from t_tech.invest.grpc.schemas import (
+    CandleInterval,
+    CandleSource,
+    GetCandlesRequest,
+    GetCandlesResponse,
+    HistoricCandle,
+    Quotation as BaseQuotation,
+)
 from t_tech.invest.grpc.signals import AsyncSignalService, SignalService
 from t_tech.invest.grpc.stoporders import (
     AsyncStopOrdersService,
@@ -114,7 +116,7 @@ class Services:
         candle_source_type: Optional[CandleSource] = None,
     ) -> Generator[HistoricCandle, None, None]:
         def make_candle_fields_tuple(candle: HistoricCandle):
-            values = []
+            values: list[Any] = []
             for field in fields(candle):
                 value = getattr(candle, field.name)
                 if field.name == "candle_source":
@@ -129,7 +131,10 @@ class Services:
 
         to = to or now()
         previous_candles = set()
-        for current_from, current_to in get_intervals(interval, from_, to):
+        for current_from, \
+                current_to in get_intervals(interval,  # type: ignore[arg-type]
+                                            from_,
+                                            to):
             candles_response: GetCandlesResponse = self.market_data.get_candles(
                 GetCandlesRequest(
                     figi=figi,
@@ -218,7 +223,8 @@ class AsyncServices:
     ) -> AsyncGenerator[HistoricCandle, None]:
         to = to or now()
 
-        for local_from_, local_to in get_intervals(interval, from_, to):
+        for local_from_, local_to in get_intervals(interval, # type: ignore
+                                                   from_, to):
             candles_response = await self.market_data.get_candles(
                 GetCandlesRequest(
                     figi=figi,
@@ -230,7 +236,7 @@ class AsyncServices:
                 )
             )
             for candle in candles_response.candles:
-                yield candle
+                yield candle  # pylint: disable=invalid-type
 
 
 

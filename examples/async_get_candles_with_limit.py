@@ -1,7 +1,8 @@
 import asyncio
 import os
 
-from t_tech.invest import AsyncClient, CandleInterval
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import CandleInterval, GetCandlesRequest
 from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
@@ -10,10 +11,12 @@ TOKEN = os.environ["INVEST_TOKEN"]
 async def main():
     async with AsyncClient(TOKEN) as client:
         candles = await client.market_data.get_candles(
-            instrument_id="BBG004730N88",
-            to=now(),
-            limit=3,
-            interval=CandleInterval.CANDLE_INTERVAL_HOUR,
+            GetCandlesRequest(
+                instrument_id="BBG004730N88",
+                to=now(),
+                limit=3,
+                interval=CandleInterval.CANDLE_INTERVAL_HOUR,
+            )
         )
         for candle in candles.candles:
             print(candle)

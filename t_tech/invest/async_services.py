@@ -273,7 +273,9 @@ class AsyncServices:
             AsyncMarketDataStreamManager,
         )
 
-        return AsyncMarketDataStreamManager(market_data_stream=self.market_data_stream)
+        return AsyncMarketDataStreamManager(
+            market_data_stream=self.market_data_stream  # type: ignore[arg-type]
+        )
 
     async def cancel_all_orders(self, account_id: AccountId) -> None:
         orders_service: OrdersService = self.orders

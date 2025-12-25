@@ -276,7 +276,7 @@ class Services:
         )
 
         return MarketDataStreamManager(
-            market_data_stream_service=self.market_data_stream
+            market_data_stream_service=self.market_data_stream  # type: ignore[arg-type]
         )
 
     def cancel_all_orders(self, account_id: AccountId) -> None:

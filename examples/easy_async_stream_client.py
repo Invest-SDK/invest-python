@@ -9,7 +9,9 @@ from t_tech.invest import (
     SubscriptionInterval,
     TradeInstrument,
 )
-from t_tech.invest.async_services import AsyncMarketDataStreamManager
+from t_tech.invest.market_data_stream.async_market_data_stream_manager import (
+    AsyncMarketDataStreamManager,
+)
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

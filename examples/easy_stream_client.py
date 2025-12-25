@@ -1,7 +1,9 @@
 import os
 
 from t_tech.invest import CandleInstrument, Client, InfoInstrument, SubscriptionInterval
-from t_tech.invest.services import MarketDataStreamManager
+from t_tech.invest.market_data_stream.market_data_stream_manager import (
+    MarketDataStreamManager,
+)
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -1,5 +1,6 @@
 from ast import (
     AsyncFunctionDef,
+    Attribute,
     Call,
     Constant,
     FunctionDef,
@@ -13,10 +14,13 @@ from ast import (
 )
 from typing import Optional
 
+from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.imports import ImportFrom
 from iprotopy.service_method_generator import (
     BaseServiceMethodGenerator as DefaultBaseServiceMethodGenerator,
 )
+
+from scripts.generate_models.code_generators.imports_resolver import ProtobufImporter
 
 
 # noinspection PyAbstractClass
@@ -24,6 +28,16 @@ class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
     tracking_id_getter: str | None = None
     error_handler: Optional[str] = None
     is_async: bool = False
+
+    def __init__(
+        self,
+        importer: DomesticImporter,
+        protobuf_importer: ProtobufImporter,
+        pyfile: str,
+    ):
+        super().__init__(importer)
+        self._pyfile = pyfile
+        self._protobuf_importer = protobuf_importer
 
     def _add_function_body_imports(self):
         self._importer.add_import(
@@ -39,7 +53,7 @@ class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
             ImportFrom(
                 module="t_tech.invest._errors",
                 names=[
-                    alias(name=self.error_handler),
+                    alias(name=self.error_handler or ""),
                 ],
                 level=0,
             )
@@ -132,6 +146,26 @@ class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
             body=body,
             decorator_list=decorator_list,
             returns=output_annotation,
+        )
+
+    def _get_dataclass_from_protobuf_call(self, request_class_name: str) -> Call:
+        return Call(
+            func=Name(id="_grpc_helpers.dataclass_to_protobuf", ctx=Load()),
+            args=[
+                Name(id="request", ctx=Load()),
+                Call(
+                    func=Attribute(
+                        value=self._protobuf_importer.get_attribute(
+                            request_class_name, self._pyfile, self._importer
+                        ),
+                        attr=request_class_name,
+                        ctx=Load(),
+                    ),
+                    args=[],
+                    keywords=[],
+                ),
+            ],
+            keywords=[],
         )
 
 

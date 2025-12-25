@@ -1,5 +1,8 @@
+from typing import Any
+
+
 class BaseService:
-    _protobuf_stub = None
+    _protobuf_stub: Any = None
 
     def __init__(self, channel, metadata):
         self._stub = self._protobuf_stub(channel)

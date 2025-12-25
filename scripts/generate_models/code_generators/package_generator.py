@@ -5,12 +5,16 @@ from typing import Dict
 
 import astor
 from iprotopy import PackageGenerator as DefaultPackageGenerator
-from iprotopy.base_service_source_generator import BaseServiceSourceGenerator
 from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.protos_generator import ProtosGenerator
 
 from scripts.generate_models.code_generators.file_generator import SourceGenerator
-from scripts.generate_models.code_generators.imports_resolver import Importer
+from scripts.generate_models.code_generators.imports_resolver import (
+    Importer,
+    ProtobufImporter,
+)
+
+from .base_service_source_generator import BaseServiceSourceGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -53,11 +57,19 @@ class PackageGenerator(DefaultPackageGenerator):
 
         self._create_lib_dependencies(base_lib_dir, importer)
 
+        protobuf_importer = ProtobufImporter(self._parser, "_pb2", proto_files)
+
         for proto_file in proto_files:
             pyfile = proto_file.relative_to(proto_dir).with_suffix(".py")
             logger.debug(pyfile)
             source_generator = SourceGenerator(
-                proto_file, out_dir, pyfile, self._parser, self._type_mapper, importer
+                proto_file,
+                out_dir,
+                pyfile,
+                self._parser,
+                self._type_mapper,
+                importer,
+                protobuf_importer,
             )
             module = source_generator.generate_source()
             modules[proto_file] = module

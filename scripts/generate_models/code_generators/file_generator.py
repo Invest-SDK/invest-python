@@ -18,6 +18,7 @@ from proto_schema_parser.ast import (
 )
 
 from scripts.generate_models.code_generators.enum_generator import EnumGenerator
+from scripts.generate_models.code_generators.imports_resolver import ProtobufImporter
 from scripts.generate_models.code_generators.message_class_field_generator import (
     MessageClassGenerator,
 )
@@ -35,6 +36,7 @@ class SourceGenerator:
         parser: Parser,
         type_mapper: TypeMapper,
         global_importer: Importer,
+        protobuf_importer: ProtobufImporter,
     ):
         self._parser = parser
         self._type_mapper = type_mapper
@@ -42,13 +44,11 @@ class SourceGenerator:
         self._proto_file = proto_file
         self._out_dir = out_dir
         self._pyfile = pyfile
+        self._protobuf_importer = protobuf_importer
 
     def generate_source(self) -> Module:
         logger.debug(f"Generating source for {self._proto_file}")
-        with open(self._proto_file) as f:
-            text = f.read()
-
-        file: File = self._parser.parse(text)
+        file: File = self._read_proto()
 
         enums: list[ClassDef] = []
         messages: list[ClassDef] = []
@@ -61,7 +61,9 @@ class SourceGenerator:
                 )
                 messages.append(proto_message_processor.process_proto_message(element))
             elif isinstance(element, Service):
-                service_generator = ServiceGenerator(self._importer, self._pyfile)
+                service_generator = ServiceGenerator(
+                    self._importer, self._pyfile, self._protobuf_importer
+                )
                 services.append(service_generator.process_sync_service(element))
                 services.append(service_generator.process_aio_service(element))
             elif isinstance(
@@ -74,3 +76,9 @@ class SourceGenerator:
             else:
                 raise NotImplementedError(f"Unknown element {element}")
         return Module(body=[*enums, *messages, *services], type_ignores=[])
+
+    def _read_proto(self) -> File:
+        with open(self._proto_file) as f:
+            text = f.read()
+        file: File = self._parser.parse(text)
+        return file

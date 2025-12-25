@@ -1,6 +1,6 @@
 from typing import Generic, List, Tuple
 
-from t_tech.invest.grpc.marketdata import (
+from t_tech.invest.grpc.schemas import (
     CandleInstrument,
     InfoInstrument,
     LastPriceInstrument,
@@ -34,23 +34,23 @@ class BaseMarketDataStreamManager(Generic[TMarketDataStreamManager]):
 
     @property
     def candles(self) -> CandlesStreamManager[TMarketDataStreamManager]:
-        return self._candles_manager
+        return self._candles_manager  # type: ignore[return-value]
 
     @property
     def order_book(self) -> OrderBookStreamManager[TMarketDataStreamManager]:
-        return self._order_book_manager
+        return self._order_book_manager  # type: ignore[return-value]
 
     @property
     def trades(self) -> TradesStreamManager[TMarketDataStreamManager]:
-        return self._trades_manager
+        return self._trades_manager  # type: ignore[return-value]
 
     @property
     def info(self) -> InfoStreamManager[TMarketDataStreamManager]:
-        return self._info_manager
+        return self._info_manager  # type: ignore[return-value]
 
     @property
     def last_price(self) -> LastPriceStreamManager[TMarketDataStreamManager]:
-        return self._last_price_manager
+        return self._last_price_manager  # type: ignore[return-value]
 
     def _update_state_from_request(
         self, request: MarketDataRequest, subscribe: bool

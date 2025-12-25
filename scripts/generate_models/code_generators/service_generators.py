@@ -1,10 +1,9 @@
 import ast
 from ast import ClassDef
+from pathlib import Path
 
+from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.service_generator import ServiceGenerator as DefaultServiceGenerator
-from iprotopy.service_method_generator import (
-    ServiceMethodGenerator as DefaultServiceMethodGenerator,
-)
 from proto_schema_parser.ast import Comment, Method, Service
 
 from scripts.generate_models.code_generators.generators_of_async_methods import (
@@ -13,9 +12,23 @@ from scripts.generate_models.code_generators.generators_of_async_methods import 
 from scripts.generate_models.code_generators.generators_of_sync_methods import (
     SyncServiceMethodGenerator,
 )
+from scripts.generate_models.code_generators.imports_resolver import ProtobufImporter
+
+from .service_method_generator import (
+    ServiceMethodGenerator as DefaultServiceMethodGenerator,
+)
 
 
 class ServiceGenerator(DefaultServiceGenerator):
+    def __init__(
+        self,
+        importer: DomesticImporter,
+        pyfile: Path,
+        protobuf_importer: ProtobufImporter,
+    ):
+        super().__init__(importer, pyfile)
+        self._protobuf_importer = protobuf_importer
+
     def _process_service(
         self, service: Service, generator_cls: type[DefaultServiceMethodGenerator]
     ) -> ClassDef:
@@ -29,7 +42,9 @@ class ServiceGenerator(DefaultServiceGenerator):
             if isinstance(element, Comment):
                 continue
             elif isinstance(element, Method):
-                service_method_generator = generator_cls(self._importer)
+                service_method_generator = generator_cls(
+                    self._importer, self._protobuf_importer, f"{self._pyfile.stem}_pb2"
+                )
                 body.append(service_method_generator.process_service_method(element))
                 continue
             else:

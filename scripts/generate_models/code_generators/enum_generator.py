@@ -1,4 +1,4 @@
-from ast import Assign, ClassDef, Constant, Load, Name, Store, alias
+from ast import Assign, ClassDef, Constant, Load, Name, Store, alias, stmt
 
 from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.imports import ImportFrom
@@ -10,7 +10,7 @@ class EnumGenerator:
         self._importer = importer
 
     def process_enum(self, element) -> ClassDef:
-        enum_body = []
+        enum_body: list[stmt] = []
         for enum_element in element.elements:
             if isinstance(enum_element, EnumValue):
                 enum_body.append(

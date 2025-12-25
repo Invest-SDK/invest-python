@@ -20,9 +20,6 @@ from ast import (
     stmt,
 )
 
-from iprotopy.service_method_generator import (
-    ServiceMethodGenerator as DefaultServiceMethodGenerator,
-)
 from proto_schema_parser.ast import Method
 
 from scripts.generate_models.code_generators.base_generators import (
@@ -31,28 +28,9 @@ from scripts.generate_models.code_generators.base_generators import (
     BaseServiceMethodGenerator,
 )
 
-
-def _get_dataclass_from_protobuf_call(request_class_name: str) -> Call:
-    return Call(
-        func=Name(id="_grpc_helpers.dataclass_to_protobuf", ctx=Load()),
-        args=[
-            Name(id="request", ctx=Load()),
-            Call(
-                func=Attribute(
-                    value=Attribute(
-                        value=Name(id="self", ctx=Load()),
-                        attr="_protobuf",
-                        ctx=Load(),
-                    ),
-                    attr=request_class_name,
-                    ctx=Load(),
-                ),
-                args=[],
-                keywords=[],
-            ),
-        ],
-        keywords=[],
-    )
+from .service_method_generator import (
+    ServiceMethodGenerator as DefaultServiceMethodGenerator,
+)
 
 
 def _get_stub_initialization(
@@ -111,7 +89,7 @@ class ServiceMethodUnaryUnaryFunctionGenerator(
         body = [
             Assign(
                 targets=[Name(id="protobuf_request", ctx=Store())],
-                value=_get_dataclass_from_protobuf_call(request_class_name),
+                value=self._get_dataclass_from_protobuf_call(request_class_name),
             ),
             Assign(
                 targets=[Name(id="response_coro", ctx=Store())],
@@ -121,7 +99,7 @@ class ServiceMethodUnaryUnaryFunctionGenerator(
             ),
             Assign(
                 targets=[Name(id="response", ctx=Store())],
-                value=Await("response_coro"),
+                value=Await(Name(id="response_coro", ctx=Load())),
             ),
             Expr(
                 value=Call(
@@ -171,7 +149,7 @@ class ServiceMethodUnaryStreamFunctionGenerator(
         body = [
             Assign(
                 targets=[Name(id="protobuf_request", ctx=Store())],
-                value=_get_dataclass_from_protobuf_call(request_class_name),
+                value=self._get_dataclass_from_protobuf_call(request_class_name),
             ),
             AsyncFor(
                 target=Name(id="response", ctx=Store()),
@@ -179,7 +157,7 @@ class ServiceMethodUnaryStreamFunctionGenerator(
                     "protobuf_request", method_name, is_stream=False
                 ),
                 body=[
-                    Yield(value=_get_protobuf_to_dataclass_call(response_class_name))
+                    Yield(value=_get_protobuf_to_dataclass_call(response_class_name))  # type: ignore
                 ],
                 orelse=[],
             ),
@@ -202,7 +180,7 @@ class ServiceMethodStreamStreamFunctionGenerator(
             Assign(
                 targets=[Name(id="protobuf_request_iterator", ctx=Store())],
                 value=GeneratorExp(
-                    elt=_get_dataclass_from_protobuf_call(request_class_name),
+                    elt=self._get_dataclass_from_protobuf_call(request_class_name),
                     generators=[
                         comprehension(
                             target=Name(id="request", ctx=Store()),
@@ -219,7 +197,7 @@ class ServiceMethodStreamStreamFunctionGenerator(
                     "protobuf_request_iterator", method_name, is_stream=True
                 ),
                 body=[
-                    Yield(value=_get_protobuf_to_dataclass_call(response_class_name))
+                    Yield(value=_get_protobuf_to_dataclass_call(response_class_name))  # type: ignore
                 ],
                 orelse=[],
             ),

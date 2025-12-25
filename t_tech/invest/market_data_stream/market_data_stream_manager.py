@@ -5,11 +5,11 @@ from typing import Dict, Iterable, Iterator, List, Optional
 
 from grpc import RpcError
 
-from t_tech.invest.grpc.marketdata import (
+from t_tech.invest.grpc.marketdata import MarketDataStreamService
+from t_tech.invest.grpc.schemas import (
     CandleInstrument,
     MarketDataRequest,
     MarketDataResponse,
-    MarketDataStreamService,
     SubscriptionAction,
 )
 from t_tech.invest.market_data_stream.market_data_stream_interface import (

@@ -13,6 +13,7 @@ from ast import (
     Subscript,
     alias,
     keyword,
+    stmt,
 )
 from typing import List
 
@@ -163,7 +164,7 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
         self._one_of_generator = OneOfGenerator(self._class_field_generator)
 
     def process_proto_message(self, current_element, **kwargs) -> ClassDef:
-        class_body = []
+        class_body: list[stmt] = []
         elements = current_element.elements
         elements.sort(
             key=lambda x: 0
@@ -174,6 +175,11 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
         )
         class_name = current_element.name
         inner_classes: List[str] = kwargs.get("inner_classes") or []
+        inner_classes.extend(
+            element.name
+            for element in elements
+            if isinstance(element, Message) or isinstance(element, Enum)
+        )
         for element in elements:
             if isinstance(element, Field):
                 class_body.append(
@@ -188,7 +194,6 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
             elif isinstance(element, Enum):
                 proto_enum_processor = EnumGenerator(self._importer)
                 class_body.append(proto_enum_processor.process_enum(element))
-                inner_classes.append(element.name)
             elif isinstance(element, OneOf):
                 class_body.extend(self._one_of_generator.process(element))
             elif isinstance(element, Message):
@@ -199,7 +204,6 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
                         inner_classes=inner_classes,
                     )
                 )
-                inner_classes.append(element.name)
             elif isinstance(element, Reserved):
                 continue
             else:
