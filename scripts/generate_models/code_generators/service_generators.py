@@ -6,6 +6,7 @@ from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.service_generator import ServiceGenerator as DefaultServiceGenerator
 from proto_schema_parser.ast import Comment, Method, Service
 
+from scripts.generate_models.code_generators.constants import PROTO_SUFFIX
 from scripts.generate_models.code_generators.generators_of_async_methods import (
     AIOServiceMethodGenerator,
 )
@@ -43,7 +44,9 @@ class ServiceGenerator(DefaultServiceGenerator):
                 continue
             elif isinstance(element, Method):
                 service_method_generator = generator_cls(
-                    self._importer, self._protobuf_importer, f"{self._pyfile.stem}_pb2"
+                    self._importer,
+                    self._protobuf_importer,
+                    f"{self._pyfile.stem}" f"{PROTO_SUFFIX}",
                 )
                 body.append(service_method_generator.process_service_method(element))
                 continue

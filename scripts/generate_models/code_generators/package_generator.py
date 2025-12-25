@@ -8,6 +8,7 @@ from iprotopy import PackageGenerator as DefaultPackageGenerator
 from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.protos_generator import ProtosGenerator
 
+from scripts.generate_models.code_generators.constants import PROTO_SUFFIX
 from scripts.generate_models.code_generators.file_generator import SourceGenerator
 from scripts.generate_models.code_generators.imports_resolver import (
     Importer,
@@ -57,7 +58,7 @@ class PackageGenerator(DefaultPackageGenerator):
 
         self._create_lib_dependencies(base_lib_dir, importer)
 
-        protobuf_importer = ProtobufImporter(self._parser, "_pb2", proto_files)
+        protobuf_importer = ProtobufImporter(self._parser, PROTO_SUFFIX, proto_files)
 
         for proto_file in proto_files:
             pyfile = proto_file.relative_to(proto_dir).with_suffix(".py")
