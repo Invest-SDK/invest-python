@@ -1,6 +1,6 @@
 import os
 
-from t_tech.invest.grpc.utils.clients import Client
+from t_tech.invest.grpc import Client
 
 
 def main():

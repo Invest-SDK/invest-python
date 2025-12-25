@@ -4,10 +4,11 @@ import grpc
 from grpc.aio import ClientInterceptor
 
 from t_tech.invest.channels import create_channel
+from t_tech.invest.constants import INVEST_GRPC_API_SANDBOX
 from t_tech.invest.grpc.utils.grpc_services import AsyncServices, Services
 from t_tech.invest.typedefs import ChannelArgumentType
 
-__all__ = ("Client", "AsyncClient")
+__all__ = ("Client", "AsyncClient", "SandboxClient", "AsyncSandboxClient")
 
 
 class Client:
@@ -15,7 +16,7 @@ class Client:
 
     ```python
     import os
-    from t_tech.invest import Client
+    from t_tech.invest.grpc import Client
 
     TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -59,6 +60,31 @@ class Client:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._channel.__exit__(exc_type, exc_val, exc_tb)
         return False
+
+
+class SandboxClient(Client):
+    """Sync sandbox client.
+
+    ```python
+    import os
+    from t_tech.invest.grpc import SandboxClient
+
+    TOKEN = os.environ["INVEST_TOKEN"]
+
+    def main():
+        with SandboxClient(TOKEN) as client:
+            print(client.users.get_accounts())
+
+    ```
+    """
+
+    def __init__(
+            self,
+            token: str,
+            **kwargs,
+    ):
+        kwargs["target"] = INVEST_GRPC_API_SANDBOX
+        super().__init__(token, **kwargs)
 
 
 class AsyncClient:
@@ -113,3 +139,13 @@ class AsyncClient:
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self._channel.__aexit__(exc_type, exc_val, exc_tb)
         return False
+
+
+class AsyncSandboxClient(AsyncClient):
+    def __init__(
+        self,
+        token: str,
+        **kwargs,
+    ):
+        kwargs["target"] = INVEST_GRPC_API_SANDBOX
+        super().__init__(token, **kwargs)
