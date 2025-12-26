@@ -1,9 +1,9 @@
 # T-Invest
 
-[//]: # ([![PyPI]&#40;https://img.shields.io/pypi/v/t-tech-investments&#41;]&#40;https://pypi.org/project/t-tech-investments/&#41;)
-[//]: # (#[![PyPI - Python Version]&#40;https://img.shields.io/pypi/pyversions/t-tech-investments&#41;]&#40;https://www.python.org/downloads/&#41;)
-[//]: # (#![GitHub]&#40;https://img.shields.io/github/license/tinkoff/invest-python&#41;)
-[//]: # (#![PyPI - Downloads]&#40;https://img.shields.io/pypi/dm/t-tech-investments&#41;)
+[![PyPI](https://img.shields.io/pypi/v/t-tech-investments)](https://pypi.org/project/t-tech-investments/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/t-tech-investments)](https://www.python.org/downloads/)
+[![Opensource](https://img.shields.io/pypi/l/t-tech-investments)](https://opensource.tbank.ru/invest/invest-python/-/blob/master/LICENSE)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/t-tech-investments)
 
 Данный репозиторий предоставляет клиент для взаимодействия с торговой платформой [Т-Инвестиции](https://www.tbank.ru/invest/) на языке Python.
 
