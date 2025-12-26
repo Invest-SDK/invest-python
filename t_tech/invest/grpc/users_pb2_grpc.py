@@ -46,6 +46,11 @@ class UsersServiceStub(object):
                 request_serializer=t__tech_dot_invest_dot_grpc_dot_users__pb2.CurrencyTransferRequest.SerializeToString,
                 response_deserializer=t__tech_dot_invest_dot_grpc_dot_users__pb2.CurrencyTransferResponse.FromString,
                 )
+        self.PayIn = channel.unary_unary(
+                '/tinkoff.public.invest.api.contract.v1.UsersService/PayIn',
+                request_serializer=t__tech_dot_invest_dot_grpc_dot_users__pb2.PayInRequest.SerializeToString,
+                response_deserializer=t__tech_dot_invest_dot_grpc_dot_users__pb2.PayInResponse.FromString,
+                )
 
 
 class UsersServiceServicer(object):
@@ -101,6 +106,14 @@ class UsersServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PayIn(self, request, context):
+        """PayIn — пополнение брокерского счета
+        Пополнить брокерский счёт с банковского
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UsersServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -133,6 +146,11 @@ def add_UsersServiceServicer_to_server(servicer, server):
                     servicer.CurrencyTransfer,
                     request_deserializer=t__tech_dot_invest_dot_grpc_dot_users__pb2.CurrencyTransferRequest.FromString,
                     response_serializer=t__tech_dot_invest_dot_grpc_dot_users__pb2.CurrencyTransferResponse.SerializeToString,
+            ),
+            'PayIn': grpc.unary_unary_rpc_method_handler(
+                    servicer.PayIn,
+                    request_deserializer=t__tech_dot_invest_dot_grpc_dot_users__pb2.PayInRequest.FromString,
+                    response_serializer=t__tech_dot_invest_dot_grpc_dot_users__pb2.PayInResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -245,5 +263,22 @@ class UsersService(object):
         return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.UsersService/CurrencyTransfer',
             t__tech_dot_invest_dot_grpc_dot_users__pb2.CurrencyTransferRequest.SerializeToString,
             t__tech_dot_invest_dot_grpc_dot_users__pb2.CurrencyTransferResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PayIn(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.UsersService/PayIn',
+            t__tech_dot_invest_dot_grpc_dot_users__pb2.PayInRequest.SerializeToString,
+            t__tech_dot_invest_dot_grpc_dot_users__pb2.PayInResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

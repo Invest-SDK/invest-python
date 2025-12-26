@@ -2,9 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from t_tech.invest.grpc import (
-    stoporders_pb2 as t__tech_dot_invest_dot_grpc_dot_stoporders__pb2,
-)
+from t_tech.invest.grpc import stoporders_pb2 as t__tech_dot_invest_dot_grpc_dot_stoporders__pb2
 
 
 class StopOrdersServiceStub(object):

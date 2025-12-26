@@ -2,13 +2,11 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from t_tech.invest.grpc import (
-    operations_pb2 as t__tech_dot_invest_dot_grpc_dot_operations__pb2,
-    orders_pb2 as t__tech_dot_invest_dot_grpc_dot_orders__pb2,
-    sandbox_pb2 as t__tech_dot_invest_dot_grpc_dot_sandbox__pb2,
-    stoporders_pb2 as t__tech_dot_invest_dot_grpc_dot_stoporders__pb2,
-    users_pb2 as t__tech_dot_invest_dot_grpc_dot_users__pb2,
-)
+from t_tech.invest.grpc import operations_pb2 as t__tech_dot_invest_dot_grpc_dot_operations__pb2
+from t_tech.invest.grpc import orders_pb2 as t__tech_dot_invest_dot_grpc_dot_orders__pb2
+from t_tech.invest.grpc import sandbox_pb2 as t__tech_dot_invest_dot_grpc_dot_sandbox__pb2
+from t_tech.invest.grpc import stoporders_pb2 as t__tech_dot_invest_dot_grpc_dot_stoporders__pb2
+from t_tech.invest.grpc import users_pb2 as t__tech_dot_invest_dot_grpc_dot_users__pb2
 
 
 class SandboxServiceStub(object):

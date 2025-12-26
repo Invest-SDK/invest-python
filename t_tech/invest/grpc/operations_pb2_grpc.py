@@ -2,9 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from t_tech.invest.grpc import (
-    operations_pb2 as t__tech_dot_invest_dot_grpc_dot_operations__pb2,
-)
+from t_tech.invest.grpc import operations_pb2 as t__tech_dot_invest_dot_grpc_dot_operations__pb2
 
 
 class OperationsServiceStub(object):
@@ -303,6 +301,11 @@ class OperationsStreamServiceStub(object):
                 request_serializer=t__tech_dot_invest_dot_grpc_dot_operations__pb2.PositionsStreamRequest.SerializeToString,
                 response_deserializer=t__tech_dot_invest_dot_grpc_dot_operations__pb2.PositionsStreamResponse.FromString,
                 )
+        self.OperationsStream = channel.unary_stream(
+                '/tinkoff.public.invest.api.contract.v1.OperationsStreamService/OperationsStream',
+                request_serializer=t__tech_dot_invest_dot_grpc_dot_operations__pb2.OperationsStreamRequest.SerializeToString,
+                response_deserializer=t__tech_dot_invest_dot_grpc_dot_operations__pb2.OperationsStreamResponse.FromString,
+                )
 
 
 class OperationsStreamServiceServicer(object):
@@ -322,6 +325,13 @@ class OperationsStreamServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def OperationsStream(self, request, context):
+        """OperationsStream — стрим обновлений операций
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_OperationsStreamServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -334,6 +344,11 @@ def add_OperationsStreamServiceServicer_to_server(servicer, server):
                     servicer.PositionsStream,
                     request_deserializer=t__tech_dot_invest_dot_grpc_dot_operations__pb2.PositionsStreamRequest.FromString,
                     response_serializer=t__tech_dot_invest_dot_grpc_dot_operations__pb2.PositionsStreamResponse.SerializeToString,
+            ),
+            'OperationsStream': grpc.unary_stream_rpc_method_handler(
+                    servicer.OperationsStream,
+                    request_deserializer=t__tech_dot_invest_dot_grpc_dot_operations__pb2.OperationsStreamRequest.FromString,
+                    response_serializer=t__tech_dot_invest_dot_grpc_dot_operations__pb2.OperationsStreamResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -376,5 +391,22 @@ class OperationsStreamService(object):
         return grpc.experimental.unary_stream(request, target, '/tinkoff.public.invest.api.contract.v1.OperationsStreamService/PositionsStream',
             t__tech_dot_invest_dot_grpc_dot_operations__pb2.PositionsStreamRequest.SerializeToString,
             t__tech_dot_invest_dot_grpc_dot_operations__pb2.PositionsStreamResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def OperationsStream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/tinkoff.public.invest.api.contract.v1.OperationsStreamService/OperationsStream',
+            t__tech_dot_invest_dot_grpc_dot_operations__pb2.OperationsStreamRequest.SerializeToString,
+            t__tech_dot_invest_dot_grpc_dot_operations__pb2.OperationsStreamResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -536,3 +536,40 @@ class CurrencyTransferResponse(google.protobuf.message.Message):
     ) -> None: ...
 
 global___CurrencyTransferResponse = CurrencyTransferResponse
+
+@typing.final
+class PayInRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    FROM_ACCOUNT_ID_FIELD_NUMBER: builtins.int
+    TO_ACCOUNT_ID_FIELD_NUMBER: builtins.int
+    AMOUNT_FIELD_NUMBER: builtins.int
+    from_account_id: builtins.str
+    """Номер счета списания."""
+    to_account_id: builtins.str
+    """Номер брокерского счета зачисления."""
+    @property
+    def amount(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+        """Сумма перевода с указанием валюты."""
+
+    def __init__(
+        self,
+        *,
+        from_account_id: builtins.str = ...,
+        to_account_id: builtins.str = ...,
+        amount: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["amount", b"amount"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["amount", b"amount", "from_account_id", b"from_account_id", "to_account_id", b"to_account_id"]) -> None: ...
+
+global___PayInRequest = PayInRequest
+
+@typing.final
+class PayInResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    def __init__(
+        self,
+    ) -> None: ...
+
+global___PayInResponse = PayInResponse

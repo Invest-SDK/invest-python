@@ -250,6 +250,10 @@ class OperationType(_grpc_helpers.Enum):
     OPERATION_TYPE_OVER_INCOME = 63
     OPERATION_TYPE_OPTION_EXPIRATION = 64
     OPERATION_TYPE_FUTURE_EXPIRATION = 65
+    OPERATION_TYPE_OTHER_FEE = 66
+    OPERATION_TYPE_OTHER = 67
+    OPERATION_TYPE_DFA_REDEMPTION = 68
+    OPERATION_TYPE_PRIMARY_ORDER = 69
 
 
 class AccessLevel(_grpc_helpers.Enum):
@@ -923,6 +927,7 @@ class Currency(_grpc_helpers.Message):  # pylint:disable=too-many-instance-attri
     real_exchange: "RealExchange" = _grpc_helpers.message_field(28)
     position_uid: str = _grpc_helpers.string_field(29)
     required_tests: List[str] = _grpc_helpers.string_field(30)
+    asset_uid: str = _grpc_helpers.string_field(31)
     for_iis_flag: bool = _grpc_helpers.bool_field(41)
     for_qual_investor_flag: bool = _grpc_helpers.bool_field(52)
     weekend_flag: bool = _grpc_helpers.bool_field(53)
@@ -2150,6 +2155,52 @@ class ChildOperationItem(_grpc_helpers.Message):
     instrument_uid: str = _grpc_helpers.string_field(1)
     payment: "MoneyValue" = _grpc_helpers.message_field(2)
 
+@dataclass(eq=False, repr=True)
+class OperationsStreamRequest(_grpc_helpers.Message):
+    accounts: List[str] = _grpc_helpers.message_field(1)
+    ping_settings: "PingDelaySettings" = _grpc_helpers.message_field(15)
+
+
+@dataclass(eq=False, repr=True)
+class OperationsStreamResponse(_grpc_helpers.Message):
+    subscriptions: "OperationsSubscriptionResult" = _grpc_helpers.message_field(1, group="payload")
+    operation: "OperationData" = _grpc_helpers.message_field(2, group="payload")
+    ping: "Ping" = _grpc_helpers.message_field(3, group="payload")
+
+
+@dataclass(eq=False, repr=True)
+class OperationsSubscriptionResult(_grpc_helpers.Message):
+    accounts: List[str] = _grpc_helpers.message_field(1)
+    subscription_status: "OperationsAccountSubscriptionStatus" = _grpc_helpers.enum_field(2)
+    tracking_id: str = _grpc_helpers.string_field(7)
+    stream_id: str = _grpc_helpers.string_field(8)
+
+
+class OperationsAccountSubscriptionStatus(_grpc_helpers.Enum):
+    OPERATIONS_SUBSCRIPTION_STATUS_UNSPECIFIED = 0
+    OPERATIONS_SUBSCRIPTION_STATUS_SUCCESS = 1
+    OPERATIONS_SUBSCRIPTION_STATUS_ACCOUNT_NOT_FOUND = 2
+    OPERATIONS_SUBSCRIPTION_STATUS_INTERNAL_ERROR = 3
+
+
+@dataclass(eq=False, repr=True)
+class OperationData(_grpc_helpers.Message):
+    broker_account_id: str = _grpc_helpers.string_field(1)
+    id: str = _grpc_helpers.string_field(2)
+    parent_operation_id: str = _grpc_helpers.string_field(3)
+    name: str = _grpc_helpers.string_field(4)
+    date: datetime = _grpc_helpers.message_field(5)
+    type: "OperationType" = _grpc_helpers.enum_field(6)
+    state: "OperationState" = _grpc_helpers.enum_field(7)
+    instrument_uid: str = _grpc_helpers.string_field(8)
+    figi: str = _grpc_helpers.string_field(9)
+    instrument_type: str = _grpc_helpers.string_field(10)
+    instrument_kind: InstrumentType = _grpc_helpers.enum_field(11)
+    position_uid: str = _grpc_helpers.string_field(12)
+    ticker: str = _grpc_helpers.string_field(13)
+    class_code: str = _grpc_helpers.string_field(14)
+    payment: MoneyValue = _grpc_helpers.message_field(15)
+
 
 @dataclass(eq=False, repr=True)
 class Operation(_grpc_helpers.Message):  # pylint:disable=too-many-instance-attributes
@@ -2440,6 +2491,7 @@ class OrderState(_grpc_helpers.Message):  # pylint:disable=too-many-instance-att
     figi: str = _grpc_helpers.string_field(11)
     direction: "OrderDirection" = _grpc_helpers.enum_field(12)
     initial_security_price: "MoneyValue" = _grpc_helpers.message_field(13)
+    trade_order_id: str = _grpc_helpers.string_field(14)
     stages: List["OrderStage"] = _grpc_helpers.message_field(14)
     service_commission: "MoneyValue" = _grpc_helpers.message_field(15)
     currency: str = _grpc_helpers.string_field(16)
@@ -3560,4 +3612,16 @@ class CurrencyTransferRequest(_grpc_helpers.Message):
 
 @dataclass(eq=False, repr=True)
 class CurrencyTransferResponse(_grpc_helpers.Message):
+    pass
+
+
+@dataclass(eq=False, repr=True)
+class PayInRequest(_grpc_helpers.Message):
+    from_account_id: str = _grpc_helpers.string_field(1)
+    to_account_id: str = _grpc_helpers.string_field(2)
+    amount: "MoneyValue" = _grpc_helpers.message_field(3)
+
+
+@dataclass(eq=False, repr=True)
+class PayInResponse(_grpc_helpers.Message):
     pass

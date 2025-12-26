@@ -1379,6 +1379,7 @@ class OrderStateStreamResponse(google.protobuf.message.Message):
         TIME_IN_FORCE_FIELD_NUMBER: builtins.int
         ORDER_TYPE_FIELD_NUMBER: builtins.int
         ACCOUNT_ID_FIELD_NUMBER: builtins.int
+        TRADE_ORDER_ID_FIELD_NUMBER: builtins.int
         INITIAL_ORDER_PRICE_FIELD_NUMBER: builtins.int
         ORDER_PRICE_FIELD_NUMBER: builtins.int
         AMOUNT_FIELD_NUMBER: builtins.int
@@ -1417,6 +1418,8 @@ class OrderStateStreamResponse(google.protobuf.message.Message):
         """Тип заявки."""
         account_id: builtins.str
         """Номер счета."""
+        trade_order_id: builtins.str
+        """Идентификатор торгового поручения."""
         currency: builtins.str
         """Валюта исполнения."""
         lots_requested: builtins.int
@@ -1477,6 +1480,7 @@ class OrderStateStreamResponse(google.protobuf.message.Message):
             time_in_force: global___TimeInForceType.ValueType = ...,
             order_type: global___OrderType.ValueType = ...,
             account_id: builtins.str = ...,
+            trade_order_id: builtins.str = ...,
             initial_order_price: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
             order_price: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
             amount: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
@@ -1493,7 +1497,7 @@ class OrderStateStreamResponse(google.protobuf.message.Message):
             instrument_uid: builtins.str = ...,
         ) -> None: ...
         def HasField(self, field_name: typing.Literal["_amount", b"_amount", "_marker", b"_marker", "_order_request_id", b"_order_request_id", "_status_info", b"_status_info", "amount", b"amount", "completion_time", b"completion_time", "created_at", b"created_at", "executed_order_price", b"executed_order_price", "initial_order_price", b"initial_order_price", "marker", b"marker", "order_price", b"order_price", "order_request_id", b"order_request_id", "status_info", b"status_info"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing.Literal["_amount", b"_amount", "_marker", b"_marker", "_order_request_id", b"_order_request_id", "_status_info", b"_status_info", "account_id", b"account_id", "amount", b"amount", "class_code", b"class_code", "client_code", b"client_code", "completion_time", b"completion_time", "created_at", b"created_at", "currency", b"currency", "direction", b"direction", "exchange", b"exchange", "executed_order_price", b"executed_order_price", "execution_report_status", b"execution_report_status", "initial_order_price", b"initial_order_price", "instrument_uid", b"instrument_uid", "lot_size", b"lot_size", "lots_cancelled", b"lots_cancelled", "lots_executed", b"lots_executed", "lots_left", b"lots_left", "lots_requested", b"lots_requested", "marker", b"marker", "order_id", b"order_id", "order_price", b"order_price", "order_request_id", b"order_request_id", "order_type", b"order_type", "status_info", b"status_info", "ticker", b"ticker", "time_in_force", b"time_in_force", "trades", b"trades"]) -> None: ...
+        def ClearField(self, field_name: typing.Literal["_amount", b"_amount", "_marker", b"_marker", "_order_request_id", b"_order_request_id", "_status_info", b"_status_info", "account_id", b"account_id", "amount", b"amount", "class_code", b"class_code", "client_code", b"client_code", "completion_time", b"completion_time", "created_at", b"created_at", "currency", b"currency", "direction", b"direction", "exchange", b"exchange", "executed_order_price", b"executed_order_price", "execution_report_status", b"execution_report_status", "initial_order_price", b"initial_order_price", "instrument_uid", b"instrument_uid", "lot_size", b"lot_size", "lots_cancelled", b"lots_cancelled", "lots_executed", b"lots_executed", "lots_left", b"lots_left", "lots_requested", b"lots_requested", "marker", b"marker", "order_id", b"order_id", "order_price", b"order_price", "order_request_id", b"order_request_id", "order_type", b"order_type", "status_info", b"status_info", "ticker", b"ticker", "time_in_force", b"time_in_force", "trade_order_id", b"trade_order_id", "trades", b"trades"]) -> None: ...
         @typing.overload
         def WhichOneof(self, oneof_group: typing.Literal["_amount", b"_amount"]) -> typing.Literal["amount"] | None: ...
         @typing.overload

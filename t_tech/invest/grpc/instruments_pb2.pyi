@@ -663,22 +663,28 @@ class FilterOptionsRequest(google.protobuf.message.Message):
 
     BASIC_ASSET_UID_FIELD_NUMBER: builtins.int
     BASIC_ASSET_POSITION_UID_FIELD_NUMBER: builtins.int
+    BASIC_INSTRUMENT_ID_FIELD_NUMBER: builtins.int
     basic_asset_uid: builtins.str
     """Идентификатор базового актива опциона.  Обязательный параметр."""
     basic_asset_position_uid: builtins.str
     """Идентификатор позиции базового актива опциона."""
+    basic_instrument_id: builtins.str
+    """Идентификатор базового инструмента, принимает значение принимает значения figi, instrument_uid или ticker+"_"+classCode."""
     def __init__(
         self,
         *,
         basic_asset_uid: builtins.str | None = ...,
         basic_asset_position_uid: builtins.str | None = ...,
+        basic_instrument_id: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["_basic_asset_position_uid", b"_basic_asset_position_uid", "_basic_asset_uid", b"_basic_asset_uid", "basic_asset_position_uid", b"basic_asset_position_uid", "basic_asset_uid", b"basic_asset_uid"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["_basic_asset_position_uid", b"_basic_asset_position_uid", "_basic_asset_uid", b"_basic_asset_uid", "basic_asset_position_uid", b"basic_asset_position_uid", "basic_asset_uid", b"basic_asset_uid"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["_basic_asset_position_uid", b"_basic_asset_position_uid", "_basic_asset_uid", b"_basic_asset_uid", "_basic_instrument_id", b"_basic_instrument_id", "basic_asset_position_uid", b"basic_asset_position_uid", "basic_asset_uid", b"basic_asset_uid", "basic_instrument_id", b"basic_instrument_id"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["_basic_asset_position_uid", b"_basic_asset_position_uid", "_basic_asset_uid", b"_basic_asset_uid", "_basic_instrument_id", b"_basic_instrument_id", "basic_asset_position_uid", b"basic_asset_position_uid", "basic_asset_uid", b"basic_asset_uid", "basic_instrument_id", b"basic_instrument_id"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal["_basic_asset_position_uid", b"_basic_asset_position_uid"]) -> typing.Literal["basic_asset_position_uid"] | None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal["_basic_asset_uid", b"_basic_asset_uid"]) -> typing.Literal["basic_asset_uid"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal["_basic_instrument_id", b"_basic_instrument_id"]) -> typing.Literal["basic_instrument_id"] | None: ...
 
 global___FilterOptionsRequest = FilterOptionsRequest
 
@@ -1847,6 +1853,7 @@ class Currency(google.protobuf.message.Message):
     REAL_EXCHANGE_FIELD_NUMBER: builtins.int
     POSITION_UID_FIELD_NUMBER: builtins.int
     REQUIRED_TESTS_FIELD_NUMBER: builtins.int
+    ASSET_UID_FIELD_NUMBER: builtins.int
     FOR_IIS_FLAG_FIELD_NUMBER: builtins.int
     FOR_QUAL_INVESTOR_FLAG_FIELD_NUMBER: builtins.int
     WEEKEND_FLAG_FIELD_NUMBER: builtins.int
@@ -1896,6 +1903,8 @@ class Currency(google.protobuf.message.Message):
     """Реальная площадка исполнения расчетов (биржа)."""
     position_uid: builtins.str
     """Уникальный идентификатор позиции инструмента."""
+    asset_uid: builtins.str
+    """Уникальный идентификатор актива."""
     for_iis_flag: builtins.bool
     """Признак доступности для ИИС."""
     for_qual_investor_flag: builtins.bool
@@ -1992,6 +2001,7 @@ class Currency(google.protobuf.message.Message):
         real_exchange: t_tech.invest.grpc.common_pb2.RealExchange.ValueType = ...,
         position_uid: builtins.str = ...,
         required_tests: collections.abc.Iterable[builtins.str] | None = ...,
+        asset_uid: builtins.str = ...,
         for_iis_flag: builtins.bool = ...,
         for_qual_investor_flag: builtins.bool = ...,
         weekend_flag: builtins.bool = ...,
@@ -2003,7 +2013,7 @@ class Currency(google.protobuf.message.Message):
         dshort_client: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing.Literal["brand", b"brand", "dlong", b"dlong", "dlong_client", b"dlong_client", "dlong_min", b"dlong_min", "dshort", b"dshort", "dshort_client", b"dshort_client", "dshort_min", b"dshort_min", "first_1day_candle_date", b"first_1day_candle_date", "first_1min_candle_date", b"first_1min_candle_date", "klong", b"klong", "kshort", b"kshort", "min_price_increment", b"min_price_increment", "nominal", b"nominal"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["api_trade_available_flag", b"api_trade_available_flag", "blocked_tca_flag", b"blocked_tca_flag", "brand", b"brand", "buy_available_flag", b"buy_available_flag", "class_code", b"class_code", "country_of_risk", b"country_of_risk", "country_of_risk_name", b"country_of_risk_name", "currency", b"currency", "dlong", b"dlong", "dlong_client", b"dlong_client", "dlong_min", b"dlong_min", "dshort", b"dshort", "dshort_client", b"dshort_client", "dshort_min", b"dshort_min", "exchange", b"exchange", "figi", b"figi", "first_1day_candle_date", b"first_1day_candle_date", "first_1min_candle_date", b"first_1min_candle_date", "for_iis_flag", b"for_iis_flag", "for_qual_investor_flag", b"for_qual_investor_flag", "isin", b"isin", "iso_currency_name", b"iso_currency_name", "klong", b"klong", "kshort", b"kshort", "lot", b"lot", "min_price_increment", b"min_price_increment", "name", b"name", "nominal", b"nominal", "otc_flag", b"otc_flag", "position_uid", b"position_uid", "real_exchange", b"real_exchange", "required_tests", b"required_tests", "sell_available_flag", b"sell_available_flag", "short_enabled_flag", b"short_enabled_flag", "ticker", b"ticker", "trading_status", b"trading_status", "uid", b"uid", "weekend_flag", b"weekend_flag"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["api_trade_available_flag", b"api_trade_available_flag", "asset_uid", b"asset_uid", "blocked_tca_flag", b"blocked_tca_flag", "brand", b"brand", "buy_available_flag", b"buy_available_flag", "class_code", b"class_code", "country_of_risk", b"country_of_risk", "country_of_risk_name", b"country_of_risk_name", "currency", b"currency", "dlong", b"dlong", "dlong_client", b"dlong_client", "dlong_min", b"dlong_min", "dshort", b"dshort", "dshort_client", b"dshort_client", "dshort_min", b"dshort_min", "exchange", b"exchange", "figi", b"figi", "first_1day_candle_date", b"first_1day_candle_date", "first_1min_candle_date", b"first_1min_candle_date", "for_iis_flag", b"for_iis_flag", "for_qual_investor_flag", b"for_qual_investor_flag", "isin", b"isin", "iso_currency_name", b"iso_currency_name", "klong", b"klong", "kshort", b"kshort", "lot", b"lot", "min_price_increment", b"min_price_increment", "name", b"name", "nominal", b"nominal", "otc_flag", b"otc_flag", "position_uid", b"position_uid", "real_exchange", b"real_exchange", "required_tests", b"required_tests", "sell_available_flag", b"sell_available_flag", "short_enabled_flag", b"short_enabled_flag", "ticker", b"ticker", "trading_status", b"trading_status", "uid", b"uid", "weekend_flag", b"weekend_flag"]) -> None: ...
 
 global___Currency = Currency
 

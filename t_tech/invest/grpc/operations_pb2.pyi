@@ -181,6 +181,14 @@ class _OperationTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._
     """Экспирация опциона."""
     OPERATION_TYPE_FUTURE_EXPIRATION: _OperationType.ValueType  # 65
     """Экспирация фьючерса."""
+    OPERATION_TYPE_OTHER_FEE: _OperationType.ValueType  # 66
+    """ Прочие комиссии;"""
+    OPERATION_TYPE_OTHER: _OperationType.ValueType  # 67
+    """ Операция по счету;"""
+    OPERATION_TYPE_DFA_REDEMPTION: _OperationType.ValueType  # 68
+    """погашение ЦФА-токена;"""
+    OPERATION_TYPE_PRIMARY_ORDER: _OperationType.ValueType  # 69
+    """ отмена заявки на первичное размещение по ЦФА;"""
 
 class OperationType(_OperationType, metaclass=_OperationTypeEnumTypeWrapper):
     """Тип операции."""
@@ -311,6 +319,14 @@ OPERATION_TYPE_OPTION_EXPIRATION: OperationType.ValueType  # 64
 """Экспирация опциона."""
 OPERATION_TYPE_FUTURE_EXPIRATION: OperationType.ValueType  # 65
 """Экспирация фьючерса."""
+OPERATION_TYPE_OTHER_FEE: OperationType.ValueType  # 66
+""" Прочие комиссии;"""
+OPERATION_TYPE_OTHER: OperationType.ValueType  # 67
+""" Операция по счету;"""
+OPERATION_TYPE_DFA_REDEMPTION: OperationType.ValueType  # 68
+"""погашение ЦФА-токена;"""
+OPERATION_TYPE_PRIMARY_ORDER: OperationType.ValueType  # 69
+""" отмена заявки на первичное размещение по ЦФА;"""
 global___OperationType = OperationType
 
 class _PortfolioSubscriptionStatus:
@@ -368,6 +384,34 @@ POSITIONS_SUBSCRIPTION_STATUS_ACCOUNT_NOT_FOUND: PositionsAccountSubscriptionSta
 POSITIONS_SUBSCRIPTION_STATUS_INTERNAL_ERROR: PositionsAccountSubscriptionStatus.ValueType  # 3
 """Произошла ошибка."""
 global___PositionsAccountSubscriptionStatus = PositionsAccountSubscriptionStatus
+
+class _OperationsAccountSubscriptionStatus:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _OperationsAccountSubscriptionStatusEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_OperationsAccountSubscriptionStatus.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    OPERATIONS_SUBSCRIPTION_STATUS_UNSPECIFIED: _OperationsAccountSubscriptionStatus.ValueType  # 0
+    """Тип не определен."""
+    OPERATIONS_SUBSCRIPTION_STATUS_SUCCESS: _OperationsAccountSubscriptionStatus.ValueType  # 1
+    """Успешно."""
+    OPERATIONS_SUBSCRIPTION_STATUS_ACCOUNT_NOT_FOUND: _OperationsAccountSubscriptionStatus.ValueType  # 2
+    """Счет не найден или недостаточно прав."""
+    OPERATIONS_SUBSCRIPTION_STATUS_INTERNAL_ERROR: _OperationsAccountSubscriptionStatus.ValueType  # 3
+    """Произошла ошибка."""
+
+class OperationsAccountSubscriptionStatus(_OperationsAccountSubscriptionStatus, metaclass=_OperationsAccountSubscriptionStatusEnumTypeWrapper):
+    """Результат подписки."""
+
+OPERATIONS_SUBSCRIPTION_STATUS_UNSPECIFIED: OperationsAccountSubscriptionStatus.ValueType  # 0
+"""Тип не определен."""
+OPERATIONS_SUBSCRIPTION_STATUS_SUCCESS: OperationsAccountSubscriptionStatus.ValueType  # 1
+"""Успешно."""
+OPERATIONS_SUBSCRIPTION_STATUS_ACCOUNT_NOT_FOUND: OperationsAccountSubscriptionStatus.ValueType  # 2
+"""Счет не найден или недостаточно прав."""
+OPERATIONS_SUBSCRIPTION_STATUS_INTERNAL_ERROR: OperationsAccountSubscriptionStatus.ValueType  # 3
+"""Произошла ошибка."""
+global___OperationsAccountSubscriptionStatus = OperationsAccountSubscriptionStatus
 
 @typing.final
 class OperationsRequest(google.protobuf.message.Message):
@@ -2303,3 +2347,175 @@ class ChildOperationItem(google.protobuf.message.Message):
     def ClearField(self, field_name: typing.Literal["instrument_uid", b"instrument_uid", "payment", b"payment"]) -> None: ...
 
 global___ChildOperationItem = ChildOperationItem
+
+@typing.final
+class OperationsStreamRequest(google.protobuf.message.Message):
+    """Запрос установки stream-соединения операций."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    ACCOUNTS_FIELD_NUMBER: builtins.int
+    PING_SETTINGS_FIELD_NUMBER: builtins.int
+    @property
+    def accounts(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
+        """Массив идентификаторов счетов пользователя."""
+
+    @property
+    def ping_settings(self) -> t_tech.invest.grpc.common_pb2.PingDelaySettings:
+        """Запрос настройки пинга."""
+
+    def __init__(
+        self,
+        *,
+        accounts: collections.abc.Iterable[builtins.str] | None = ...,
+        ping_settings: t_tech.invest.grpc.common_pb2.PingDelaySettings | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["ping_settings", b"ping_settings"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["accounts", b"accounts", "ping_settings", b"ping_settings"]) -> None: ...
+
+global___OperationsStreamRequest = OperationsStreamRequest
+
+@typing.final
+class OperationsStreamResponse(google.protobuf.message.Message):
+    """Информация по операциям."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    SUBSCRIPTIONS_FIELD_NUMBER: builtins.int
+    OPERATION_FIELD_NUMBER: builtins.int
+    PING_FIELD_NUMBER: builtins.int
+    @property
+    def subscriptions(self) -> global___OperationsSubscriptionResult:
+        """Объект результата подписки."""
+
+    @property
+    def operation(self) -> global___OperationData:
+        """Объект стриминга операций."""
+
+    @property
+    def ping(self) -> t_tech.invest.grpc.common_pb2.Ping:
+        """Проверка активности стрима."""
+
+    def __init__(
+        self,
+        *,
+        subscriptions: global___OperationsSubscriptionResult | None = ...,
+        operation: global___OperationData | None = ...,
+        ping: t_tech.invest.grpc.common_pb2.Ping | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["operation", b"operation", "payload", b"payload", "ping", b"ping", "subscriptions", b"subscriptions"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["operation", b"operation", "payload", b"payload", "ping", b"ping", "subscriptions", b"subscriptions"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing.Literal["payload", b"payload"]) -> typing.Literal["subscriptions", "operation", "ping"] | None: ...
+
+global___OperationsStreamResponse = OperationsStreamResponse
+
+@typing.final
+class OperationsSubscriptionResult(google.protobuf.message.Message):
+    """Объект результата подписки."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    ACCOUNTS_FIELD_NUMBER: builtins.int
+    SUBSCRIPTION_STATUS_FIELD_NUMBER: builtins.int
+    TRACKING_ID_FIELD_NUMBER: builtins.int
+    STREAM_ID_FIELD_NUMBER: builtins.int
+    subscription_status: global___OperationsAccountSubscriptionStatus.ValueType
+    """Результат подписки."""
+    tracking_id: builtins.str
+    """Уникальный идентификатор запроса, подробнее: [tracking_id](/invest/intro/developer/protocols/grpc#tracking-id)."""
+    stream_id: builtins.str
+    """Идентификатор открытого соединения"""
+    @property
+    def accounts(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
+        """Массив счетов клиента."""
+
+    def __init__(
+        self,
+        *,
+        accounts: collections.abc.Iterable[builtins.str] | None = ...,
+        subscription_status: global___OperationsAccountSubscriptionStatus.ValueType = ...,
+        tracking_id: builtins.str = ...,
+        stream_id: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing.Literal["accounts", b"accounts", "stream_id", b"stream_id", "subscription_status", b"subscription_status", "tracking_id", b"tracking_id"]) -> None: ...
+
+global___OperationsSubscriptionResult = OperationsSubscriptionResult
+
+@typing.final
+class OperationData(google.protobuf.message.Message):
+    """Данные об операции."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    BROKER_ACCOUNT_ID_FIELD_NUMBER: builtins.int
+    ID_FIELD_NUMBER: builtins.int
+    PARENT_OPERATION_ID_FIELD_NUMBER: builtins.int
+    NAME_FIELD_NUMBER: builtins.int
+    DATE_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    STATE_FIELD_NUMBER: builtins.int
+    INSTRUMENT_UID_FIELD_NUMBER: builtins.int
+    FIGI_FIELD_NUMBER: builtins.int
+    INSTRUMENT_TYPE_FIELD_NUMBER: builtins.int
+    INSTRUMENT_KIND_FIELD_NUMBER: builtins.int
+    POSITION_UID_FIELD_NUMBER: builtins.int
+    TICKER_FIELD_NUMBER: builtins.int
+    CLASS_CODE_FIELD_NUMBER: builtins.int
+    PAYMENT_FIELD_NUMBER: builtins.int
+    broker_account_id: builtins.str
+    """Идентификатор счета."""
+    id: builtins.str
+    """Номер поручения."""
+    parent_operation_id: builtins.str
+    """Номер родительского поручения."""
+    name: builtins.str
+    """Название инструмента."""
+    type: global___OperationType.ValueType
+    """Тип операции."""
+    state: global___OperationState.ValueType
+    """Статус поручения."""
+    instrument_uid: builtins.str
+    """Уникальный идентификатор инструмента."""
+    figi: builtins.str
+    """FIGI-идентификатор инструмента."""
+    instrument_type: builtins.str
+    """Тип инструмента."""
+    instrument_kind: t_tech.invest.grpc.common_pb2.InstrumentType.ValueType
+    """Тип инструмента."""
+    position_uid: builtins.str
+    """Идентификатор позиции."""
+    ticker: builtins.str
+    """Тикер инструмента."""
+    class_code: builtins.str
+    """Класс-код (секция торгов)."""
+    @property
+    def date(self) -> google.protobuf.timestamp_pb2.Timestamp:
+        """Дата."""
+
+    @property
+    def payment(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+        """Сумма операции."""
+
+    def __init__(
+        self,
+        *,
+        broker_account_id: builtins.str = ...,
+        id: builtins.str = ...,
+        parent_operation_id: builtins.str = ...,
+        name: builtins.str = ...,
+        date: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        type: global___OperationType.ValueType = ...,
+        state: global___OperationState.ValueType = ...,
+        instrument_uid: builtins.str = ...,
+        figi: builtins.str = ...,
+        instrument_type: builtins.str = ...,
+        instrument_kind: t_tech.invest.grpc.common_pb2.InstrumentType.ValueType = ...,
+        position_uid: builtins.str = ...,
+        ticker: builtins.str = ...,
+        class_code: builtins.str = ...,
+        payment: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["date", b"date", "payment", b"payment"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["broker_account_id", b"broker_account_id", "class_code", b"class_code", "date", b"date", "figi", b"figi", "id", b"id", "instrument_kind", b"instrument_kind", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "name", b"name", "parent_operation_id", b"parent_operation_id", "payment", b"payment", "position_uid", b"position_uid", "state", b"state", "ticker", b"ticker", "type", b"type"]) -> None: ...
+
+global___OperationData = OperationData
