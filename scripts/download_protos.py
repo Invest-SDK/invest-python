@@ -7,13 +7,12 @@ from zipfile import ZipFile
 
 import requests
 
-BRANCH = "main"
-# https://gitlab.tcsbank.ru/invest-piapi/public-invest-api-contract/-/archive/{BRANCH}/public-invest-api-contract-{BRANCH}.zip
-URL = f"https://github.com/RussianInvestments/investAPI/archive/refs/heads/{BRANCH}.zip"
-OUTPUT_PATH = "protos/tinkoff/invest/grpc"
+BRANCH = "master"
+URL = f"https://opensource.tbank.ru/invest/invest-contracts/-/archive/{BRANCH}/invest-contracts-{BRANCH}.zip?ref_type=heads"
+OUTPUT_PATH = "protos/t_tech/invest/grpc"
 PROTOS_TMP_ZIP = "protos.zip"
 ZIP_PROTOS_ROOT_PATH_BRANCH = BRANCH.replace("/", "-")
-ZIP_PROTOS_ROOT_PATH = f"investAPI-{ZIP_PROTOS_ROOT_PATH_BRANCH}"
+ZIP_PROTOS_ROOT_PATH = f"invest-contracts-{ZIP_PROTOS_ROOT_PATH_BRANCH}"
 ZIP_PROTOS_PATH = f"{ZIP_PROTOS_ROOT_PATH}/src/docs/contracts"
 FILES = [
     "google/api/field_behavior.proto",
@@ -29,7 +28,7 @@ FILES = [
 ]
 
 LINES_TO_REPLACE = [
-    (f'import "{file_name}";', f'import "tinkoff/invest/grpc/{file_name}";')
+    (f'import "{file_name}";', f'import "t_tech/invest/grpc/{file_name}";')
     for file_name in FILES
 ]
 
