@@ -7,7 +7,7 @@
 
 Данный репозиторий предоставляет клиент для взаимодействия с торговой платформой [Т-Инвестиции](https://www.tbank.ru/invest/) на языке Python.
 
-- [Документация](https://RussianInvestments.github.io/invest-python/)
+- [Документация](https://opensource.tbank.ru/invest/invest-python/-/blob/master/README.md?ref_type=heads)
 - [Документация по Invest API](https://developer.tbank.ru/invest/intro/intro)
 
 ## Начало работы
@@ -58,14 +58,14 @@ with Client(TOKEN, target=INVEST_GRPC_API) as client:
 > :warning: **Не публикуйте токены в общедоступные репозитории**
 <br/>
 
-Остальные примеры доступны в [examples](https://opensource.tbank.ru/invest/invest-python/-/tree/main/examples).
+Остальные примеры доступны в [examples](https://opensource.tbank.ru/invest/invest-python/-/tree/master/examples).
 
 ## Contribution
 
 Для тех, кто хочет внести свои изменения в проект.
 
-- [CONTRIBUTING](https://opensource.tbank.ru/invest/invest-python/-/blob/main/CONTRIBUTING.md)
+- [CONTRIBUTING](https://opensource.tbank.ru/invest/invest-python/-/blob/master/CONTRIBUTING.md)
 
 ## License
 
-Лицензия [The Apache License](https://opensource.tbank.ru/invest/invest-python/-/blob/main/LICENSE).
+Лицензия [The Apache License](https://opensource.tbank.ru/invest/invest-python/-/blob/master/LICENSE).
