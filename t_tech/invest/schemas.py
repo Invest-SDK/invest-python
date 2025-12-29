@@ -2155,6 +2155,7 @@ class ChildOperationItem(_grpc_helpers.Message):
     instrument_uid: str = _grpc_helpers.string_field(1)
     payment: "MoneyValue" = _grpc_helpers.message_field(2)
 
+
 @dataclass(eq=False, repr=True)
 class OperationsStreamRequest(_grpc_helpers.Message):
     accounts: List[str] = _grpc_helpers.message_field(1)
@@ -2163,7 +2164,9 @@ class OperationsStreamRequest(_grpc_helpers.Message):
 
 @dataclass(eq=False, repr=True)
 class OperationsStreamResponse(_grpc_helpers.Message):
-    subscriptions: "OperationsSubscriptionResult" = _grpc_helpers.message_field(1, group="payload")
+    subscriptions: "OperationsSubscriptionResult" = _grpc_helpers.message_field(
+        1, group="payload"
+    )
     operation: "OperationData" = _grpc_helpers.message_field(2, group="payload")
     ping: "Ping" = _grpc_helpers.message_field(3, group="payload")
 
@@ -2171,7 +2174,9 @@ class OperationsStreamResponse(_grpc_helpers.Message):
 @dataclass(eq=False, repr=True)
 class OperationsSubscriptionResult(_grpc_helpers.Message):
     accounts: List[str] = _grpc_helpers.message_field(1)
-    subscription_status: "OperationsAccountSubscriptionStatus" = _grpc_helpers.enum_field(2)
+    subscription_status: "OperationsAccountSubscriptionStatus" = (
+        _grpc_helpers.enum_field(2)
+    )
     tracking_id: str = _grpc_helpers.string_field(7)
     stream_id: str = _grpc_helpers.string_field(8)
 
@@ -2491,7 +2496,6 @@ class OrderState(_grpc_helpers.Message):  # pylint:disable=too-many-instance-att
     figi: str = _grpc_helpers.string_field(11)
     direction: "OrderDirection" = _grpc_helpers.enum_field(12)
     initial_security_price: "MoneyValue" = _grpc_helpers.message_field(13)
-    trade_order_id: str = _grpc_helpers.string_field(14)
     stages: List["OrderStage"] = _grpc_helpers.message_field(14)
     service_commission: "MoneyValue" = _grpc_helpers.message_field(15)
     currency: str = _grpc_helpers.string_field(16)
@@ -3380,6 +3384,7 @@ class OrderStateStreamOrderState(_grpc_helpers.Message):
     time_in_force: TimeInForceType = _grpc_helpers.message_field(11)
     order_type: OrderType = _grpc_helpers.message_field(12)
     account_id: str = _grpc_helpers.string_field(13)
+    trade_order_id: str = _grpc_helpers.string_field(14)
     initial_order_price: MoneyValue = _grpc_helpers.message_field(22)
     order_price: MoneyValue = _grpc_helpers.message_field(23)
     amount: Optional[MoneyValue] = _grpc_helpers.message_field(24)

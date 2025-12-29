@@ -9,7 +9,7 @@ from sentry_sdk.integrations.excepthook import ExcepthookIntegration
 from sentry_sdk.types import Event
 
 from ._errors import TFunc
-from .constants import PACKAGE_NAME, ERROR_HUB_DSN
+from .constants import ERROR_HUB_DSN, PACKAGE_NAME
 from .exceptions import AioRequestError, RequestError
 
 __all__ = (
@@ -52,6 +52,7 @@ def init_error_hub(client):
         dsn=ERROR_HUB_DSN,
         send_default_pii=False,
         integrations=[],
+        auto_enabling_integrations=False,
         disabled_integrations=[ModulesIntegration(), ExcepthookIntegration()],
         before_send=sanitize_bearer_tokens,
         release=PACKAGE_NAME,

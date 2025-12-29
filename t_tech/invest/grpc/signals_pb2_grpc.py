@@ -2,7 +2,9 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from t_tech.invest.grpc import signals_pb2 as t__tech_dot_invest_dot_grpc_dot_signals__pb2
+from t_tech.invest.grpc import (
+    signals_pb2 as t__tech_dot_invest_dot_grpc_dot_signals__pb2,
+)
 
 
 class SignalServiceStub(object):

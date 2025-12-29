@@ -168,6 +168,8 @@ from .schemas import (
     OpenSandboxAccountResponse,
     OperationsRequest,
     OperationsResponse,
+    OperationsStreamRequest,
+    OperationsStreamResponse,
     OperationState,
     OptionResponse,
     OptionsResponse,
@@ -179,6 +181,8 @@ from .schemas import (
     OrderStateStreamResponse,
     OrderType,
     Page,
+    PayInRequest,
+    PayInResponse,
     PingDelaySettings,
     PortfolioRequest,
     PortfolioResponse,
@@ -217,8 +221,7 @@ from .schemas import (
     TradingSchedulesRequest,
     TradingSchedulesResponse,
     WithdrawLimitsRequest,
-    WithdrawLimitsResponse, PayInRequest, PayInResponse, OperationsStreamRequest,
-    OperationsStreamResponse,
+    WithdrawLimitsResponse,
 )
 from .typedefs import AccountId
 from .utils import get_intervals, now
@@ -1514,17 +1517,18 @@ class OperationsStreamService(_grpc_helpers.Service):
 
     @handle_aio_request_error_gen("OperationsStream")
     async def operations_stream(
-            self,
-            request: OperationsStreamRequest, ) -> AsyncIterable[
-        OperationsStreamResponse]:
+        self,
+        request: OperationsStreamRequest,
+    ) -> AsyncIterable[OperationsStreamResponse]:
         async for response in self.stub.OperationsStream(
-                request=_grpc_helpers.dataclass_to_protobuff(
-                    request, operations_pb2.OperationsStreamRequest()
-                ),
-                metadata=self.metadata,
+            request=_grpc_helpers.dataclass_to_protobuff(
+                request, operations_pb2.OperationsStreamRequest()
+            ),
+            metadata=self.metadata,
         ):
-            yield _grpc_helpers.protobuf_to_dataclass(response,
-                                                      OperationsStreamResponse)
+            yield _grpc_helpers.protobuf_to_dataclass(
+                response, OperationsStreamResponse
+            )
 
 
 class OrdersStreamService(_grpc_helpers.Service):
@@ -1836,9 +1840,7 @@ class UsersService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, CurrencyTransferResponse)
 
     @handle_aio_request_error("PayIn")
-    async def pay_in(
-            self, request: PayInRequest
-    ) -> PayInResponse:
+    async def pay_in(self, request: PayInRequest) -> PayInResponse:
         response_coro = self.stub.PayIn(
             request=_grpc_helpers.dataclass_to_protobuff(
                 request, users_pb2.PayInRequest()

@@ -167,6 +167,8 @@ from .schemas import (
     OpenSandboxAccountResponse,
     OperationsRequest,
     OperationsResponse,
+    OperationsStreamRequest,
+    OperationsStreamResponse,
     OperationState,
     OptionResponse,
     OptionsResponse,
@@ -178,6 +180,8 @@ from .schemas import (
     OrderStateStreamResponse,
     OrderType,
     Page,
+    PayInRequest,
+    PayInResponse,
     PingDelaySettings,
     PortfolioRequest,
     PortfolioResponse,
@@ -217,8 +221,7 @@ from .schemas import (
     TradingSchedulesRequest,
     TradingSchedulesResponse,
     WithdrawLimitsRequest,
-    WithdrawLimitsResponse, OperationsStreamRequest, OperationsStreamResponse,
-    PayInRequest, PayInResponse
+    WithdrawLimitsResponse,
 )
 from .typedefs import AccountId
 from .utils import get_intervals, now
@@ -1459,15 +1462,18 @@ class OperationsStreamService(_grpc_helpers.Service):
 
     @handle_request_error_gen("OperationsStream")
     def operations_stream(
-            self,
-            request: OperationsStreamRequest,) -> Iterable[OperationsStreamResponse]:
+        self,
+        request: OperationsStreamRequest,
+    ) -> Iterable[OperationsStreamResponse]:
         for response in self.stub.OperationsStream(
             request=_grpc_helpers.dataclass_to_protobuff(
                 request, operations_pb2.OperationsStreamRequest()
             ),
             metadata=self.metadata,
         ):
-            yield _grpc_helpers.protobuf_to_dataclass(response, OperationsStreamResponse)
+            yield _grpc_helpers.protobuf_to_dataclass(
+                response, OperationsStreamResponse
+            )
 
 
 class OrdersStreamService(_grpc_helpers.Service):
@@ -1765,9 +1771,7 @@ class UsersService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, CurrencyTransferResponse)
 
     @handle_request_error("PayIn")
-    def pay_in(
-            self, request: PayInRequest
-    ) -> PayInResponse:
+    def pay_in(self, request: PayInRequest) -> PayInResponse:
         response, call = self.stub.PayIn.with_call(
             request=_grpc_helpers.dataclass_to_protobuff(
                 request, users_pb2.PayInRequest()

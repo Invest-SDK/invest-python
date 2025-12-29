@@ -8,7 +8,6 @@ TOKEN = os.environ["INVEST_TOKEN"]
 
 
 async def main():
-
     async with AsyncClient(TOKEN) as client:
         accounts = await client.users.get_accounts()
         accounts = [i.id for i in accounts.accounts]
@@ -18,7 +17,7 @@ async def main():
                 accounts=accounts,
                 ping_settings=PingDelaySettings(
                     ping_delay_ms=10_000,
-                )
+                ),
             )
         ):
             print(operation)

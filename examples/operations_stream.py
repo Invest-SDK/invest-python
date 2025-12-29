@@ -7,7 +7,6 @@ TOKEN = os.environ["INVEST_TOKEN"]
 
 
 def main():
-
     with Client(TOKEN) as client:
         accounts = client.users.get_accounts().accounts
         accounts = [i.id for i in accounts]
@@ -17,7 +16,7 @@ def main():
                 accounts=accounts,
                 ping_settings=PingDelaySettings(
                     ping_delay_ms=5000,
-                )
+                ),
             )
         ):
             print(operation)
