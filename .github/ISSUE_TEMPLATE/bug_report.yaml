@@ -32,6 +32,7 @@ body:
     label: T-Tech Invest Version
     description: Какая версия библиотеки используется?
     options:
+    - 0.3.2
     - 0.3.1
     - 0.2.0-beta118
     - 0.2.0-beta117
