@@ -11,22 +11,30 @@ from examples.sandbox.sandbox_cancel_stop_order import cancel_stop_order
 from examples.sandbox.sandbox_get_order_price import get_order_price
 from examples.sandbox.sandbox_get_stop_orders import get_stop_orders
 from examples.sandbox.sandbox_post_stop_order import post_stop_order
-from t_tech.invest import (
-    Account,
+from t_tech.invest import RequestError, utils
+from t_tech.invest.grpc import (
+    GetOrderStateRequest,
+    OperationsRequest,
+    PortfolioRequest,
+    PositionsRequest,
+    PostOrderRequest,
+    SandboxClient,
+)
+from t_tech.invest.grpc.sandbox import (
+    CloseSandboxAccountRequest,
     CloseSandboxAccountResponse,
+    SandboxPayInRequest,
+)
+from t_tech.invest.grpc.schemas import (
+    Account,
+    GetOrderPriceResponse,
     MoneyValue,
     OperationState,
     OrderDirection,
-    OrderType,
-    Quotation,
-    RequestError,
-    utils,
-)
-from t_tech.invest.sandbox.client import SandboxClient
-from t_tech.invest.schemas import (
-    GetOrderPriceResponse,
     OrderExecutionReportStatus,
+    OrderType,
     PostOrderAsyncRequest,
+    Quotation,
     StopOrderDirection,
     StopOrderStatusOption,
 )
@@ -49,12 +57,16 @@ def initial_balance_pay_in() -> MoneyValue:
 def account_id(sandbox_service, initial_balance_pay_in: MoneyValue):
     response = sandbox_service.sandbox.open_sandbox_account()
     sandbox_service.sandbox.sandbox_pay_in(
-        account_id=response.account_id,
-        amount=initial_balance_pay_in,
+        SandboxPayInRequest(
+            account_id=response.account_id,
+            amount=initial_balance_pay_in,
+        )
     )
     yield response.account_id
     sandbox_service.sandbox.close_sandbox_account(
-        account_id=response.account_id,
+        CloseSandboxAccountRequest(
+            account_id=response.account_id,
+        )
     )
 
 
@@ -152,7 +164,9 @@ class TestSandboxOperations:
         response = sandbox_service.sandbox.open_sandbox_account()
         assert isinstance(response.account_id, str)
         sandbox_service.sandbox.close_sandbox_account(
-            account_id=response.account_id,
+            CloseSandboxAccountRequest(
+                account_id=response.account_id,
+            )
         )
 
     def test_get_sandbox_accounts(self, sandbox_service, account_id):
@@ -173,7 +187,9 @@ class TestSandboxOperations:
     def test_close_sandbox_account(self, sandbox_service):
         response = sandbox_service.sandbox.open_sandbox_account()
         response = sandbox_service.sandbox.close_sandbox_account(
-            account_id=response.account_id,
+            CloseSandboxAccountRequest(
+                account_id=response.account_id,
+            )
         )
         assert isinstance(response, CloseSandboxAccountResponse)
 
@@ -181,7 +197,7 @@ class TestSandboxOperations:
     def test_post_sandbox_order(
         self, sandbox_service, order, instrument_id, direction, quantity
     ):
-        response = sandbox_service.orders.post_order(**order)
+        response = sandbox_service.orders.post_order(PostOrderRequest(**order))
         assert isinstance(response.order_id, str)
         assert response.instrument_uid == instrument_id
         assert response.direction == direction
@@ -208,7 +224,7 @@ class TestSandboxOperations:
 
     @skip_when_exchange_closed
     def test_get_sandbox_orders(self, sandbox_service, order, account_id):
-        response = sandbox_service.orders.post_order(**order)
+        response = sandbox_service.orders.post_order(PostOrderRequest(**order))
         assert response
 
     @skip_when_exchange_closed
@@ -225,11 +241,13 @@ class TestSandboxOperations:
     def test_get_sandbox_order_state(
         self, sandbox_service, order, account_id, instrument_id, direction, quantity
     ):
-        response = sandbox_service.orders.post_order(**order)
+        response = sandbox_service.orders.post_order(PostOrderRequest(**order))
 
         response = sandbox_service.orders.get_order_state(
-            account_id=account_id,
-            order_id=response.order_id,
+            GetOrderStateRequest(
+                account_id=account_id,
+                order_id=response.order_id,
+            )
         )
         assert response.instrument_uid == instrument_id
         assert response.direction == direction
@@ -240,20 +258,24 @@ class TestSandboxOperations:
     def test_get_sandbox_positions(
         self, sandbox_service, account_id, order, order_type
     ):
-        _ = sandbox_service.orders.post_order(**order)
+        _ = sandbox_service.orders.post_order(PostOrderRequest(**order))
 
-        response = sandbox_service.operations.get_positions(account_id=account_id)
+        response = sandbox_service.operations.get_positions(
+            PositionsRequest(account_id=account_id)
+        )
 
         assert isinstance(response.money[0], MoneyValue)
         assert response.money[0].currency == "rub"
 
     def test_get_sandbox_operations(self, sandbox_service, account_id, order, figi):
         response = sandbox_service.operations.get_operations(
-            account_id=account_id,
-            from_=datetime(2000, 2, 2),
-            to=datetime(2022, 2, 2),
-            state=OperationState.OPERATION_STATE_EXECUTED,
-            figi=figi,
+            OperationsRequest(
+                account_id=account_id,
+                from_=datetime(2000, 2, 2),
+                to=datetime(2022, 2, 2),
+                state=OperationState.OPERATION_STATE_EXECUTED,
+                figi=figi,
+            )
         )
         assert isinstance(response.operations, list)
 
@@ -261,7 +283,9 @@ class TestSandboxOperations:
         self, sandbox_service, account_id, initial_balance_pay_in: MoneyValue
     ):
         response = sandbox_service.operations.get_portfolio(
-            account_id=account_id,
+            PortfolioRequest(
+                account_id=account_id,
+            )
         )
         assert str(response.total_amount_bonds) == str(
             MoneyValue(currency="rub", units=0, nano=0)
@@ -284,8 +308,10 @@ class TestSandboxOperations:
     ):
         amount = MoneyValue(currency="rub", units=1234, nano=0)
         response = sandbox_service.sandbox.sandbox_pay_in(
-            account_id=account_id,
-            amount=amount,
+            SandboxPayInRequest(
+                account_id=account_id,
+                amount=amount,
+            )
         )
 
         assert money_to_decimal(response.balance) == (
