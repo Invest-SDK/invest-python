@@ -94,8 +94,13 @@ def decimal_to_quotation(decimal: Decimal) -> Quotation:
     return Quotation(units=int(decimal // 1), nano=int(fractional * Decimal("10e8")))
 
 
-def quotation_to_money(quotation: Quotation, currency: str) -> MoneyValue:
-    return MoneyValue(units=quotation.units, nano=quotation.nano, currency=currency)
+def decimal_to_quotation(decimal: Decimal):  # type: ignore[no-redef]  # noqa: F811
+    from .grpc.schemas import Quotation as QuotationGrpc
+
+    fractional = decimal % 1
+    return QuotationGrpc(
+        units=int(decimal // 1), nano=int(fractional * Decimal("10e8"))
+    )
 
 
 def decimal_to_money(decimal: Decimal, currency: str) -> MoneyValue:
@@ -103,9 +108,26 @@ def decimal_to_money(decimal: Decimal, currency: str) -> MoneyValue:
     return quotation_to_money(quotation, currency)
 
 
+# noinspection LongLine
+def decimal_to_money(decimal: Decimal, currency: str):  # type: ignore[no-redef]  # noqa: F811
+    quotation = decimal_to_quotation(decimal)
+    return quotation_to_money(quotation, currency)
+
+
 class MoneyProtocol(Protocol):
     units: int
     nano: int
+
+
+def quotation_to_money(quotation: MoneyProtocol, currency: str) -> MoneyValue:
+    return MoneyValue(units=quotation.units, nano=quotation.nano, currency=currency)
+
+
+# noinspection LongLine
+def quotation_to_money(quotation: MoneyProtocol, currency: str):  # type: ignore[no-redef]  # noqa: F811
+    from .grpc.schemas import MoneyValue as MoneyValueGrpc
+
+    return MoneyValueGrpc(units=quotation.units, nano=quotation.nano, currency=currency)
 
 
 def money_to_decimal(money: MoneyProtocol) -> Decimal:
@@ -187,8 +209,8 @@ def dataclass_from_dict(klass, d):
     if issubclass(klass, Enum):
         return klass(int(d))
 
-    fieldtypes = {f.name: f.type for f in dataclasses.fields(klass)}
-    return klass(**{f: dataclass_from_dict(fieldtypes[f], d[f]) for f in d})
+    field_types = {f.name: f.type for f in dataclasses.fields(klass)}
+    return klass(**{f: dataclass_from_dict(field_types[f], d[f]) for f in d})
 
 
 _datetime_range_replace_floor_by_interval = {
@@ -224,7 +246,7 @@ def round_datetime_range(
     date_range: Tuple[datetime, datetime],
     interval: CandleInterval,
 ) -> Tuple[datetime, datetime]:
-    """Expand datetime range to nearest round range.
+    """Expand datetime range to the nearest round range.
 
     interval = CandleInterval.CANDLE_INTERVAL_DAY,
     date_range = [
