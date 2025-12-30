@@ -4,7 +4,7 @@ from unittest import mock
 
 import pytest
 
-from t_tech.invest.services import SignalService
+from t_tech.invest.grpc import SignalService
 
 
 @pytest.fixture()

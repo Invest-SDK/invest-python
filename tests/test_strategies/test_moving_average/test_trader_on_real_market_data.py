@@ -7,7 +7,7 @@ from typing import Dict, Iterable, List
 import pytest
 from matplotlib import pyplot as plt
 
-from t_tech.invest import (
+from t_tech.invest.grpc import (
     Candle,
     CandleInterval,
     HistoricCandle,

@@ -6,7 +6,7 @@ from typing import Dict
 import matplotlib.pyplot as plt
 import pytest
 
-from t_tech.invest import (
+from t_tech.invest.grpc import (
     CandleInterval,
     MoneyValue,
     PortfolioPosition,

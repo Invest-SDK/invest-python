@@ -8,12 +8,11 @@ from typing import Dict, Iterable
 
 import pytest
 
-from t_tech.invest import CandleInterval
 from t_tech.invest.caching.market_data_cache.cache import MarketDataCache
 from t_tech.invest.caching.market_data_cache.cache_settings import (
     MarketDataCacheSettings,
 )
-from t_tech.invest.sandbox.client import SandboxClient
+from t_tech.invest.grpc import CandleInterval, SandboxClient
 from t_tech.invest.utils import now
 
 

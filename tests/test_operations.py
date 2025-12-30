@@ -4,7 +4,13 @@ from unittest import mock
 
 import pytest
 
-from t_tech.invest.services import OperationsService
+from t_tech.invest import WithdrawLimitsRequest
+from t_tech.invest.grpc import (
+    OperationsRequest,
+    OperationsService,
+    PortfolioRequest,
+    PositionsRequest,
+)
 
 
 @pytest.fixture()
@@ -14,31 +20,39 @@ def operations_service():
 
 def test_get_operations(operations_service):
     response = operations_service.get_operations(  # noqa: F841
-        account_id=mock.Mock(),
-        from_=mock.Mock(),
-        to=mock.Mock(),
-        state=mock.Mock(),
-        figi=mock.Mock(),
+        OperationsRequest(
+            account_id=mock.Mock(),
+            from_=mock.Mock(),
+            to=mock.Mock(),
+            state=mock.Mock(),
+            figi=mock.Mock(),
+        )
     )
     operations_service.get_operations.assert_called_once()
 
 
 def test_get_portfolio(operations_service):
     response = operations_service.get_portfolio(  # noqa: F841
-        account_id=mock.Mock(),
+        PortfolioRequest(
+            account_id=mock.Mock(),
+        )
     )
     operations_service.get_portfolio.assert_called_once()
 
 
 def test_get_positions(operations_service):
     response = operations_service.get_positions(  # noqa: F841
-        account_id=mock.Mock(),
+        PositionsRequest(
+            account_id=mock.Mock(),
+        )
     )
     operations_service.get_positions.assert_called_once()
 
 
 def test_get_withdraw_limits(operations_service):
     response = operations_service.get_withdraw_limits(  # noqa: F841
-        account_id=mock.Mock(),
+        WithdrawLimitsRequest(
+            account_id=mock.Mock(),
+        )
     )
     operations_service.get_withdraw_limits.assert_called_once()

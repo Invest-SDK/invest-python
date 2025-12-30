@@ -3,7 +3,7 @@ from random import randrange
 
 import pytest
 
-from t_tech.invest import Quotation
+from t_tech.invest.grpc.schemas import Quotation
 from t_tech.invest.utils import decimal_to_quotation, quotation_to_decimal
 
 MAX_UNITS = 999_999_999_999

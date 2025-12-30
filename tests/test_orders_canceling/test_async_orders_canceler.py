@@ -5,29 +5,35 @@ from unittest.mock import call
 import pytest
 import pytest_asyncio
 
-from t_tech.invest import (
+from t_tech.invest.grpc import (
+    AsyncOrdersService,
+    AsyncStopOrdersService,
+    CancelOrderRequest,
+    CancelStopOrderRequest,
     GetOrdersResponse,
     GetStopOrdersResponse,
     OrderState,
     StopOrder,
 )
-from t_tech.invest.async_services import AsyncServices, OrdersService, StopOrdersService
+from t_tech.invest.grpc.utils.grpc_services import AsyncServices
 from t_tech.invest.typedefs import AccountId
 
 
 @pytest_asyncio.fixture()
-async def orders_service(mocker) -> OrdersService:
-    return mocker.create_autospec(OrdersService)
+async def orders_service(mocker) -> AsyncOrdersService:
+    return mocker.create_autospec(AsyncOrdersService)
 
 
 @pytest_asyncio.fixture()
-async def stop_orders_service(mocker) -> StopOrdersService:
-    return mocker.create_autospec(StopOrdersService)
+async def stop_orders_service(mocker) -> AsyncStopOrdersService:
+    return mocker.create_autospec(AsyncStopOrdersService)
 
 
 @pytest_asyncio.fixture()
 async def async_services(
-    mocker, orders_service: OrdersService, stop_orders_service: StopOrdersService
+    mocker,
+    orders_service: AsyncOrdersService,
+    stop_orders_service: AsyncStopOrdersService,
 ) -> AsyncServices:
     async_services = mocker.create_autospec(AsyncServices)
     async_services.orders = orders_service
@@ -71,8 +77,8 @@ class TestAsyncOrdersCanceling:
     async def test_cancels_all_orders(
         self,
         async_services: AsyncServices,
-        orders_service: OrdersService,
-        stop_orders_service: StopOrdersService,
+        orders_service: AsyncOrdersService,
+        stop_orders_service: AsyncStopOrdersService,
         account_id: AccountId,
         orders: List[OrderState],
         stop_orders: List[StopOrder],
@@ -86,10 +92,15 @@ class TestAsyncOrdersCanceling:
 
         orders_service.get_orders.assert_called_once()
         orders_service.cancel_order.assert_has_calls(
-            call(account_id=account_id, order_id=order.order_id) for order in orders
+            call(CancelOrderRequest(account_id=account_id, order_id=order.order_id))
+            for order in orders
         )
         stop_orders_service.get_stop_orders.assert_called_once()
         stop_orders_service.cancel_stop_order.assert_has_calls(
-            call(account_id=account_id, stop_order_id=stop_order.stop_order_id)
+            call(
+                CancelStopOrderRequest(
+                    account_id=account_id, stop_order_id=stop_order.stop_order_id
+                )
+            )
             for stop_order in stop_orders
         )

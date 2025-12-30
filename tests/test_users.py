@@ -4,7 +4,7 @@ from unittest import mock
 
 import pytest
 
-from t_tech.invest.services import UsersService
+from t_tech.invest.grpc import GetMarginAttributesRequest, UsersService
 
 
 @pytest.fixture()
@@ -19,7 +19,9 @@ def test_get_accounts(users_service):
 
 def test_get_margin_attributes(users_service):
     response = users_service.get_margin_attributes(  # noqa: F841
-        account_id=mock.Mock(),
+        GetMarginAttributesRequest(
+            account_id=mock.Mock(),
+        )
     )
     users_service.get_margin_attributes.assert_called_once()
 

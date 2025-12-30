@@ -7,7 +7,10 @@ from unittest.mock import Mock
 import pytest
 from pytest_freezegun import freeze_time
 
-from t_tech.invest import (
+from t_tech.invest.caching.instruments_cache.instruments_cache import InstrumentsCache
+from t_tech.invest.caching.instruments_cache.models import InstrumentsResponse
+from t_tech.invest.caching.instruments_cache.settings import InstrumentsCacheSettings
+from t_tech.invest.grpc import (
     Bond,
     BondResponse,
     BondsResponse,
@@ -26,10 +29,7 @@ from t_tech.invest import (
     ShareResponse,
     SharesResponse,
 )
-from t_tech.invest.caching.instruments_cache.instruments_cache import InstrumentsCache
-from t_tech.invest.caching.instruments_cache.models import InstrumentsResponse
-from t_tech.invest.caching.instruments_cache.settings import InstrumentsCacheSettings
-from t_tech.invest.services import Services
+from t_tech.invest.grpc.utils.grpc_services import Services
 
 
 def uid() -> str:

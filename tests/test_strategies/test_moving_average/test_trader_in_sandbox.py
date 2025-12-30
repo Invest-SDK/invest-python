@@ -7,18 +7,18 @@ from typing import Iterator
 import matplotlib.pyplot as plt
 import pytest
 
-from t_tech.invest import (
+from t_tech.invest.exceptions import UnauthenticatedError
+from t_tech.invest.grpc import (
     CandleInterval,
     Client,
     GetMarginAttributesResponse,
     InstrumentIdType,
     MoneyValue,
-    OpenSandboxAccountResponse,
     Quotation,
     ShareResponse,
     TradingSchedulesResponse,
 )
-from t_tech.invest.exceptions import UnauthenticatedError
+from t_tech.invest.grpc.sandbox import OpenSandboxAccountResponse
 from t_tech.invest.services import SandboxService, Services
 from t_tech.invest.strategies.base.account_manager import AccountManager
 from t_tech.invest.strategies.base.errors import MarketDataNotAvailableError

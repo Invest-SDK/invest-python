@@ -3,12 +3,12 @@ import os
 
 import pytest
 
-from t_tech.invest import (
+from t_tech.invest._grpc_helpers import protobuf_to_dataclass
+from t_tech.invest.grpc.instruments_pb2 import EditFavoritesRequest as ProtoModel
+from t_tech.invest.grpc.schemas import (
     EditFavoritesActionType,
     EditFavoritesRequest as DataclassModel,
 )
-from t_tech.invest._grpc_helpers import protobuf_to_dataclass
-from t_tech.invest.grpc.instruments_pb2 import EditFavoritesRequest as ProtoModel
 
 logging.basicConfig(level=logging.DEBUG)
 

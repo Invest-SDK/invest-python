@@ -149,7 +149,7 @@ target-version = ["py38", "py39", "py310", "py311", "py312"]
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-fail_under = 64
+fail_under = 68
 exclude_lines = [
   "raise NotImplementedError",
   "def __repr__",

@@ -3,7 +3,7 @@ from typing import Tuple
 
 import pytest
 
-from t_tech.invest import CandleInterval
+from t_tech.invest.grpc import CandleInterval
 from t_tech.invest.utils import round_datetime_range
 
 

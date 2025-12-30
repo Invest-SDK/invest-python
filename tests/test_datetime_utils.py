@@ -2,7 +2,7 @@ from datetime import timedelta
 
 import pytest
 
-from t_tech.invest import CandleInterval
+from t_tech.invest.grpc.schemas import CandleInterval
 from t_tech.invest.utils import (
     candle_interval_to_timedelta,
     ceil_datetime,

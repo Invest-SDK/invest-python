@@ -3,7 +3,7 @@ from datetime import datetime
 
 import pytest
 
-from t_tech.invest.schemas import CandleInterval
+from t_tech.invest.grpc.schemas import CandleInterval
 from t_tech.invest.utils import empty_or_uuid, get_intervals
 
 

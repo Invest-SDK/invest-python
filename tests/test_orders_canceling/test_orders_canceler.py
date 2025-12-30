@@ -4,13 +4,17 @@ from unittest.mock import call
 
 import pytest
 
-from t_tech.invest import (
+from t_tech.invest.grpc import (
+    CancelOrderRequest,
+    CancelStopOrderRequest,
     GetOrdersResponse,
     GetStopOrdersResponse,
+    OrdersService,
     OrderState,
     StopOrder,
+    StopOrdersService,
 )
-from t_tech.invest.services import OrdersService, Services, StopOrdersService
+from t_tech.invest.grpc.utils.grpc_services import Services
 from t_tech.invest.typedefs import AccountId
 
 
@@ -84,10 +88,15 @@ class TestOrdersCanceler:
 
         orders_service.get_orders.assert_called_once()
         orders_service.cancel_order.assert_has_calls(
-            call(account_id=account_id, order_id=order.order_id) for order in orders
+            call(CancelOrderRequest(account_id=account_id, order_id=order.order_id))
+            for order in orders
         )
         stop_orders_service.get_stop_orders.assert_called_once()
         stop_orders_service.cancel_stop_order.assert_has_calls(
-            call(account_id=account_id, stop_order_id=stop_order.stop_order_id)
+            call(
+                CancelStopOrderRequest(
+                    account_id=account_id, stop_order_id=stop_order.stop_order_id
+                )
+            )
             for stop_order in stop_orders
         )

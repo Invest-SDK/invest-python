@@ -6,15 +6,17 @@ import pytest
 from google.protobuf.json_format import MessageToDict
 
 from t_tech.invest._grpc_helpers import dataclass_to_protobuf
-from t_tech.invest.grpc import marketdata_pb2
-from t_tech.invest.schemas import (
+from t_tech.invest.grpc import (
+    GetCandlesRequest,
+    GetLastPricesRequest,
     GetMySubscriptions,
     MarketDataRequest,
+    MarketDataService,
     SubscribeTradesRequest,
     SubscriptionAction,
     TradeInstrument,
+    marketdata_pb2,
 )
-from t_tech.invest.services import MarketDataService
 
 
 @pytest.fixture()
@@ -24,28 +26,32 @@ def market_data_service():
 
 def test_get_candles(market_data_service):
     response = market_data_service.get_candles(  # noqa: F841
-        figi=mock.Mock(),
-        from_=mock.Mock(),
-        to=mock.Mock(),
-        interval=mock.Mock(),
+        GetCandlesRequest(
+            figi=mock.Mock(),
+            from_=mock.Mock(),
+            to=mock.Mock(),
+            interval=mock.Mock(),
+        )
     )
     market_data_service.get_candles.assert_called_once()
 
 
 def test_get_last_prices(market_data_service):
-    response = market_data_service.get_last_prices(figi=mock.Mock())  # noqa: F841
+    response = market_data_service.get_last_prices(  # noqa: F841
+        GetLastPricesRequest(
+            figi=mock.Mock(),
+        )
+    )
     market_data_service.get_last_prices.assert_called_once()
 
 
 def test_get_order_book(market_data_service):
-    response = market_data_service.get_order_book(  # noqa: F841
-        figi=mock.Mock(), depth=mock.Mock()
-    )
+    response = market_data_service.get_order_book(request=mock.Mock())  # noqa: F841
     market_data_service.get_order_book.assert_called_once()
 
 
 def test_get_trading_status(market_data_service):
-    response = market_data_service.get_trading_status(figi=mock.Mock())  # noqa: F841
+    response = market_data_service.get_trading_status(request=mock.Mock())  # noqa: F841
     market_data_service.get_trading_status.assert_called_once()
 
 

@@ -4,18 +4,23 @@ from unittest.mock import ANY, call
 import pytest
 import pytest_asyncio
 
-from t_tech.invest import CandleInterval, GetCandlesResponse
-from t_tech.invest.async_services import AsyncServices, MarketDataService
+from t_tech.invest.grpc import (
+    AsyncMarketDataService,
+    CandleInterval,
+    GetCandlesRequest,
+    GetCandlesResponse,
+)
+from t_tech.invest.grpc.utils.grpc_services import AsyncServices
 
 
 @pytest_asyncio.fixture
-async def marketdata_service(mocker) -> MarketDataService:
-    return mocker.create_autospec(MarketDataService)
+async def marketdata_service(mocker) -> AsyncMarketDataService:
+    return mocker.create_autospec(AsyncMarketDataService)
 
 
 @pytest_asyncio.fixture
 async def async_services(
-    mocker, marketdata_service: MarketDataService
+    mocker, marketdata_service: AsyncMarketDataService
 ) -> AsyncServices:
     async_services = mocker.create_autospec(AsyncServices)
     async_services.market_data = marketdata_service
@@ -44,7 +49,7 @@ class TestAsyncMarketData:
     async def test_get_candles(
         self,
         async_services: AsyncServices,
-        marketdata_service: MarketDataService,
+        marketdata_service: AsyncMarketDataService,
         candle_interval: CandleInterval,
         from_: datetime,
         to: datetime,
@@ -60,12 +65,14 @@ class TestAsyncMarketData:
         marketdata_service.get_candles.assert_has_calls(
             [
                 call(
-                    from_=ANY,
-                    to=ANY,
-                    interval=candle_interval,
-                    candle_source_type=None,
-                    figi="",
-                    instrument_id="",
+                    GetCandlesRequest(
+                        from_=ANY,
+                        to=ANY,
+                        interval=candle_interval,
+                        candle_source_type=None,
+                        figi="",
+                        instrument_id="",
+                    )
                 )
                 for _ in range(expected)
             ]

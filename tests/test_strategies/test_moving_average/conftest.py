@@ -8,7 +8,8 @@ from typing import Callable, Dict, Iterable, Iterator, List, Optional
 import pytest
 from grpc import StatusCode
 
-from t_tech.invest import (
+from t_tech.invest import RequestError
+from t_tech.invest.grpc import (
     Candle,
     Client,
     GetCandlesResponse,
@@ -21,7 +22,6 @@ from t_tech.invest import (
     PortfolioPosition,
     PortfolioResponse,
     Quotation,
-    RequestError,
 )
 from t_tech.invest.services import Services
 from t_tech.invest.strategies.base.account_manager import AccountManager
