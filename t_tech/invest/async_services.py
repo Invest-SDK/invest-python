@@ -1583,7 +1583,7 @@ class OperationsStreamService(_grpc_helpers.Service):
         request: OperationsStreamRequest,
     ) -> AsyncIterable[OperationsStreamResponse]:
         async for response in self.stub.OperationsStream(
-            request=_grpc_helpers.dataclass_to_protobuff(
+            request=_grpc_helpers.dataclass_to_protobuf(
                 request, operations_pb2.OperationsStreamRequest()
             ),
             metadata=self.metadata,
@@ -1906,7 +1906,7 @@ class UsersService(_grpc_helpers.Service):
     @handle_aio_request_error("PayIn")
     async def pay_in(self, request: PayInRequest) -> PayInResponse:
         response_coro = self.stub.PayIn(
-            request=_grpc_helpers.dataclass_to_protobuff(
+            request=_grpc_helpers.dataclass_to_protobuf(
                 request, users_pb2.PayInRequest()
             ),
             metadata=self.metadata,
