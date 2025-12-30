@@ -7,6 +7,7 @@ import grpc
 from deprecation import deprecated
 
 from . import _grpc_helpers, utils
+from ._error_hub import handle_error_hub_gen
 from ._errors import handle_request_error, handle_request_error_gen
 from .exceptions import RequestError
 from .grpc import (
@@ -1236,6 +1237,7 @@ class MarketDataStreamService(_grpc_helpers.Service):
                 request, marketdata_pb2.MarketDataRequest()
             )
 
+    @handle_error_hub_gen()
     @handle_request_error_gen("MarketDataStream")
     def market_data_stream(
         self,
@@ -1256,6 +1258,7 @@ class MarketDataStreamService(_grpc_helpers.Service):
                 request, marketdata_pb2.MarketDataServerSideStreamRequest()
             )
 
+    @handle_error_hub_gen()
     @handle_request_error_gen("MarketDataServerSideStream")
     def market_data_server_side_stream(
         self,
@@ -1409,6 +1412,7 @@ class OperationsService(_grpc_helpers.Service):
 class OperationsStreamService(_grpc_helpers.Service):
     _stub_factory = operations_pb2_grpc.OperationsStreamServiceStub
 
+    @handle_error_hub_gen()
     @handle_request_error_gen("PortfolioStream")
     def portfolio_stream(
         self,
@@ -1433,6 +1437,7 @@ class OperationsStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, PortfolioStreamResponse)
 
+    @handle_error_hub_gen()
     @handle_request_error_gen("PositionsStream")
     def positions_stream(
         self,
@@ -1460,6 +1465,7 @@ class OperationsStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, PositionsStreamResponse)
 
+    @handle_error_hub_gen()
     @handle_request_error_gen("OperationsStream")
     def operations_stream(
         self,
@@ -1479,6 +1485,7 @@ class OperationsStreamService(_grpc_helpers.Service):
 class OrdersStreamService(_grpc_helpers.Service):
     _stub_factory = orders_pb2_grpc.OrdersStreamServiceStub
 
+    @handle_error_hub_gen()
     @handle_request_error_gen("TradesStream")
     def trades_stream(
         self,
@@ -1501,6 +1508,7 @@ class OrdersStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, TradesStreamResponse)
 
+    @handle_error_hub_gen()
     @handle_request_error_gen("OrderStateStream")
     def order_state_stream(
         self, *, request: OrderStateStreamRequest
