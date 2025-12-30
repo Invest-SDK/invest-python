@@ -27,6 +27,7 @@ from scripts.generate_models.code_generators.imports_resolver import ProtobufImp
 class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
     tracking_id_getter: str | None = None
     error_handler: Optional[str] = None
+    error_hub_handler: Optional[str] = None
     is_async: bool = False
 
     def __init__(
@@ -58,6 +59,16 @@ class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
                 level=0,
             )
         )
+        if self.error_hub_handler:
+            self._importer.add_import(
+                ImportFrom(
+                    module="t_tech.invest._error_hub",
+                    names=[
+                        alias(name=self.error_hub_handler),
+                    ],
+                    level=0,
+                )
+            )
         if self.tracking_id_getter:
             self._importer.add_import(
                 ImportFrom(
@@ -125,6 +136,15 @@ class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
 
         decorator_list: list[expr] = []
 
+        if self.error_hub_handler:
+            decorator_list.append(
+                Call(
+                    func=Name(id=self.error_hub_handler, ctx=Load()),
+                    args=[],
+                    keywords=[],
+                )
+            )
+
         decorator_list.append(
             Call(
                 func=Name(id=str(self.error_handler), ctx=Load()),
@@ -176,6 +196,7 @@ class BaseSyncServiceAnyUnaryFunctionGenerator(BaseServiceMethodGenerator):
 
 class BaseSyncServiceAnyStreamFunctionGenerator(BaseServiceMethodGenerator):
     error_handler: str = "handle_request_error_gen"
+    error_hub_handler: str = "handle_error_hub_gen"
 
 
 class BaseAIOServiceAnyUnaryFunctionGenerator(BaseServiceMethodGenerator):
@@ -186,4 +207,5 @@ class BaseAIOServiceAnyUnaryFunctionGenerator(BaseServiceMethodGenerator):
 
 class BaseAIOServiceAnyStreamFunctionGenerator(BaseServiceMethodGenerator):
     error_handler: str = "handle_aio_request_error_gen"
+    error_hub_handler: str = "handle_aio_error_hub_gen"
     is_async: bool = True

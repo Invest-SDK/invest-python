@@ -183,6 +183,8 @@ class FilterOptionsRequest(_grpc_helpers.Message):
         =True)
     basic_asset_position_uid: Optional[str] = _grpc_helpers.string_field(2,
         optional=True)
+    basic_instrument_id: Optional[str] = _grpc_helpers.string_field(3,
+        optional=True)
 
 
 @dataclass
@@ -472,6 +474,7 @@ class Currency(_grpc_helpers.Message):
     real_exchange: 'RealExchange' = _grpc_helpers.message_field(28)
     position_uid: str = _grpc_helpers.string_field(29)
     required_tests: List[str] = _grpc_helpers.string_field(30)
+    asset_uid: str = _grpc_helpers.string_field(31)
     for_iis_flag: bool = _grpc_helpers.bool_field(41)
     for_qual_investor_flag: bool = _grpc_helpers.bool_field(52)
     weekend_flag: bool = _grpc_helpers.bool_field(53)

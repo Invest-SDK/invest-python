@@ -149,6 +149,18 @@ class CurrencyTransferResponse(_grpc_helpers.Message):
     pass
 
 
+@dataclass
+class PayInRequest(_grpc_helpers.Message):
+    from_account_id: str = _grpc_helpers.string_field(1)
+    to_account_id: str = _grpc_helpers.string_field(2)
+    amount: 'MoneyValue' = _grpc_helpers.message_field(3)
+
+
+@dataclass
+class PayInResponse(_grpc_helpers.Message):
+    pass
+
+
 class UsersService(BaseService):
     """/*С помощью сервиса можно получить: <br/> 1.
                        список счетов пользователя; <br/> 2. маржинальные показатели по счeту.*/"""
@@ -220,6 +232,15 @@ class UsersService(BaseService):
         log_request(get_tracking_id_from_call(call), 'CurrencyTransfer')
         return _grpc_helpers.protobuf_to_dataclass(response,
             CurrencyTransferResponse)
+
+    @handle_request_error('PayIn')
+    def pay_in(self, request: 'PayInRequest'=PayInRequest()) ->'PayInResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.PayInRequest())
+        response, call = self._stub.PayIn.with_call(request=
+            protobuf_request, metadata=self._metadata)
+        log_request(get_tracking_id_from_call(call), 'PayIn')
+        return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)
 
 
 class AsyncUsersService(BaseService):
@@ -304,3 +325,14 @@ class AsyncUsersService(BaseService):
             'CurrencyTransfer')
         return _grpc_helpers.protobuf_to_dataclass(response,
             CurrencyTransferResponse)
+
+    @handle_aio_request_error('PayIn')
+    async def pay_in(self, request: 'PayInRequest'=PayInRequest()
+        ) ->'PayInResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.PayInRequest())
+        response_coro = self._stub.PayIn(request=protobuf_request, metadata
+            =self._metadata)
+        response = await response_coro
+        log_request(await get_tracking_id_from_coro(response_coro), 'PayIn')
+        return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)

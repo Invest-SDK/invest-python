@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import AsyncIterable, Iterable, List, Optional
 
 from t_tech.invest import _grpc_helpers
+from t_tech.invest._error_hub import handle_aio_error_hub_gen, handle_error_hub_gen
 from t_tech.invest._errors import (
     handle_aio_request_error,
     handle_aio_request_error_gen,
@@ -96,6 +97,10 @@ class OperationType(_grpc_helpers.Enum):
     OPERATION_TYPE_OVER_INCOME = 63
     OPERATION_TYPE_OPTION_EXPIRATION = 64
     OPERATION_TYPE_FUTURE_EXPIRATION = 65
+    OPERATION_TYPE_OTHER_FEE = 66
+    OPERATION_TYPE_OTHER = 67
+    OPERATION_TYPE_DFA_REDEMPTION = 68
+    OPERATION_TYPE_PRIMARY_ORDER = 69
 
 
 class PortfolioSubscriptionStatus(_grpc_helpers.Enum):
@@ -110,6 +115,13 @@ class PositionsAccountSubscriptionStatus(_grpc_helpers.Enum):
     POSITIONS_SUBSCRIPTION_STATUS_SUCCESS = 1
     POSITIONS_SUBSCRIPTION_STATUS_ACCOUNT_NOT_FOUND = 2
     POSITIONS_SUBSCRIPTION_STATUS_INTERNAL_ERROR = 3
+
+
+class OperationsAccountSubscriptionStatus(_grpc_helpers.Enum):
+    OPERATIONS_SUBSCRIPTION_STATUS_UNSPECIFIED = 0
+    OPERATIONS_SUBSCRIPTION_STATUS_SUCCESS = 1
+    OPERATIONS_SUBSCRIPTION_STATUS_ACCOUNT_NOT_FOUND = 2
+    OPERATIONS_SUBSCRIPTION_STATUS_INTERNAL_ERROR = 3
 
 
 @dataclass
@@ -591,6 +603,49 @@ class ChildOperationItem(_grpc_helpers.Message):
     payment: 'MoneyValue' = _grpc_helpers.message_field(2)
 
 
+@dataclass
+class OperationsStreamRequest(_grpc_helpers.Message):
+    accounts: List[str] = _grpc_helpers.string_field(1)
+    ping_settings: 'PingDelaySettings' = _grpc_helpers.message_field(15)
+
+
+@dataclass
+class OperationsStreamResponse(_grpc_helpers.Message):
+    subscriptions: Optional['OperationsSubscriptionResult'
+        ] = _grpc_helpers.message_field(1, optional=True)
+    operation: Optional['OperationData'] = _grpc_helpers.message_field(2,
+        optional=True)
+    ping: Optional['Ping'] = _grpc_helpers.message_field(3, optional=True)
+
+
+@dataclass
+class OperationsSubscriptionResult(_grpc_helpers.Message):
+    accounts: List[str] = _grpc_helpers.string_field(1)
+    subscription_status: 'OperationsAccountSubscriptionStatus' = (_grpc_helpers
+        .message_field(2))
+    tracking_id: str = _grpc_helpers.string_field(7)
+    stream_id: str = _grpc_helpers.string_field(8)
+
+
+@dataclass
+class OperationData(_grpc_helpers.Message):
+    broker_account_id: str = _grpc_helpers.string_field(1)
+    id: str = _grpc_helpers.string_field(2)
+    parent_operation_id: str = _grpc_helpers.string_field(3)
+    name: str = _grpc_helpers.string_field(4)
+    date: datetime = _grpc_helpers.message_field(5)
+    type: 'OperationType' = _grpc_helpers.message_field(6)
+    state: 'OperationState' = _grpc_helpers.message_field(7)
+    instrument_uid: str = _grpc_helpers.string_field(8)
+    figi: str = _grpc_helpers.string_field(9)
+    instrument_type: str = _grpc_helpers.string_field(10)
+    instrument_kind: 'InstrumentType' = _grpc_helpers.message_field(11)
+    position_uid: str = _grpc_helpers.string_field(12)
+    ticker: str = _grpc_helpers.string_field(13)
+    class_code: str = _grpc_helpers.string_field(14)
+    payment: 'MoneyValue' = _grpc_helpers.message_field(15)
+
+
 class OperationsService(BaseService):
     """/*С помощью методов сервиса можно получить:<br/><br/> **1**. Список операций по счету.<br/> **2**.
                               Портфель по счету.<br/> **3**. Позиции ценных бумаг на счете.<br/> **4**.
@@ -782,6 +837,7 @@ class OperationsStreamService(BaseService):
     _protobuf_grpc = operations_pb2_grpc
     _protobuf_stub = _protobuf_grpc.OperationsStreamServiceStub
 
+    @handle_error_hub_gen()
     @handle_request_error_gen('PortfolioStream')
     def portfolio_stream(self, request: 'PortfolioStreamRequest'=
         PortfolioStreamRequest()) ->Iterable['PortfolioStreamResponse']:
@@ -791,6 +847,7 @@ class OperationsStreamService(BaseService):
             yield _grpc_helpers.protobuf_to_dataclass(response,
                 PortfolioStreamResponse)
 
+    @handle_error_hub_gen()
     @handle_request_error_gen('PositionsStream')
     def positions_stream(self, request: 'PositionsStreamRequest'=
         PositionsStreamRequest()) ->Iterable['PositionsStreamResponse']:
@@ -800,12 +857,23 @@ class OperationsStreamService(BaseService):
             yield _grpc_helpers.protobuf_to_dataclass(response,
                 PositionsStreamResponse)
 
+    @handle_error_hub_gen()
+    @handle_request_error_gen('OperationsStream')
+    def operations_stream(self, request: 'OperationsStreamRequest'=
+        OperationsStreamRequest()) ->Iterable['OperationsStreamResponse']:
+        for response in self._stub.OperationsStream(request=
+            _grpc_helpers.dataclass_to_protobuf(request, self._protobuf.
+            OperationsStreamRequest()), metadata=self._metadata):
+            yield _grpc_helpers.protobuf_to_dataclass(response,
+                OperationsStreamResponse)
+
 
 class AsyncOperationsStreamService(BaseService):
     _protobuf = operations_pb2
     _protobuf_grpc = operations_pb2_grpc
     _protobuf_stub = _protobuf_grpc.OperationsStreamServiceStub
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen('PortfolioStream')
     async def portfolio_stream(self, request: 'PortfolioStreamRequest'=
         PortfolioStreamRequest()) ->AsyncIterable['PortfolioStreamResponse']:
@@ -816,6 +884,7 @@ class AsyncOperationsStreamService(BaseService):
             _grpc_helpers.protobuf_to_dataclass(response,
             PortfolioStreamResponse))
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen('PositionsStream')
     async def positions_stream(self, request: 'PositionsStreamRequest'=
         PositionsStreamRequest()) ->AsyncIterable['PositionsStreamResponse']:
@@ -825,3 +894,14 @@ class AsyncOperationsStreamService(BaseService):
             protobuf_request, metadata=self._metadata):(yield
             _grpc_helpers.protobuf_to_dataclass(response,
             PositionsStreamResponse))
+
+    @handle_aio_error_hub_gen()
+    @handle_aio_request_error_gen('OperationsStream')
+    async def operations_stream(self, request: 'OperationsStreamRequest'=
+        OperationsStreamRequest()) ->AsyncIterable['OperationsStreamResponse']:
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.OperationsStreamRequest())
+        async for response in self._stub.OperationsStream(request=
+            protobuf_request, metadata=self._metadata):(yield
+            _grpc_helpers.protobuf_to_dataclass(response,
+            OperationsStreamResponse))

@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import AsyncIterable, Iterable, List, Optional
 
 from t_tech.invest import _grpc_helpers
+from t_tech.invest._error_hub import handle_aio_error_hub_gen, handle_error_hub_gen
 from t_tech.invest._errors import (
     handle_aio_request_error,
     handle_aio_request_error_gen,
@@ -387,6 +388,7 @@ class OrderStateStreamResponse(_grpc_helpers.Message):
         time_in_force: 'TimeInForceType' = _grpc_helpers.message_field(11)
         order_type: 'OrderType' = _grpc_helpers.message_field(12)
         account_id: str = _grpc_helpers.string_field(13)
+        trade_order_id: str = _grpc_helpers.string_field(14)
         initial_order_price: 'MoneyValue' = _grpc_helpers.message_field(22)
         order_price: 'MoneyValue' = _grpc_helpers.message_field(23)
         amount: Optional['MoneyValue'] = _grpc_helpers.message_field(24,
@@ -411,6 +413,7 @@ class OrdersStreamService(BaseService):
     _protobuf_grpc = orders_pb2_grpc
     _protobuf_stub = _protobuf_grpc.OrdersStreamServiceStub
 
+    @handle_error_hub_gen()
     @handle_request_error_gen('TradesStream')
     def trades_stream(self, request: 'TradesStreamRequest'=
         TradesStreamRequest()) ->Iterable['TradesStreamResponse']:
@@ -420,6 +423,7 @@ class OrdersStreamService(BaseService):
             yield _grpc_helpers.protobuf_to_dataclass(response,
                 TradesStreamResponse)
 
+    @handle_error_hub_gen()
     @handle_request_error_gen('OrderStateStream')
     def order_state_stream(self, request: 'OrderStateStreamRequest'=
         OrderStateStreamRequest()) ->Iterable['OrderStateStreamResponse']:
@@ -435,6 +439,7 @@ class AsyncOrdersStreamService(BaseService):
     _protobuf_grpc = orders_pb2_grpc
     _protobuf_stub = _protobuf_grpc.OrdersStreamServiceStub
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen('TradesStream')
     async def trades_stream(self, request: 'TradesStreamRequest'=
         TradesStreamRequest()) ->AsyncIterable['TradesStreamResponse']:
@@ -445,6 +450,7 @@ class AsyncOrdersStreamService(BaseService):
             _grpc_helpers.protobuf_to_dataclass(response, TradesStreamResponse)
             )
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen('OrderStateStream')
     async def order_state_stream(self, request: 'OrderStateStreamRequest'=
         OrderStateStreamRequest()) ->AsyncIterable['OrderStateStreamResponse']:

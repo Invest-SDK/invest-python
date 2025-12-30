@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import AsyncIterable, Iterable, List, Optional
 
 from t_tech.invest import _grpc_helpers
+from t_tech.invest._error_hub import handle_aio_error_hub_gen, handle_error_hub_gen
 from t_tech.invest._errors import (
     handle_aio_request_error,
     handle_aio_request_error_gen,
@@ -946,6 +947,7 @@ class MarketDataStreamService(BaseService):
     _protobuf_grpc = marketdata_pb2_grpc
     _protobuf_stub = _protobuf_grpc.MarketDataStreamServiceStub
 
+    @handle_error_hub_gen()
     @handle_request_error_gen('MarketDataStream')
     def market_data_stream(self, requests: Iterable['MarketDataRequest']
         ) ->Iterable['MarketDataResponse']:
@@ -956,6 +958,7 @@ class MarketDataStreamService(BaseService):
             yield _grpc_helpers.protobuf_to_dataclass(response,
                 MarketDataResponse)
 
+    @handle_error_hub_gen()
     @handle_request_error_gen('MarketDataServerSideStream')
     def market_data_server_side_stream(self, request:
         'MarketDataServerSideStreamRequest'=MarketDataServerSideStreamRequest()
@@ -972,6 +975,7 @@ class AsyncMarketDataStreamService(BaseService):
     _protobuf_grpc = marketdata_pb2_grpc
     _protobuf_stub = _protobuf_grpc.MarketDataStreamServiceStub
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen('MarketDataStream')
     async def market_data_stream(self, request_iterator: AsyncIterable[
         'MarketDataRequest']) ->AsyncIterable['MarketDataResponse']:
@@ -982,6 +986,7 @@ class AsyncMarketDataStreamService(BaseService):
             protobuf_request_iterator, metadata=self._metadata):(yield
             _grpc_helpers.protobuf_to_dataclass(response, MarketDataResponse))
 
+    @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen('MarketDataServerSideStream')
     async def market_data_server_side_stream(self, request:
         'MarketDataServerSideStreamRequest'=MarketDataServerSideStreamRequest()
