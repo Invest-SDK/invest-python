@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "t-tech-investments"
-version = "0.3.2"
+version = "0.3.3"
 description = "T-Invest Python SDK"
 authors = ["Invest Public API Team <t-tech.python@ya.ru>"]
 license = "Apache-2.0"
