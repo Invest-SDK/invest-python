@@ -246,6 +246,7 @@ __all__ = (
 )
 
 
+@deprecated(deprecated_in="0.4.0")
 class AsyncServices:
     def __init__(
         self,
@@ -268,6 +269,7 @@ class AsyncServices:
         self.stop_orders = StopOrdersService(channel, metadata)
         self.signals = SignalsService(channel, metadata)
 
+    @deprecated(deprecated_in="0.4.0")
     def create_market_data_stream(self):
         from .market_data_stream.async_market_data_stream_manager import (
             AsyncMarketDataStreamManager,
@@ -277,6 +279,7 @@ class AsyncServices:
             market_data_stream=self.market_data_stream  # type: ignore[arg-type]
         )
 
+    @deprecated(deprecated_in="0.4.0")
     async def cancel_all_orders(self, account_id: AccountId) -> None:
         orders_service: OrdersService = self.orders
         stop_orders_service: StopOrdersService = self.stop_orders
@@ -303,6 +306,7 @@ class AsyncServices:
             ]
         )
 
+    @deprecated(deprecated_in="0.4.0")
     async def get_all_candles(
         self,
         *,
@@ -328,9 +332,11 @@ class AsyncServices:
                 yield candle
 
 
+@deprecated(deprecated_in="0.4.0")
 class InstrumentsService(_grpc_helpers.Service):
     _stub_factory = instruments_pb2_grpc.InstrumentsServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("TradingSchedules")
     async def trading_schedules(
         self,
@@ -356,6 +362,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, TradingSchedulesResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("BondBy")
     async def bond_by(
         self,
@@ -378,6 +385,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "BondBy")
         return _grpc_helpers.protobuf_to_dataclass(response, BondResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("Bonds")
     async def bonds(
         self,
@@ -399,6 +407,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, BondsResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("CurrencyBy")
     async def currency_by(
         self,
@@ -421,6 +430,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "CurrencyBy")
         return _grpc_helpers.protobuf_to_dataclass(response, CurrencyResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("Currencies")
     async def currencies(
         self,
@@ -442,6 +452,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, CurrenciesResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("EtfBy")
     async def etf_by(
         self,
@@ -464,6 +475,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "EtfBy")
         return _grpc_helpers.protobuf_to_dataclass(response, EtfResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("Etfs")
     async def etfs(
         self,
@@ -485,6 +497,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, EtfsResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("FutureBy")
     async def future_by(
         self,
@@ -507,6 +520,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "FutureBy")
         return _grpc_helpers.protobuf_to_dataclass(response, FutureResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("Futures")
     async def futures(
         self,
@@ -528,6 +542,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, FuturesResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("OptionBy")
     async def option_by(
         self,
@@ -567,6 +582,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "Options")
         return _grpc_helpers.protobuf_to_dataclass(response, OptionsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("OptionsBy")
     async def options_by(
         self, *, basic_asset_uid: str = "", basic_asset_position_uid: str = ""
@@ -585,6 +601,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, OptionsResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("ShareBy")
     async def share_by(
         self,
@@ -607,6 +624,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "ShareBy")
         return _grpc_helpers.protobuf_to_dataclass(response, ShareResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("Shares")
     async def shares(
         self,
@@ -627,6 +645,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "Shares")
         return _grpc_helpers.protobuf_to_dataclass(response, SharesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("Indicatives")
     async def indicatives(self, request: IndicativesRequest) -> IndicativesResponse:
         response_coro = self.stub.Indicatives(
@@ -639,6 +658,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "Indicatives")
         return _grpc_helpers.protobuf_to_dataclass(response, IndicativesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetAccruedInterests")
     async def get_accrued_interests(
         self,
@@ -669,6 +689,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, GetAccruedInterestsResponse
         )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetFuturesMargin")
     async def get_futures_margin(
         self, *, figi: str = "", instrument_id: str = ""
@@ -687,6 +708,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetFuturesMarginResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetInstrumentBy")
     async def get_instrument_by(
         self,
@@ -709,6 +731,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetInstrumentBy")
         return _grpc_helpers.protobuf_to_dataclass(response, InstrumentResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetDividends")
     async def get_dividends(
         self,
@@ -735,6 +758,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetDividends")
         return _grpc_helpers.protobuf_to_dataclass(response, GetDividendsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetBondCoupons")
     async def get_bond_coupons(
         self,
@@ -761,6 +785,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetBondCoupons")
         return _grpc_helpers.protobuf_to_dataclass(response, GetBondCouponsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetBondEvents")
     async def get_bond_events(
         self, request: GetBondEventsRequest
@@ -776,6 +801,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetBondEventsResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetAssetBy")
     async def get_asset_by(
         self,
@@ -794,6 +820,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetAssetBy")
         return _grpc_helpers.protobuf_to_dataclass(response, AssetResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetAssets")
     async def get_assets(
         self,
@@ -811,6 +838,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetAssets")
         return _grpc_helpers.protobuf_to_dataclass(response, AssetsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetFavorites")
     async def get_favorites(
         self,
@@ -830,6 +858,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetFavorites")
         return _grpc_helpers.protobuf_to_dataclass(response, GetFavoritesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("EditFavorites")
     async def edit_favorites(
         self,
@@ -855,6 +884,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "EditFavorites")
         return _grpc_helpers.protobuf_to_dataclass(response, EditFavoritesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("CreateFavoriteGroup")
     async def create_favorite_group(
         self,
@@ -874,6 +904,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, CreateFavoriteGroupResponse
         )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("DeleteFavoriteGroup")
     async def delete_favorite_group(
         self,
@@ -893,6 +924,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, DeleteFavoriteGroupResponse
         )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetFavoriteGroups")
     async def get_favorite_groups(
         self,
@@ -908,6 +940,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetFavoriteGroups")
         return _grpc_helpers.protobuf_to_dataclass(response, GetFavoriteGroupsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetCountries")
     async def get_countries(
         self,
@@ -923,6 +956,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetCountries")
         return _grpc_helpers.protobuf_to_dataclass(response, GetCountriesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("FindInstrument")
     async def find_instrument(
         self,
@@ -947,6 +981,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "FindInstrument")
         return _grpc_helpers.protobuf_to_dataclass(response, FindInstrumentResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetBrands")
     async def get_brands(
         self,
@@ -966,6 +1001,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetBrandsResponse)
 
     # noinspection PyShadowingBuiltins
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetBrandBy")
     async def get_brands_by(self, id: str = "") -> Brand:
         request = GetBrandRequest()
@@ -980,6 +1016,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetBrandBy")
         return _grpc_helpers.protobuf_to_dataclass(response, Brand)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetAssetFundamentals")
     async def get_asset_fundamentals(
         self, request: GetAssetFundamentalsRequest
@@ -998,6 +1035,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, GetAssetFundamentalsResponse
         )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetAssetReports")
     async def get_asset_reports(
         self, request: GetAssetReportsRequest
@@ -1012,6 +1050,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetAssetReports")
         return _grpc_helpers.protobuf_to_dataclass(response, GetAssetReportsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetConsensusForecasts")
     async def get_consensus_forecasts(
         self, request: GetConsensusForecastsRequest
@@ -1030,6 +1069,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, GetConsensusForecastsResponse
         )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetForecastBy")
     async def get_forecast_by(self, request: GetForecastRequest) -> GetForecastResponse:
         response_coro = self.stub.GetForecastBy(
@@ -1042,6 +1082,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetForecastBy")
         return _grpc_helpers.protobuf_to_dataclass(response, GetForecastResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetRiskRates")
     async def get_risk_rates(self, request: RiskRatesRequest) -> RiskRatesResponse:
         response_coro = self.stub.GetRiskRates(
@@ -1068,6 +1109,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetInsiderDeals")
         return _grpc_helpers.protobuf_to_dataclass(response, GetInsiderDealsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("StructuredNoteBy")
     async def get_structured_note_by(
         self, request: InstrumentRequest
@@ -1082,6 +1124,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "StructuredNoteBy")
         return _grpc_helpers.protobuf_to_dataclass(response, StructuredNoteResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("StructuredNotes")
     async def get_structured_notes(
         self, request: InstrumentsRequest
@@ -1122,9 +1165,11 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, DfaResponse)
 
 
+@deprecated(deprecated_in="0.4.0")
 class MarketDataService(_grpc_helpers.Service):
     _stub_factory = marketdata_pb2_grpc.MarketDataServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetCandles")
     async def get_candles(
         self,
@@ -1159,6 +1204,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetCandles")
         return _grpc_helpers.protobuf_to_dataclass(response, GetCandlesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetLastPrices")
     async def get_last_prices(
         self,
@@ -1187,6 +1233,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetLastPrices")
         return _grpc_helpers.protobuf_to_dataclass(response, GetLastPricesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetOrderBook")
     async def get_order_book(
         self, *, figi: str = "", depth: int = 0, instrument_id: str = ""
@@ -1205,6 +1252,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetOrderBook")
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrderBookResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetTradingStatus")
     async def get_trading_status(
         self, *, figi: str = "", instrument_id: str = ""
@@ -1222,6 +1270,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetTradingStatus")
         return _grpc_helpers.protobuf_to_dataclass(response, GetTradingStatusResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetTradingStatuses")
     async def get_trading_statuses(
         self, *, instrument_ids: Optional[List[str]] = None
@@ -1241,6 +1290,7 @@ class MarketDataService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, GetTradingStatusesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetLastTrades")
     async def get_last_trades(
         self,
@@ -1267,6 +1317,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetLastTrades")
         return _grpc_helpers.protobuf_to_dataclass(response, GetLastTradesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetClosePrices")
     async def get_close_prices(
         self,
@@ -1289,6 +1340,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetClosePrices")
         return _grpc_helpers.protobuf_to_dataclass(response, GetClosePricesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetTechAnalysis")
     async def get_tech_analysis(
         self,
@@ -1305,6 +1357,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetTechAnalysis")
         return _grpc_helpers.protobuf_to_dataclass(response, GetTechAnalysisResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetMarketValues")
     async def get_market_values(
         self,
@@ -1322,6 +1375,7 @@ class MarketDataService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetMarketValuesResponse)
 
 
+@deprecated(deprecated_in="0.4.0")
 class MarketDataStreamService(_grpc_helpers.Service):
     _stub_factory = marketdata_pb2_grpc.MarketDataStreamServiceStub
 
@@ -1343,6 +1397,7 @@ class MarketDataStreamService(_grpc_helpers.Service):
                 request, marketdata_pb2.MarketDataServerSideStreamRequest()
             )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("MarketDataStream")
     async def market_data_stream(
@@ -1355,6 +1410,7 @@ class MarketDataStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, MarketDataResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("MarketDataServerSideStream")
     async def market_data_server_side_stream(
@@ -1370,9 +1426,11 @@ class MarketDataStreamService(_grpc_helpers.Service):
             yield _grpc_helpers.protobuf_to_dataclass(response, MarketDataResponse)
 
 
+@deprecated(deprecated_in="0.4.0")
 class OperationsService(_grpc_helpers.Service):
     _stub_factory = operations_pb2_grpc.OperationsServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetOperations")
     async def get_operations(
         self,
@@ -1401,6 +1459,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetOperations")
         return _grpc_helpers.protobuf_to_dataclass(response, OperationsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetPortfolio")
     async def get_portfolio(self, *, account_id: str = "") -> PortfolioResponse:
         request = PortfolioRequest()
@@ -1415,6 +1474,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetPortfolio")
         return _grpc_helpers.protobuf_to_dataclass(response, PortfolioResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetPositions")
     async def get_positions(self, *, account_id: str = "") -> PositionsResponse:
         request = PositionsRequest()
@@ -1429,6 +1489,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetPositions")
         return _grpc_helpers.protobuf_to_dataclass(response, PositionsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetWithdrawLimits")
     async def get_withdraw_limits(
         self, *, account_id: str = ""
@@ -1445,6 +1506,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetWithdrawLimits")
         return _grpc_helpers.protobuf_to_dataclass(response, WithdrawLimitsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetBrokerReport")
     async def get_broker_report(
         self,
@@ -1467,6 +1529,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetBrokerReport")
         return _grpc_helpers.protobuf_to_dataclass(response, BrokerReportResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetDividendsForeignIssuer")
     async def get_dividends_foreign_issuer(
         self,
@@ -1499,6 +1562,7 @@ class OperationsService(_grpc_helpers.Service):
             response, GetDividendsForeignIssuerResponse
         )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetOperationsByCursor")
     async def get_operations_by_cursor(
         self,
@@ -1519,9 +1583,11 @@ class OperationsService(_grpc_helpers.Service):
         )
 
 
+@deprecated(deprecated_in="0.4.0")
 class OperationsStreamService(_grpc_helpers.Service):
     _stub_factory = operations_pb2_grpc.OperationsStreamServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("PortfolioStream")
     async def portfolio_stream(
@@ -1547,6 +1613,7 @@ class OperationsStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, PortfolioStreamResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("PositionsStream")
     async def positions_stream(
@@ -1576,6 +1643,7 @@ class OperationsStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, PositionsStreamResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("OperationsStream")
     async def operations_stream(
@@ -1593,9 +1661,11 @@ class OperationsStreamService(_grpc_helpers.Service):
             )
 
 
+@deprecated(deprecated_in="0.4.0")
 class OrdersStreamService(_grpc_helpers.Service):
     _stub_factory = orders_pb2_grpc.OrdersStreamServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("TradesStream")
     async def trades_stream(
@@ -1614,6 +1684,7 @@ class OrdersStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, TradesStreamResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("OrderStateStream")
     async def order_state_stream(
@@ -1630,9 +1701,11 @@ class OrdersStreamService(_grpc_helpers.Service):
             )
 
 
+@deprecated(deprecated_in="0.4.0")
 class OrdersService(_grpc_helpers.Service):
     _stub_factory = orders_pb2_grpc.OrdersServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("PostOrder")
     async def post_order(
         self,
@@ -1680,6 +1753,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "PostOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("PostOrderAsync")
     async def post_order_async(
         self, request: PostOrderAsyncRequest
@@ -1700,6 +1774,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "PostOrderAsync")
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderAsyncResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("CancelOrder")
     async def cancel_order(
         self,
@@ -1722,6 +1797,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "CancelOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, CancelOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetOrderState")
     async def get_order_state(
         self,
@@ -1746,6 +1822,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetOrderState")
         return _grpc_helpers.protobuf_to_dataclass(response, OrderState)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetOrders")
     async def get_orders(
         self,
@@ -1775,6 +1852,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetOrders")
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrdersResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("ReplaceOrder")
     async def replace_order(self, request: ReplaceOrderRequest) -> PostOrderResponse:
         response_coro = self.stub.ReplaceOrder(
@@ -1787,6 +1865,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "ReplaceOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetMaxLots")
     async def get_max_lots(self, request: GetMaxLotsRequest) -> GetMaxLotsResponse:
         response_coro = self.stub.GetMaxLots(
@@ -1799,6 +1878,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetMaxLots")
         return _grpc_helpers.protobuf_to_dataclass(response, GetMaxLotsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetOrderPrice")
     async def get_order_price(
         self, request: GetOrderPriceRequest
@@ -1814,9 +1894,11 @@ class OrdersService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrderPriceResponse)
 
 
+@deprecated(deprecated_in="0.4.0")
 class UsersService(_grpc_helpers.Service):
     _stub_factory = users_pb2_grpc.UsersServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetAccounts")
     async def get_accounts(self) -> GetAccountsResponse:
         request = GetAccountsRequest()
@@ -1830,6 +1912,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetAccounts")
         return _grpc_helpers.protobuf_to_dataclass(response, GetAccountsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetMarginAttributes")
     async def get_margin_attributes(
         self, *, account_id: str = ""
@@ -1850,6 +1933,7 @@ class UsersService(_grpc_helpers.Service):
             response, GetMarginAttributesResponse
         )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetUserTariff")
     async def get_user_tariff(self) -> GetUserTariffResponse:
         request = GetUserTariffRequest()
@@ -1863,6 +1947,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetUserTariff")
         return _grpc_helpers.protobuf_to_dataclass(response, GetUserTariffResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetInfo")
     async def get_info(self) -> GetInfoResponse:
         request = GetInfoRequest()
@@ -1876,6 +1961,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetInfo")
         return _grpc_helpers.protobuf_to_dataclass(response, GetInfoResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetBankAccounts")
     async def get_bank_accounts(self) -> GetBankAccountsResponse:
         request = GetBankAccountsRequest()
@@ -1889,6 +1975,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetBankAccounts")
         return _grpc_helpers.protobuf_to_dataclass(response, GetBankAccountsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("CurrencyTransfer")
     async def currency_transfer(
         self, request: CurrencyTransferRequest
@@ -1903,6 +1990,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "CurrencyTransfer")
         return _grpc_helpers.protobuf_to_dataclass(response, CurrencyTransferResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("PayIn")
     async def pay_in(self, request: PayInRequest) -> PayInResponse:
         response_coro = self.stub.PayIn(
@@ -1930,9 +2018,11 @@ class UsersService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetAccountValuesResponse)
 
 
+@deprecated(deprecated_in="0.4.0")
 class SandboxService(_grpc_helpers.Service):
     _stub_factory = sandbox_pb2_grpc.SandboxServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("OpenSandboxAccount")
     async def open_sandbox_account(
         self, name: Optional[str] = ""
@@ -1951,6 +2041,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, OpenSandboxAccountResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxAccounts")
     async def get_sandbox_accounts(self) -> GetAccountsResponse:
         request = GetAccountsRequest()
@@ -1966,6 +2057,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, GetAccountsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("CloseSandboxAccount")
     async def close_sandbox_account(
         self, *, account_id: str = ""
@@ -1986,6 +2078,7 @@ class SandboxService(_grpc_helpers.Service):
             response, CloseSandboxAccountResponse
         )
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("PostSandboxOrder")
     async def post_sandbox_order(
         self,
@@ -2030,6 +2123,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "PostSandboxOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("ReplaceSandboxOrder")
     async def replace_sandbox_order(
         self,
@@ -2047,6 +2141,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxOrders")
     async def get_sandbox_orders(self, *, account_id: str = "") -> GetOrdersResponse:
         request = GetOrdersRequest()
@@ -2061,6 +2156,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetSandboxOrders")
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrdersResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("CancelSandboxOrder")
     async def cancel_sandbox_order(
         self,
@@ -2085,6 +2181,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, CancelOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxOrderState")
     async def get_sandbox_order_state(
         self,
@@ -2111,6 +2208,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, OrderState)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxPositions")
     async def get_sandbox_positions(self, *, account_id: str = "") -> PositionsResponse:
         request = PositionsRequest()
@@ -2127,6 +2225,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, PositionsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxOperations")
     async def get_sandbox_operations(
         self,
@@ -2157,6 +2256,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, OperationsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxPortfolio")
     async def get_sandbox_portfolio(self, *, account_id: str = "") -> PortfolioResponse:
         request = PortfolioRequest()
@@ -2173,6 +2273,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, PortfolioResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("SandboxPayIn")
     async def sandbox_pay_in(
         self, *, account_id: str = "", amount: Optional[MoneyValue] = None
@@ -2191,6 +2292,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "SandboxPayIn")
         return _grpc_helpers.protobuf_to_dataclass(response, SandboxPayInResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxWithdrawLimits")
     async def get_sandbox_withdraw_limits(
         self,
@@ -2211,6 +2313,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, WithdrawLimitsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxMaxLots")
     async def get_sandbox_max_lots(
         self,
@@ -2227,6 +2330,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetSandboxMaxLots")
         return _grpc_helpers.protobuf_to_dataclass(response, GetMaxLotsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("PostSandboxOrderAsync")
     async def post_sandbox_order_async(
         self,
@@ -2245,6 +2349,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderAsyncResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("PostSandboxStopOrder")
     async def post_sandbox_stop_order(
         self, *, request: "PostStopOrderRequest"
@@ -2261,6 +2366,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, PostStopOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxStopOrders")
     async def get_sandbox_stop_orders(
         self, *, request: "GetStopOrdersRequest"
@@ -2277,6 +2383,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, GetStopOrdersResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("CancelSandboxStopOrder")
     async def cancel_sandbox_stop_order(
         self, *, request: "CancelStopOrderRequest"
@@ -2293,6 +2400,7 @@ class SandboxService(_grpc_helpers.Service):
         )
         return _grpc_helpers.protobuf_to_dataclass(response, CancelStopOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSandboxOrderPrice")
     async def get_sandbox_order_price(
         self, request: GetOrderPriceRequest
@@ -2310,9 +2418,11 @@ class SandboxService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrderPriceResponse)
 
 
+@deprecated(deprecated_in="0.4.0")
 class StopOrdersService(_grpc_helpers.Service):
     _stub_factory = stoporders_pb2_grpc.StopOrdersServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("PostStopOrder")
     async def post_stop_order(
         self,
@@ -2370,6 +2480,7 @@ class StopOrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "PostStopOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, PostStopOrderResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetStopOrders")
     async def get_stop_orders(
         self,
@@ -2396,6 +2507,7 @@ class StopOrdersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetStopOrders")
         return _grpc_helpers.protobuf_to_dataclass(response, GetStopOrdersResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("CancelStopOrder")
     async def cancel_stop_order(
         self, *, account_id: str = "", stop_order_id: str = ""
@@ -2414,9 +2526,11 @@ class StopOrdersService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, CancelStopOrderResponse)
 
 
+@deprecated(deprecated_in="0.4.0")
 class SignalsService(_grpc_helpers.Service):
     _stub_factory = signals_pb2_grpc.SignalServiceStub
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetSignals")
     async def get_signals(
         self,
@@ -2433,6 +2547,7 @@ class SignalsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "GetSignals")
         return _grpc_helpers.protobuf_to_dataclass(response, GetSignalsResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetStrategies")
     async def get_strategies(
         self,
