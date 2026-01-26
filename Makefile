@@ -83,6 +83,14 @@ install:
 publish:
 	@poetry publish --build --no-interaction --username=$(pypi_username) --password=$(pypi_password)
 
+.PHONY: publish-opensource
+publish-opensource:
+	@poetry publish --build --no-interaction -r opensource --username=$(pypi_username) --password=$(pypi_password)
+
+.PHONY: config-opensource
+config-opensource:
+	@poetry config repositories.opensource https://opensource.tbank.ru/api/v4/projects/238/packages/pypi
+
 .PHONY: download-protos
 download-protos:
 	$(POETRY_RUN) python -m scripts.download_protos
