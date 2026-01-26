@@ -1,21 +1,32 @@
 # T-Invest
 
-[![PyPI](https://img.shields.io/pypi/v/t-tech-investments)](https://pypi.org/project/t-tech-investments/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/t-tech-investments)](https://www.python.org/downloads/)
-[![Opensource](https://img.shields.io/pypi/l/t-tech-investments)](https://opensource.tbank.ru/invest/invest-python/-/blob/master/LICENSE)
-![PyPI - Downloads](https://img.shields.io/pypi/dw/t-tech-investments)
+[![PyPI](https://img.shields.io/gitlab/v/release/238?gitlab_url=https%3A%2F%2Fopensource.tbank.ru)](https://opensource.tbank.ru/invest/invest-python/-/packages)
+[![PyPI - Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https://opensource.tbank.ru/invest/invest-python/-/raw/master/pyproject.toml)](https://www.python.org/downloads/)
+[![Opensource](https://img.shields.io/gitlab/license/238?gitlab_url=https%3A%2F%2Fopensource.tbank.ru)](https://opensource.tbank.ru/invest/invest-python/-/blob/master/LICENSE)
 
-Данный репозиторий предоставляет клиент для взаимодействия с торговой платформой [Т-Инвестиции](https://www.tbank.ru/invest/) на языке Python.
+[//]: # (![PyPI - Downloads]&#40;https://img.shields.io/pypi/dw/t-investments&#41;)
+
+Данный репозиторий предоставляет клиент для взаимодействия с торговой платформой 
+[Т-Инвестиции](https://www.tbank.ru/invest/) на языке Python.
+
+Проект является продуктом независимой разработки и не связан с какими-либо компаниями. Библиотека распространяется 
+свободно и не является коммерческим продуктом или официальным выпуском какого-либо стороннего разработчика. Все 
+исходные материалы, архитектура и реализация созданы самостоятельно.
+
+The project is the result of independent development and is not affiliated with any companies. The library is 
+distributed freely and is not a commercial product or official release of any third-party vendor. All source materials,
+architecture, and implementation were created independently.
+
 
 - [Документация](https://opensource.tbank.ru/invest/invest-python/-/blob/master/README.md?ref_type=heads)
 - [Документация по Invest API](https://developer.tbank.ru/invest/intro/intro)
 
 ## Начало работы
 
-<!-- termynal -->
+<!-- terminal -->
 
 ```
-$ pip install t-tech-investments
+$ pip install t-tech-investments --index-url https://opensource.tbank.ru/api/v4/projects/238/packages/pypi/simple
 ```
 
 ## Возможности
@@ -41,7 +52,9 @@ with Client(TOKEN) as client:
 
 ### Переопределить target
 
-В T-Invest API есть два контура - "боевой", предназначенный для исполнения ордеров на бирже и "песочница", предназначенный для тестирования API и торговых гипотез, заявки с которого не выводятся на биржу, а исполняются в эмуляторе.
+В T-Invest API есть два контура - "боевой", предназначенный для исполнения ордеров на бирже и "песочница", 
+предназначенный для тестирования API и торговых гипотез, заявки с которого не выводятся на биржу, 
+а исполняются в эмуляторе.
 
 Переключение между контурами реализовано через target, INVEST_GRPC_API - "боевой", INVEST_GRPC_API_SANDBOX - "песочница"
 
