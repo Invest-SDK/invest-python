@@ -2,6 +2,9 @@
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[project]
+requires-python = ">=3.8.1"
+
 [tool.poetry]
 name = "t-tech-investments"
 version = "0.3.3"
