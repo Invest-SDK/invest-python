@@ -2,9 +2,9 @@ import logging
 import os
 from pprint import pprint
 
-from t_tech.invest import Client, InstrumentIdType
-from t_tech.invest.caching.instruments_cache.instruments_cache import InstrumentsCache
-from t_tech.invest.caching.instruments_cache.settings import InstrumentsCacheSettings
+from t_tech.invest.caching.overrides import InstrumentCacheableMethods
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.instruments import InstrumentIdType, InstrumentRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -13,26 +13,27 @@ logging.basicConfig(level=logging.INFO)
 
 
 def main():
-    with Client(TOKEN) as client:
+    with Client(
+        TOKEN, instrument_methods_to_cache=(InstrumentCacheableMethods.ETF_BY,)
+    ) as client:
         inst = client.instruments.etfs().instruments[-1]
         pprint(inst)
 
         from_server = client.instruments.etf_by(
-            id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_UID,
-            class_code=inst.class_code,
-            id=inst.uid,
+            request=InstrumentRequest(
+                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_UID,
+                class_code=inst.class_code,
+                id=inst.uid,
+            )
         )
         pprint(from_server)
 
-        settings = InstrumentsCacheSettings()
-        instruments_cache = InstrumentsCache(
-            settings=settings, instruments_service=client.instruments
-        )
-
-        from_cache = instruments_cache.etf_by(
-            id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_UID,
-            class_code=inst.class_code,
-            id=inst.uid,
+        from_cache = client.instruments.etf_by(
+            request=InstrumentRequest(
+                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_UID,
+                class_code=inst.class_code,
+                id=inst.uid,
+            )
         )
         pprint(from_cache)
 

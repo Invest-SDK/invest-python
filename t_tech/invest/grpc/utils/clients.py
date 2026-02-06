@@ -1,8 +1,12 @@
-from typing import List, Optional
+from typing import Iterable, List, Optional
 
 import grpc
 from grpc.aio import ClientInterceptor
 
+from t_tech.invest.caching.overrides import (
+    InstrumentCacheableMethods,
+    InstrumentCacheableMethodsToWarmup,
+)
 from t_tech.invest.channels import create_channel
 from t_tech.invest.constants import INVEST_GRPC_API_SANDBOX
 from t_tech.invest.grpc.utils.grpc_services import AsyncServices, Services
@@ -36,11 +40,30 @@ class Client:
         options: Optional[ChannelArgumentType] = None,
         app_name: Optional[str] = None,
         interceptors: Optional[List[ClientInterceptor]] = None,
+        instrument_methods_to_cache: Iterable[InstrumentCacheableMethods] = (
+            InstrumentCacheableMethods.SHARES,
+            InstrumentCacheableMethods.BONDS,
+            InstrumentCacheableMethods.ETFS,
+            InstrumentCacheableMethods.FUTURES,
+            InstrumentCacheableMethods.CURRENCIES,
+            InstrumentCacheableMethods.OPTIONS,
+            InstrumentCacheableMethods.SHARE_BY,
+            InstrumentCacheableMethods.BOND_BY,
+            InstrumentCacheableMethods.ETF_BY,
+            InstrumentCacheableMethods.FUTURE_BY,
+            InstrumentCacheableMethods.CURRENCY_BY,
+            InstrumentCacheableMethods.OPTION_BY,
+            InstrumentCacheableMethods.GET_INSTRUMENT_BY,
+
+        ),
+        warmup_cache_methods: Iterable[InstrumentCacheableMethodsToWarmup] = tuple(),
     ):
         self._token = token
         self._sandbox_token = sandbox_token
         self._options = options
         self._app_name = app_name
+        self._warmup_cache_methods = warmup_cache_methods
+        self._instrument_methods_to_cache = instrument_methods_to_cache
 
         self._channel = create_channel(target=target, options=options)
         if interceptors is None:
@@ -50,12 +73,16 @@ class Client:
 
     def __enter__(self) -> Services:
         channel = self._channel.__enter__()
-        return Services(
+        services = Services(
             channel,
             token=self._token,
             sandbox_token=self._sandbox_token,
             app_name=self._app_name,
+            instrument_methods_to_cache=self._instrument_methods_to_cache,
+            warmup_cache_methods=self._warmup_cache_methods,
         )
+        services.warmup_instruments_cache()
+        return services
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._channel.__exit__(exc_type, exc_val, exc_tb)
@@ -118,6 +145,23 @@ class AsyncClient:
         options: Optional[ChannelArgumentType] = None,
         app_name: Optional[str] = None,
         interceptors: Optional[List[ClientInterceptor]] = None,
+        instrument_methods_to_cache: Iterable[InstrumentCacheableMethods] = (
+            InstrumentCacheableMethods.SHARES,
+            InstrumentCacheableMethods.BONDS,
+            InstrumentCacheableMethods.ETFS,
+            InstrumentCacheableMethods.FUTURES,
+            InstrumentCacheableMethods.CURRENCIES,
+            InstrumentCacheableMethods.OPTIONS,
+            InstrumentCacheableMethods.SHARE_BY,
+            InstrumentCacheableMethods.BOND_BY,
+            InstrumentCacheableMethods.ETF_BY,
+            InstrumentCacheableMethods.FUTURE_BY,
+            InstrumentCacheableMethods.CURRENCY_BY,
+            InstrumentCacheableMethods.OPTION_BY,
+            InstrumentCacheableMethods.GET_INSTRUMENT_BY,
+
+        ),
+        warmup_cache_methods: Iterable[InstrumentCacheableMethodsToWarmup] = tuple(),
     ):
         self._token = token
         self._sandbox_token = sandbox_token
@@ -126,15 +170,21 @@ class AsyncClient:
         self._channel = create_channel(
             target=target, force_async=True, options=options, interceptors=interceptors
         )
+        self._warmup_cache_methods = warmup_cache_methods
+        self._instrument_methods_to_cache = instrument_methods_to_cache
 
     async def __aenter__(self) -> AsyncServices:
         channel = await self._channel.__aenter__()
-        return AsyncServices(
+        services = AsyncServices(
             channel,
             token=self._token,
             sandbox_token=self._sandbox_token,
             app_name=self._app_name,
+            instrument_methods_to_cache=self._instrument_methods_to_cache,
+            warmup_cache_methods=self._warmup_cache_methods,
         )
+        await services.warmup_instruments_cache()
+        return services
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self._channel.__aexit__(exc_type, exc_val, exc_tb)

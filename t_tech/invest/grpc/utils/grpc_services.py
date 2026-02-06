@@ -1,11 +1,21 @@
 import asyncio
 import logging
+import types
 from dataclasses import dataclass, fields
 from datetime import datetime
-from typing import Any, AsyncGenerator, Generator, Optional
+from typing import Any, AsyncGenerator, Generator, Iterable, Optional, Set
 
 import grpc
 
+from t_tech.invest.caching.instruments_cache.cache import (
+    InstrumentCallCache,
+    InstrumentCallCacheSettings,
+    cache_instrument_call,
+)
+from t_tech.invest.caching.overrides import (
+    InstrumentCacheableMethods,
+    InstrumentCacheableMethodsToWarmup,
+)
 from t_tech.invest.grpc.instruments import AsyncInstrumentsService, InstrumentsService
 from t_tech.invest.grpc.marketdata import (
     AsyncMarketDataService,
@@ -64,6 +74,8 @@ class Services:
         token: str,
         sandbox_token: Optional[str] = None,
         app_name: Optional[str] = None,
+        instrument_methods_to_cache: Iterable[InstrumentCacheableMethods] = tuple(),
+        warmup_cache_methods: Iterable[InstrumentCacheableMethodsToWarmup] = tuple(),
     ) -> None:
         metadata = get_metadata(token, app_name)
         sandbox_metadata = get_metadata(sandbox_token or token, app_name)
@@ -78,6 +90,8 @@ class Services:
         self.sandbox = SandboxService(channel, sandbox_metadata)
         self.stop_orders = StopOrdersService(channel, metadata)
         self.signals = SignalService(channel, metadata)
+        self._warmup_cache_methods = warmup_cache_methods
+        init_instruments_cache(self.instruments, instrument_methods_to_cache, warmup_cache_methods)
 
     def create_market_data_stream(self) -> MarketDataStreamManager:
         return MarketDataStreamManager(
@@ -155,6 +169,22 @@ class Services:
 
             previous_candles = current_candles
 
+    def warmup_instruments_cache(self):
+        for method in self._warmup_cache_methods:
+            logger.info("Warming up %s cache", method.value)
+            if method == InstrumentCacheableMethods.SHARES:
+                self.instruments.shares()
+            elif method == InstrumentCacheableMethods.BONDS:
+                self.instruments.bonds()
+            elif method == InstrumentCacheableMethods.ETFS:
+                self.instruments.etfs()
+            elif method == InstrumentCacheableMethods.FUTURES:
+                self.instruments.futures()
+            elif method == InstrumentCacheableMethods.CURRENCIES:
+                self.instruments.currencies()
+            elif method == InstrumentCacheableMethods.OPTIONS:
+                self.instruments.options()
+
 
 class AsyncServices:
     def __init__(
@@ -163,6 +193,8 @@ class AsyncServices:
         token: str,
         sandbox_token: Optional[str] = None,
         app_name: Optional[str] = None,
+        instrument_methods_to_cache: Iterable[InstrumentCacheableMethods] = tuple(),
+        warmup_cache_methods: Iterable[InstrumentCacheableMethodsToWarmup] = tuple(),
     ) -> None:
         metadata = get_metadata(token, app_name)
         sandbox_metadata = get_metadata(sandbox_token or token, app_name)
@@ -177,6 +209,8 @@ class AsyncServices:
         self.sandbox = AsyncSandboxService(channel, sandbox_metadata)
         self.stop_orders = AsyncStopOrdersService(channel, metadata)
         self.signals = AsyncSignalService(channel, metadata)
+        self._warmup_cache_methods = warmup_cache_methods
+        init_instruments_cache(self.instruments, instrument_methods_to_cache, warmup_cache_methods)
 
     def create_market_data_stream(self) -> AsyncMarketDataStreamManager:
         return AsyncMarketDataStreamManager(market_data_stream=self.market_data_stream)
@@ -237,7 +271,42 @@ class AsyncServices:
             )
             for candle in candles_response.candles:
                 yield candle  # pylint: disable=invalid-type
+    
+    async def warmup_instruments_cache(self):
+        async with asyncio.TaskGroup() as group:
+            for method in self._warmup_cache_methods:
+                logger.info("Warming up %s cache", method.value)
+                if method == InstrumentCacheableMethods.SHARES:
+                    group.create_task(self.instruments.shares())
+                elif method == InstrumentCacheableMethods.BONDS:
+                    group.create_task(self.instruments.bonds())
+                elif method == InstrumentCacheableMethods.ETFS:
+                    group.create_task(self.instruments.etfs())
+                elif method == InstrumentCacheableMethods.FUTURES:
+                    group.create_task(self.instruments.futures())
+                elif method == InstrumentCacheableMethods.CURRENCIES:
+                    group.create_task(self.instruments.currencies())
+                elif method == InstrumentCacheableMethods.OPTIONS:
+                    group.create_task(self.instruments.options())
 
+
+def init_instruments_cache(
+    instruments_service: InstrumentsService | AsyncInstrumentsService,
+    method_names: Iterable[InstrumentCacheableMethods],
+    warmup_cache_methods: Iterable[InstrumentCacheableMethodsToWarmup],
+) -> None:
+    has_cacheable_methods = False
+    for method_name in set(method_names) | set(warmup_cache_methods):
+        unbound = getattr(instruments_service.__class__, method_name, None)
+        if unbound is None:
+            continue
+        has_cacheable_methods = True
+        wrapped = cache_instrument_call(unbound)
+        bound = types.MethodType(wrapped, instruments_service)
+        setattr(instruments_service, method_name, bound)
+    if has_cacheable_methods:
+        setattr(instruments_service, '_instrument_call_cache', InstrumentCallCache(
+            InstrumentCallCacheSettings()))
 
 
 @dataclass(eq=False, repr=True)

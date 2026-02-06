@@ -179,5 +179,5 @@ module = ["tests.*", "examples.*"]
 check_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = ["t_tech.invest.caching.instruments_cache.*", "t_tech.invest.mock_services.*"]
+module = ["t_tech.invest.mock_services.*"]
 ignore_errors = true
