@@ -7,8 +7,7 @@ TOKEN = os.environ["INVEST_TOKEN"]
 
 def main():
     with Client(TOKEN) as client:
-        r = client.instruments.dfas(
-        )
+        r = client.instruments.dfas()
         for dfa in r.instruments:
             print(dfa)
 
