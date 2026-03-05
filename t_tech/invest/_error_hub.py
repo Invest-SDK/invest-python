@@ -1,7 +1,7 @@
 import datetime
 import re
 from functools import wraps
-from typing import Any, Callable, cast
+from typing import Any, Callable, Optional, cast
 
 import sentry_sdk
 from grpc import StatusCode
@@ -22,7 +22,7 @@ __all__ = (
 BEARER_PATTERN = re.compile(r"Bearer\s+[a-zA-Z0-9\-_\.]+", re.IGNORECASE)
 
 
-def sanitize_bearer_tokens(event, hint) -> Event | None:
+def sanitize_bearer_tokens(event, hint) -> Optional[Event]:
     def _sanitize_value(value):
         if isinstance(value, str):
             return BEARER_PATTERN.sub("[***Filtered***]", value)
