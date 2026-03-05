@@ -3150,8 +3150,8 @@ class GetAssetReportsRequest(_grpc_helpers.Message):
 class GetAssetReportsEvent(_grpc_helpers.Message):
     instrument_id: str = _grpc_helpers.string_field(1)
     report_date: datetime = _grpc_helpers.message_field(2)
-    period_year: datetime = _grpc_helpers.message_field(3)
-    period_num: datetime = _grpc_helpers.message_field(4)
+    period_year: int = _grpc_helpers.int32_field(3)
+    period_num: int = _grpc_helpers.int32_field(4)
     period_type: "AssetReportPeriodType" = _grpc_helpers.enum_field(5)
     created_at: datetime = _grpc_helpers.message_field(6)
 
