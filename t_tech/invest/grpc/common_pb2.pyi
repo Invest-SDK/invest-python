@@ -45,6 +45,8 @@ class _InstrumentTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper.
     """Индекс."""
     INSTRUMENT_TYPE_COMMODITY: _InstrumentType.ValueType  # 10
     """Товар."""
+    INSTRUMENT_TYPE_DFA: _InstrumentType.ValueType  # 11
+    """Цифровой актив."""
 
 class InstrumentType(_InstrumentType, metaclass=_InstrumentTypeEnumTypeWrapper):
     """Тип инструмента."""
@@ -70,6 +72,8 @@ INSTRUMENT_TYPE_INDEX: InstrumentType.ValueType  # 9
 """Индекс."""
 INSTRUMENT_TYPE_COMMODITY: InstrumentType.ValueType  # 10
 """Товар."""
+INSTRUMENT_TYPE_DFA: InstrumentType.ValueType  # 11
+"""Цифровой актив."""
 global___InstrumentType = InstrumentType
 
 class _InstrumentStatus:
@@ -136,6 +140,8 @@ class _SecurityTradingStatusEnumTypeWrapper(google.protobuf.internal.enum_type_w
     """Перерыв торговли в режиме внутренней ликвидности брокера."""
     SECURITY_TRADING_STATUS_DEALER_NOT_AVAILABLE_FOR_TRADING: _SecurityTradingStatus.ValueType  # 16
     """Недоступна торговля в режиме внутренней ликвидности брокера."""
+    SECURITY_TRADING_STATUS_STABILIZATION_AUCTION: _SecurityTradingStatus.ValueType  # 17
+    """Аукцион обновления цен."""
 
 class SecurityTradingStatus(_SecurityTradingStatus, metaclass=_SecurityTradingStatusEnumTypeWrapper):
     """Режим торгов инструмента"""
@@ -174,6 +180,8 @@ SECURITY_TRADING_STATUS_DEALER_BREAK_IN_TRADING: SecurityTradingStatus.ValueType
 """Перерыв торговли в режиме внутренней ликвидности брокера."""
 SECURITY_TRADING_STATUS_DEALER_NOT_AVAILABLE_FOR_TRADING: SecurityTradingStatus.ValueType  # 16
 """Недоступна торговля в режиме внутренней ликвидности брокера."""
+SECURITY_TRADING_STATUS_STABILIZATION_AUCTION: SecurityTradingStatus.ValueType  # 17
+"""Аукцион обновления цен."""
 global___SecurityTradingStatus = SecurityTradingStatus
 
 class _PriceType:

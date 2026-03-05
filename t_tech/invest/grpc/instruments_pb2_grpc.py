@@ -99,6 +99,16 @@ class InstrumentsServiceStub(object):
                 request_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentsRequest.SerializeToString,
                 response_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.SharesResponse.FromString,
                 )
+        self.DfaBy = channel.unary_unary(
+                '/tinkoff.public.invest.api.contract.v1.InstrumentsService/DfaBy',
+                request_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentRequest.SerializeToString,
+                response_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfaResponse.FromString,
+                )
+        self.Dfas = channel.unary_unary(
+                '/tinkoff.public.invest.api.contract.v1.InstrumentsService/Dfas',
+                request_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfasRequest.SerializeToString,
+                response_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfasResponse.FromString,
+                )
         self.Indicatives = channel.unary_unary(
                 '/tinkoff.public.invest.api.contract.v1.InstrumentsService/Indicatives',
                 request_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.IndicativesRequest.SerializeToString,
@@ -334,6 +344,20 @@ class InstrumentsServiceServicer(object):
 
     def Shares(self, request, context):
         """Shares — список акций
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DfaBy(self, request, context):
+        """DfaBy — получить цифровой актив по ее идентификатору
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Dfas(self, request, context):
+        """Dfas — список цифровых активов
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -590,6 +614,16 @@ def add_InstrumentsServiceServicer_to_server(servicer, server):
                     servicer.Shares,
                     request_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentsRequest.FromString,
                     response_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.SharesResponse.SerializeToString,
+            ),
+            'DfaBy': grpc.unary_unary_rpc_method_handler(
+                    servicer.DfaBy,
+                    request_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentRequest.FromString,
+                    response_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfaResponse.SerializeToString,
+            ),
+            'Dfas': grpc.unary_unary_rpc_method_handler(
+                    servicer.Dfas,
+                    request_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfasRequest.FromString,
+                    response_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfasResponse.SerializeToString,
             ),
             'Indicatives': grpc.unary_unary_rpc_method_handler(
                     servicer.Indicatives,
@@ -993,6 +1027,40 @@ class InstrumentsService(object):
         return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.InstrumentsService/Shares',
             t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentsRequest.SerializeToString,
             t__tech_dot_invest_dot_grpc_dot_instruments__pb2.SharesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DfaBy(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.InstrumentsService/DfaBy',
+            t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentRequest.SerializeToString,
+            t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfaResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Dfas(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.InstrumentsService/Dfas',
+            t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfasRequest.SerializeToString,
+            t__tech_dot_invest_dot_grpc_dot_instruments__pb2.DfasResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -57,6 +57,9 @@ from .schemas import (
     CurrencyTransferResponse,
     DeleteFavoriteGroupRequest,
     DeleteFavoriteGroupResponse,
+    DfaResponse,
+    DfasRequest,
+    DfasResponse,
     EditFavoritesActionType,
     EditFavoritesRequest,
     EditFavoritesRequestInstrument,
@@ -73,6 +76,8 @@ from .schemas import (
     GenerateDividendsForeignIssuerReportRequest,
     GetAccountsRequest,
     GetAccountsResponse,
+    GetAccountValuesRequest,
+    GetAccountValuesResponse,
     GetAccruedInterestsRequest,
     GetAccruedInterestsResponse,
     GetAssetFundamentalsRequest,
@@ -1033,6 +1038,33 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "StructuredNotes")
         return _grpc_helpers.protobuf_to_dataclass(response, StructuredNotesResponse)
 
+    @handle_request_error("Dfas")
+    def dfas(
+        self,
+    ) -> DfasResponse:
+        response, call = self.stub.Dfas.with_call(
+            request=_grpc_helpers.dataclass_to_protobuff(
+                DfasRequest(), instruments_pb2.DfasRequest()
+            ),
+            metadata=self.metadata,
+        )
+        log_request(get_tracking_id_from_call(call), "Dfas")
+        return _grpc_helpers.protobuf_to_dataclass(response, DfasResponse)
+
+    @handle_request_error("DfaBy")
+    def dfa_by(
+        self,
+        request: InstrumentRequest,
+    ) -> DfaResponse:
+        response, call = self.stub.DfaBy.with_call(
+            request=_grpc_helpers.dataclass_to_protobuff(
+                request, instruments_pb2.InstrumentRequest()
+            ),
+            metadata=self.metadata,
+        )
+        log_request(get_tracking_id_from_call(call), "DfaBy")
+        return _grpc_helpers.protobuf_to_dataclass(response, DfaResponse)
+
 
 class MarketDataService(_grpc_helpers.Service):
     _stub_factory = marketdata_pb2_grpc.MarketDataServiceStub
@@ -1789,6 +1821,19 @@ class UsersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "PayIn")
         return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)
 
+    @handle_request_error("GetAccountValues")
+    def get_account_values(
+        self, request: GetAccountValuesRequest
+    ) -> GetAccountValuesResponse:
+        response, call = self.stub.GetAccountValues.with_call(
+            request=_grpc_helpers.dataclass_to_protobuff(
+                request, users_pb2.GetAccountValuesRequest()
+            ),
+            metadata=self.metadata,
+        )
+        log_request(get_tracking_id_from_call(call), "GetAccountValues")
+        return _grpc_helpers.protobuf_to_dataclass(response, GetAccountValuesResponse)
+
 
 class SandboxService(_grpc_helpers.Service):
     _stub_factory = sandbox_pb2_grpc.SandboxServiceStub
@@ -2188,6 +2233,7 @@ class StopOrdersService(_grpc_helpers.Service):
         price_type: PriceType = PriceType(0),
         order_id: str = "",
         confirm_margin_trade: bool = False,
+        instant_execution: Optional[bool] = None,
     ) -> PostStopOrderResponse:
         request = PostStopOrderRequest()
         request.figi = figi
@@ -2211,6 +2257,8 @@ class StopOrdersService(_grpc_helpers.Service):
         request.order_id = order_id
         if confirm_margin_trade:
             request.confirm_margin_trade = confirm_margin_trade
+        if instant_execution is not None:
+            request.instant_execution = instant_execution
         response, call = self.stub.PostStopOrder.with_call(
             request=_grpc_helpers.dataclass_to_protobuff(
                 request, stoporders_pb2.PostStopOrderRequest()

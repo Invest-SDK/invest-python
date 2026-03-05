@@ -41,6 +41,8 @@ class _AccountTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._En
     """Дебетовый карточный счeт."""
     ACCOUNT_TYPE_SAVING: _AccountType.ValueType  # 6
     """Накопительный счeт."""
+    ACCOUNT_TYPE_DFA: _AccountType.ValueType  # 7
+    """Смарт-счет."""
 
 class AccountType(_AccountType, metaclass=_AccountTypeEnumTypeWrapper):
     """Тип счeта."""
@@ -59,6 +61,8 @@ ACCOUNT_TYPE_DEBIT: AccountType.ValueType  # 5
 """Дебетовый карточный счeт."""
 ACCOUNT_TYPE_SAVING: AccountType.ValueType  # 6
 """Накопительный счeт."""
+ACCOUNT_TYPE_DFA: AccountType.ValueType  # 7
+"""Смарт-счет."""
 global___AccountType = AccountType
 
 class _AccountStatus:
@@ -120,6 +124,29 @@ ACCOUNT_ACCESS_LEVEL_READ_ONLY: AccessLevel.ValueType  # 2
 ACCOUNT_ACCESS_LEVEL_NO_ACCESS: AccessLevel.ValueType  # 3
 """Доступа нет."""
 global___AccessLevel = AccessLevel
+
+class _AccountValue:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _AccountValueEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_AccountValue.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    ACCOUNT_VALUE_UNSPECIFIED: _AccountValue.ValueType  # 0
+    """Не определён."""
+    ACCOUNT_VALUE_MARGIN_FEE: _AccountValue.ValueType  # 1
+    """Размер комиссии за маржинальное кредитование."""
+    ACCOUNT_VALUE_AMOUNT_WITHOUT_EXTRA_FEE: _AccountValue.ValueType  # 2
+    """Остаток доступного лимита с текущей комиссией."""
+
+class AccountValue(_AccountValue, metaclass=_AccountValueEnumTypeWrapper): ...
+
+ACCOUNT_VALUE_UNSPECIFIED: AccountValue.ValueType  # 0
+"""Не определён."""
+ACCOUNT_VALUE_MARGIN_FEE: AccountValue.ValueType  # 1
+"""Размер комиссии за маржинальное кредитование."""
+ACCOUNT_VALUE_AMOUNT_WITHOUT_EXTRA_FEE: AccountValue.ValueType  # 2
+"""Остаток доступного лимита с текущей комиссией."""
+global___AccountValue = AccountValue
 
 @typing.final
 class GetAccountsRequest(google.protobuf.message.Message):
@@ -238,6 +265,7 @@ class GetMarginAttributesResponse(google.protobuf.message.Message):
     FUNDS_SUFFICIENCY_LEVEL_FIELD_NUMBER: builtins.int
     AMOUNT_OF_MISSING_FUNDS_FIELD_NUMBER: builtins.int
     CORRECTED_MARGIN_FIELD_NUMBER: builtins.int
+    GUARANTEE_FOR_FUTURES_FIELD_NUMBER: builtins.int
     @property
     def liquid_portfolio(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
         """Ликвидная стоимость портфеля. [Подробнее про ликвидный портфель](https://www.tbank.ru/invest/help/brokerage/account/margin/about/#q4)."""
@@ -262,6 +290,10 @@ class GetMarginAttributesResponse(google.protobuf.message.Message):
     def corrected_margin(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
         """Скорректированная маржа. Начальная маржа, в которой плановые позиции рассчитываются с учeтом активных заявок на покупку позиций лонг или продажу позиций шорт."""
 
+    @property
+    def guarantee_for_futures(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+        """Размер гарантийного обеспечения, заблокированного под фьючерсы."""
+
     def __init__(
         self,
         *,
@@ -271,9 +303,10 @@ class GetMarginAttributesResponse(google.protobuf.message.Message):
         funds_sufficiency_level: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
         amount_of_missing_funds: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
         corrected_margin: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
+        guarantee_for_futures: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["amount_of_missing_funds", b"amount_of_missing_funds", "corrected_margin", b"corrected_margin", "funds_sufficiency_level", b"funds_sufficiency_level", "liquid_portfolio", b"liquid_portfolio", "minimal_margin", b"minimal_margin", "starting_margin", b"starting_margin"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["amount_of_missing_funds", b"amount_of_missing_funds", "corrected_margin", b"corrected_margin", "funds_sufficiency_level", b"funds_sufficiency_level", "liquid_portfolio", b"liquid_portfolio", "minimal_margin", b"minimal_margin", "starting_margin", b"starting_margin"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["amount_of_missing_funds", b"amount_of_missing_funds", "corrected_margin", b"corrected_margin", "funds_sufficiency_level", b"funds_sufficiency_level", "guarantee_for_futures", b"guarantee_for_futures", "liquid_portfolio", b"liquid_portfolio", "minimal_margin", b"minimal_margin", "starting_margin", b"starting_margin"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["amount_of_missing_funds", b"amount_of_missing_funds", "corrected_margin", b"corrected_margin", "funds_sufficiency_level", b"funds_sufficiency_level", "guarantee_for_futures", b"guarantee_for_futures", "liquid_portfolio", b"liquid_portfolio", "minimal_margin", b"minimal_margin", "starting_margin", b"starting_margin"]) -> None: ...
 
 global___GetMarginAttributesResponse = GetMarginAttributesResponse
 
@@ -573,3 +606,90 @@ class PayInResponse(google.protobuf.message.Message):
     ) -> None: ...
 
 global___PayInResponse = PayInResponse
+
+@typing.final
+class GetAccountValuesRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    ACCOUNTS_FIELD_NUMBER: builtins.int
+    VALUES_FIELD_NUMBER: builtins.int
+    @property
+    def accounts(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
+        """Массив счетов пользователя."""
+
+    @property
+    def values(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___AccountValue.ValueType]:
+        """Массив запрашиваемых параметров."""
+
+    def __init__(
+        self,
+        *,
+        accounts: collections.abc.Iterable[builtins.str] | None = ...,
+        values: collections.abc.Iterable[global___AccountValue.ValueType] | None = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing.Literal["accounts", b"accounts", "values", b"values"]) -> None: ...
+
+global___GetAccountValuesRequest = GetAccountValuesRequest
+
+@typing.final
+class GetAccountValuesResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    ACCOUNTS_FIELD_NUMBER: builtins.int
+    @property
+    def accounts(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___AccountValuesWithParameters]:
+        """Массив счетов с параметрами."""
+
+    def __init__(
+        self,
+        *,
+        accounts: collections.abc.Iterable[global___AccountValuesWithParameters] | None = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing.Literal["accounts", b"accounts"]) -> None: ...
+
+global___GetAccountValuesResponse = GetAccountValuesResponse
+
+@typing.final
+class AccountValuesWithParameters(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    ACCOUNT_ID_FIELD_NUMBER: builtins.int
+    VALUES_FIELD_NUMBER: builtins.int
+    account_id: builtins.str
+    """Номер счета."""
+    @property
+    def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___InstrumentParameter]:
+        """Массив параметров инструмента."""
+
+    def __init__(
+        self,
+        *,
+        account_id: builtins.str = ...,
+        values: collections.abc.Iterable[global___InstrumentParameter] | None = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing.Literal["account_id", b"account_id", "values", b"values"]) -> None: ...
+
+global___AccountValuesWithParameters = AccountValuesWithParameters
+
+@typing.final
+class InstrumentParameter(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    NAME_FIELD_NUMBER: builtins.int
+    VALUE_FIELD_NUMBER: builtins.int
+    name: global___AccountValue.ValueType
+    """Тип запрашиваемого параметра."""
+    @property
+    def value(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+        """Значение запрашиваемого параметра."""
+
+    def __init__(
+        self,
+        *,
+        name: global___AccountValue.ValueType = ...,
+        value: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["value", b"value"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["name", b"name", "value", b"value"]) -> None: ...
+
+global___InstrumentParameter = InstrumentParameter

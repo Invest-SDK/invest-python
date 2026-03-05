@@ -53,6 +53,8 @@ def get_historical_candle(
         time=time,
         is_complete=is_complete,
         candle_source=candle_source,
+        volume_buy=45,
+        volume_sell=55,
     )
 
 

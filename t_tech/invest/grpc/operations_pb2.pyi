@@ -672,6 +672,7 @@ class PortfolioResponse(google.protobuf.message.Message):
     VIRTUAL_POSITIONS_FIELD_NUMBER: builtins.int
     DAILY_YIELD_FIELD_NUMBER: builtins.int
     DAILY_YIELD_RELATIVE_FIELD_NUMBER: builtins.int
+    TOTAL_AMOUNT_DFA_FIELD_NUMBER: builtins.int
     account_id: builtins.str
     """Идентификатор счета пользователя."""
     @property
@@ -726,6 +727,10 @@ class PortfolioResponse(google.protobuf.message.Message):
     def daily_yield_relative(self) -> t_tech.invest.grpc.common_pb2.Quotation:
         """Относительная доходность в день в %."""
 
+    @property
+    def total_amount_dfa(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+        """Общая стоимость смарт-активов в портфеле в рублях."""
+
     def __init__(
         self,
         *,
@@ -743,9 +748,10 @@ class PortfolioResponse(google.protobuf.message.Message):
         virtual_positions: collections.abc.Iterable[global___VirtualPortfolioPosition] | None = ...,
         daily_yield: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
         daily_yield_relative: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
+        total_amount_dfa: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["daily_yield", b"daily_yield", "daily_yield_relative", b"daily_yield_relative", "expected_yield", b"expected_yield", "total_amount_bonds", b"total_amount_bonds", "total_amount_currencies", b"total_amount_currencies", "total_amount_etf", b"total_amount_etf", "total_amount_futures", b"total_amount_futures", "total_amount_options", b"total_amount_options", "total_amount_portfolio", b"total_amount_portfolio", "total_amount_shares", b"total_amount_shares", "total_amount_sp", b"total_amount_sp"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["account_id", b"account_id", "daily_yield", b"daily_yield", "daily_yield_relative", b"daily_yield_relative", "expected_yield", b"expected_yield", "positions", b"positions", "total_amount_bonds", b"total_amount_bonds", "total_amount_currencies", b"total_amount_currencies", "total_amount_etf", b"total_amount_etf", "total_amount_futures", b"total_amount_futures", "total_amount_options", b"total_amount_options", "total_amount_portfolio", b"total_amount_portfolio", "total_amount_shares", b"total_amount_shares", "total_amount_sp", b"total_amount_sp", "virtual_positions", b"virtual_positions"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["daily_yield", b"daily_yield", "daily_yield_relative", b"daily_yield_relative", "expected_yield", b"expected_yield", "total_amount_bonds", b"total_amount_bonds", "total_amount_currencies", b"total_amount_currencies", "total_amount_dfa", b"total_amount_dfa", "total_amount_etf", b"total_amount_etf", "total_amount_futures", b"total_amount_futures", "total_amount_options", b"total_amount_options", "total_amount_portfolio", b"total_amount_portfolio", "total_amount_shares", b"total_amount_shares", "total_amount_sp", b"total_amount_sp"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["account_id", b"account_id", "daily_yield", b"daily_yield", "daily_yield_relative", b"daily_yield_relative", "expected_yield", b"expected_yield", "positions", b"positions", "total_amount_bonds", b"total_amount_bonds", "total_amount_currencies", b"total_amount_currencies", "total_amount_dfa", b"total_amount_dfa", "total_amount_etf", b"total_amount_etf", "total_amount_futures", b"total_amount_futures", "total_amount_options", b"total_amount_options", "total_amount_portfolio", b"total_amount_portfolio", "total_amount_shares", b"total_amount_shares", "total_amount_sp", b"total_amount_sp", "virtual_positions", b"virtual_positions"]) -> None: ...
 
 global___PortfolioResponse = PortfolioResponse
 
@@ -1313,12 +1319,15 @@ class GetBrokerReportResponse(google.protobuf.message.Message):
     ITEMSCOUNT_FIELD_NUMBER: builtins.int
     PAGESCOUNT_FIELD_NUMBER: builtins.int
     PAGE_FIELD_NUMBER: builtins.int
+    TASK_ID_FIELD_NUMBER: builtins.int
     itemsCount: builtins.int
     """Количество записей в отчете."""
     pagesCount: builtins.int
     """Количество страниц с данными отчета, начинается с 0."""
     page: builtins.int
     """Текущая страница, начинается с 0."""
+    task_id: builtins.str
+    """Идентификатор задачи формирования брокерского отчета."""
     @property
     def broker_report(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___BrokerReport]: ...
     def __init__(
@@ -1328,8 +1337,9 @@ class GetBrokerReportResponse(google.protobuf.message.Message):
         itemsCount: builtins.int = ...,
         pagesCount: builtins.int = ...,
         page: builtins.int = ...,
+        task_id: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing.Literal["broker_report", b"broker_report", "itemsCount", b"itemsCount", "page", b"page", "pagesCount", b"pagesCount"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["broker_report", b"broker_report", "itemsCount", b"itemsCount", "page", b"page", "pagesCount", b"pagesCount", "task_id", b"task_id"]) -> None: ...
 
 global___GetBrokerReportResponse = GetBrokerReportResponse
 
@@ -1832,7 +1842,7 @@ class GetOperationsByCursorRequest(google.protobuf.message.Message):
     account_id: builtins.str
     """Идентификатор счета клиента, обязательный параметр. Остальные параметры опциональны."""
     instrument_id: builtins.str
-    """Идентификатор инструмента — FIGI или UID инструмента."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     cursor: builtins.str
     """Идентификатор элемента, с которого начать формировать ответ."""
     limit: builtins.int

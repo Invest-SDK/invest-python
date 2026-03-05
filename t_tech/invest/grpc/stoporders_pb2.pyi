@@ -282,6 +282,7 @@ class PostStopOrderRequest(google.protobuf.message.Message):
     PRICE_TYPE_FIELD_NUMBER: builtins.int
     ORDER_ID_FIELD_NUMBER: builtins.int
     CONFIRM_MARGIN_TRADE_FIELD_NUMBER: builtins.int
+    INSTANT_EXECUTION_FIELD_NUMBER: builtins.int
     figi: builtins.str
     """Deprecated FIGI-идентификатор инструмента. Используйте `instrument_id`."""
     quantity: builtins.int
@@ -295,7 +296,7 @@ class PostStopOrderRequest(google.protobuf.message.Message):
     stop_order_type: global___StopOrderType.ValueType
     """Тип заявки."""
     instrument_id: builtins.str
-    """Идентификатор инструмента. Принимает значение `figi` или `instrument_uid`."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     exchange_order_type: global___ExchangeOrderType.ValueType
     """Тип дочерней биржевой заявки."""
     take_profit_type: global___TakeProfitType.ValueType
@@ -306,6 +307,8 @@ class PostStopOrderRequest(google.protobuf.message.Message):
     """Идентификатор запроса выставления поручения для целей идемпотентности в формате `UID`. Максимальная длина — 36 символов."""
     confirm_margin_trade: builtins.bool
     """Согласие на выставление заявки, которая может привести к непокрытой позиции, по умолчанию false."""
+    instant_execution: builtins.bool
+    """Признак необходимости моментальной активации, используется только для трейлинг-стопа."""
     @property
     def price(self) -> t_tech.invest.grpc.common_pb2.Quotation:
         """Цена за 1 инструмент биржевой заявки, которая будет выставлена при срабатывании по достижению `stop_price`. Чтобы получить стоимость лота, нужно умножить на лотность инструмента."""
@@ -341,13 +344,16 @@ class PostStopOrderRequest(google.protobuf.message.Message):
         price_type: t_tech.invest.grpc.common_pb2.PriceType.ValueType = ...,
         order_id: builtins.str = ...,
         confirm_margin_trade: builtins.bool = ...,
+        instant_execution: builtins.bool | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["_expire_date", b"_expire_date", "_figi", b"_figi", "_price", b"_price", "_stop_price", b"_stop_price", "expire_date", b"expire_date", "figi", b"figi", "price", b"price", "stop_price", b"stop_price", "trailing_data", b"trailing_data"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["_expire_date", b"_expire_date", "_figi", b"_figi", "_price", b"_price", "_stop_price", b"_stop_price", "account_id", b"account_id", "confirm_margin_trade", b"confirm_margin_trade", "direction", b"direction", "exchange_order_type", b"exchange_order_type", "expiration_type", b"expiration_type", "expire_date", b"expire_date", "figi", b"figi", "instrument_id", b"instrument_id", "order_id", b"order_id", "price", b"price", "price_type", b"price_type", "quantity", b"quantity", "stop_order_type", b"stop_order_type", "stop_price", b"stop_price", "take_profit_type", b"take_profit_type", "trailing_data", b"trailing_data"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["_expire_date", b"_expire_date", "_figi", b"_figi", "_instant_execution", b"_instant_execution", "_price", b"_price", "_stop_price", b"_stop_price", "expire_date", b"expire_date", "figi", b"figi", "instant_execution", b"instant_execution", "price", b"price", "stop_price", b"stop_price", "trailing_data", b"trailing_data"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["_expire_date", b"_expire_date", "_figi", b"_figi", "_instant_execution", b"_instant_execution", "_price", b"_price", "_stop_price", b"_stop_price", "account_id", b"account_id", "confirm_margin_trade", b"confirm_margin_trade", "direction", b"direction", "exchange_order_type", b"exchange_order_type", "expiration_type", b"expiration_type", "expire_date", b"expire_date", "figi", b"figi", "instant_execution", b"instant_execution", "instrument_id", b"instrument_id", "order_id", b"order_id", "price", b"price", "price_type", b"price_type", "quantity", b"quantity", "stop_order_type", b"stop_order_type", "stop_price", b"stop_price", "take_profit_type", b"take_profit_type", "trailing_data", b"trailing_data"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal["_expire_date", b"_expire_date"]) -> typing.Literal["expire_date"] | None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal["_figi", b"_figi"]) -> typing.Literal["figi"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal["_instant_execution", b"_instant_execution"]) -> typing.Literal["instant_execution"] | None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal["_price", b"_price"]) -> typing.Literal["price"] | None: ...
     @typing.overload
@@ -549,6 +555,7 @@ class StopOrder(google.protobuf.message.Message):
     EXCHANGE_ORDER_ID_FIELD_NUMBER: builtins.int
     TICKER_FIELD_NUMBER: builtins.int
     CLASS_CODE_FIELD_NUMBER: builtins.int
+    INSTANT_EXECUTION_FIELD_NUMBER: builtins.int
     stop_order_id: builtins.str
     """Уникальный идентификатор стоп-заявки."""
     lots_requested: builtins.int
@@ -575,6 +582,8 @@ class StopOrder(google.protobuf.message.Message):
     """Тикер инструмента."""
     class_code: builtins.str
     """Класс-код (секция торгов)."""
+    instant_execution: builtins.bool
+    """Признак необходимости моментальной активации, используется только для трейлинг-стопа."""
     @property
     def create_date(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Дата и время выставления заявки по UTC."""
@@ -621,9 +630,10 @@ class StopOrder(google.protobuf.message.Message):
         exchange_order_id: builtins.str | None = ...,
         ticker: builtins.str = ...,
         class_code: builtins.str = ...,
+        instant_execution: builtins.bool = ...,
     ) -> None: ...
     def HasField(self, field_name: typing.Literal["_exchange_order_id", b"_exchange_order_id", "activation_date_time", b"activation_date_time", "create_date", b"create_date", "exchange_order_id", b"exchange_order_id", "expiration_time", b"expiration_time", "price", b"price", "stop_price", b"stop_price", "trailing_data", b"trailing_data"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["_exchange_order_id", b"_exchange_order_id", "activation_date_time", b"activation_date_time", "class_code", b"class_code", "create_date", b"create_date", "currency", b"currency", "direction", b"direction", "exchange_order_id", b"exchange_order_id", "exchange_order_type", b"exchange_order_type", "expiration_time", b"expiration_time", "figi", b"figi", "instrument_uid", b"instrument_uid", "lots_requested", b"lots_requested", "order_type", b"order_type", "price", b"price", "status", b"status", "stop_order_id", b"stop_order_id", "stop_price", b"stop_price", "take_profit_type", b"take_profit_type", "ticker", b"ticker", "trailing_data", b"trailing_data"]) -> None: ...
+    def ClearField(self, field_name: typing.Literal["_exchange_order_id", b"_exchange_order_id", "activation_date_time", b"activation_date_time", "class_code", b"class_code", "create_date", b"create_date", "currency", b"currency", "direction", b"direction", "exchange_order_id", b"exchange_order_id", "exchange_order_type", b"exchange_order_type", "expiration_time", b"expiration_time", "figi", b"figi", "instant_execution", b"instant_execution", "instrument_uid", b"instrument_uid", "lots_requested", b"lots_requested", "order_type", b"order_type", "price", b"price", "status", b"status", "stop_order_id", b"stop_order_id", "stop_price", b"stop_price", "take_profit_type", b"take_profit_type", "ticker", b"ticker", "trailing_data", b"trailing_data"]) -> None: ...
     def WhichOneof(self, oneof_group: typing.Literal["_exchange_order_id", b"_exchange_order_id"]) -> typing.Literal["exchange_order_id"] | None: ...
 
 global___StopOrder = StopOrder

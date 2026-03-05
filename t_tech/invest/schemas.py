@@ -25,6 +25,7 @@ class SecurityTradingStatus(_grpc_helpers.Enum):
     SECURITY_TRADING_STATUS_DEALER_NORMAL_TRADING = 14
     SECURITY_TRADING_STATUS_DEALER_BREAK_IN_TRADING = 15
     SECURITY_TRADING_STATUS_DEALER_NOT_AVAILABLE_FOR_TRADING = 16
+    SECURITY_TRADING_STATUS_STABILIZATION_AUCTION = 17
 
 
 class InstrumentIdType(_grpc_helpers.Enum):
@@ -33,6 +34,7 @@ class InstrumentIdType(_grpc_helpers.Enum):
     INSTRUMENT_ID_TYPE_TICKER = 2
     INSTRUMENT_ID_TYPE_UID = 3
     INSTRUMENT_ID_TYPE_POSITION_UID = 4
+    INSTRUMENT_ID_TYPE_ID = 5
 
 
 class InstrumentStatus(_grpc_helpers.Enum):
@@ -158,6 +160,9 @@ class AccountType(_grpc_helpers.Enum):
     ACCOUNT_TYPE_TINKOFF_IIS = 2
     ACCOUNT_TYPE_INVEST_BOX = 3
     ACCOUNT_TYPE_INVEST_FUND = 4
+    ACCOUNT_TYPE_DEBIT = 5
+    ACCOUNT_TYPE_SAVING = 6
+    ACCOUNT_TYPE_DFA = 7
 
 
 class AccountStatus(_grpc_helpers.Enum):
@@ -321,6 +326,7 @@ class InstrumentType(_grpc_helpers.Enum):
     INSTRUMENT_TYPE_CLEARING_CERTIFICATE = 8
     INSTRUMENT_TYPE_INDEX = 9
     INSTRUMENT_TYPE_COMMODITY = 10
+    INSTRUMENT_TYPE_DFA = 11
 
 
 class OptionDirection(_grpc_helpers.Enum):
@@ -1821,6 +1827,10 @@ class Candle(_grpc_helpers.Message):
     time: datetime = _grpc_helpers.message_field(8)
     last_trade_ts: datetime = _grpc_helpers.message_field(9)
     instrument_uid: str = _grpc_helpers.string_field(10)
+    ticker: str = _grpc_helpers.string_field(11)
+    class_code: str = _grpc_helpers.string_field(12)
+    volume_buy: int = _grpc_helpers.int64_field(13)
+    volume_sell: int = _grpc_helpers.int64_field(14)
     candle_source_type: "CandleSource" = _grpc_helpers.enum_field(19)
 
 
@@ -2277,8 +2287,9 @@ class PortfolioResponse(_grpc_helpers.Message):
     virtual_positions: List["VirtualPortfolioPosition"] = _grpc_helpers.message_field(
         12
     )
-    daily_yield: MoneyValue = _grpc_helpers.message_field(16)
-    daily_yield_relative: Quotation = _grpc_helpers.message_field(17)
+    daily_yield: MoneyValue = _grpc_helpers.message_field(15)
+    daily_yield_relative: Quotation = _grpc_helpers.message_field(16)
+    total_amount_dfa: MoneyValue = _grpc_helpers.message_field(17)
 
 
 @dataclass(eq=False, repr=True)
@@ -2518,6 +2529,7 @@ class OrderStage(_grpc_helpers.Message):
 @dataclass(eq=False, repr=True)
 class ReplaceOrderRequest(_grpc_helpers.Message):
     account_id: str = _grpc_helpers.string_field(1)
+    order_id_type: "OrderIdType" = _grpc_helpers.message_field(5)
     order_id: str = _grpc_helpers.string_field(6)
     idempotency_key: str = _grpc_helpers.string_field(7)
     quantity: int = _grpc_helpers.int64_field(11)
@@ -2571,6 +2583,7 @@ class GetMarginAttributesResponse(_grpc_helpers.Message):
     funds_sufficiency_level: "Quotation" = _grpc_helpers.message_field(4)
     amount_of_missing_funds: "MoneyValue" = _grpc_helpers.message_field(5)
     corrected_margin: "MoneyValue" = _grpc_helpers.message_field(6)
+    guarantee_for_futures: "MoneyValue" = _grpc_helpers.message_field(7)
 
 
 @dataclass(eq=False, repr=True)
@@ -2661,6 +2674,7 @@ class PostStopOrderRequest(_grpc_helpers.Message):
     price_type: "PriceType" = _grpc_helpers.message_field(14)
     order_id: str = _grpc_helpers.string_field(15)
     confirm_margin_trade: bool = _grpc_helpers.bool_field(16)
+    instant_execution: Optional[bool] = _grpc_helpers.bool_field(17)
 
 
 @dataclass(eq=False, repr=True)
@@ -2721,6 +2735,9 @@ class StopOrder(_grpc_helpers.Message):  # pylint:disable=too-many-instance-attr
     status: "StopOrderStatusOption" = _grpc_helpers.message_field(15)
     exchange_order_type: "ExchangeOrderType" = _grpc_helpers.message_field(16)
     exchange_order_id: Optional[str] = _grpc_helpers.string_field(17)
+    ticker: str = _grpc_helpers.string_field(18)
+    class_code: str = _grpc_helpers.string_field(19)
+    instant_execution: bool = _grpc_helpers.bool_field(20)
 
 
 @dataclass(eq=False, repr=True)
@@ -2778,6 +2795,7 @@ class GetBrokerReportResponse(_grpc_helpers.Message):
     itemsCount: int = _grpc_helpers.int32_field(2)
     pagesCount: int = _grpc_helpers.int32_field(3)
     page: int = _grpc_helpers.int32_field(4)
+    task_id: str = _grpc_helpers.string_field(5)
 
 
 @dataclass(eq=False, repr=True)
@@ -3315,6 +3333,57 @@ class GetMaxLotsResponse(_grpc_helpers.Message):
 
 
 @dataclass(eq=False, repr=True)
+class DfasRequest(_grpc_helpers.Message):
+    pass
+
+
+@dataclass(eq=False, repr=True)
+class DfaResponse(_grpc_helpers.Message):
+    uid: str = _grpc_helpers.string_field(1)
+    ticker: str = _grpc_helpers.string_field(2)
+    name: str = _grpc_helpers.string_field(3)
+    position_uid: str = _grpc_helpers.string_field(4)
+    min_price_increment: "Quotation" = _grpc_helpers.message_field(5)
+    lot: int = _grpc_helpers.int32_field(6)
+    nominal: "MoneyValue" = _grpc_helpers.message_field(7)
+    currency: str = _grpc_helpers.string_field(8)
+    maturity_date: datetime = _grpc_helpers.message_field(9)
+    short_enabled_flag: bool = _grpc_helpers.bool_field(10)
+    api_trade_available_flag: bool = _grpc_helpers.bool_field(11)
+    buy_available_flag: bool = _grpc_helpers.bool_field(12)
+    sell_available_flag: bool = _grpc_helpers.bool_field(13)
+    limit_order_available_flag: bool = _grpc_helpers.bool_field(14)
+    market_order_available_flag: bool = _grpc_helpers.bool_field(15)
+    bestprice_order_available_flag: bool = _grpc_helpers.bool_field(16)
+    for_iis_flag: bool = _grpc_helpers.bool_field(17)
+    for_qual_investor_flag: bool = _grpc_helpers.bool_field(18)
+    type: str = _grpc_helpers.string_field(19)
+    basic_assets: List["BasicDfaAsset"] = _grpc_helpers.message_field(20)
+    forecast_yield: "ForecastYield" = _grpc_helpers.message_field(21)
+    yield_to_maturity: "Quotation" = _grpc_helpers.message_field(22)
+    coupon_value: "Quotation" = _grpc_helpers.message_field(23)
+    coupon_payment_frequency: int = _grpc_helpers.int32_field(24)
+    coupon_payment_date: datetime = _grpc_helpers.message_field(25)
+    aci_value: "Quotation" = _grpc_helpers.message_field(26)
+
+
+@dataclass(eq=False, repr=True)
+class BasicDfaAsset(_grpc_helpers.Message):
+    uid: str = _grpc_helpers.string_field(1)
+
+
+@dataclass(eq=False, repr=True)
+class ForecastYield(_grpc_helpers.Message):
+    min_value: "Quotation" = _grpc_helpers.message_field(1)
+    max_value: "Quotation" = _grpc_helpers.message_field(2)
+
+
+@dataclass(eq=False, repr=True)
+class DfasResponse(_grpc_helpers.Message):
+    instruments: List["DfaResponse"] = _grpc_helpers.message_field(1)
+
+
+@dataclass(eq=False, repr=True)
 class BuyLimitsView(_grpc_helpers.Message):
     buy_money_amount: "Quotation" = _grpc_helpers.message_field(1)
     buy_max_lots: int = _grpc_helpers.int64_field(2)
@@ -3590,6 +3659,12 @@ class YieldType(_grpc_helpers.Enum):
     YIELD_TYPE_PARTICIPATION = 3
 
 
+class AccountValue(_grpc_helpers.Enum):
+    ACCOUNT_VALUE_UNSPECIFIED = 0
+    ACCOUNT_VALUE_MARGIN_FEE = 1
+    ACCOUNT_VALUE_AMOUNT_WITHOUT_EXTRA_FEE = 2
+
+
 @dataclass(eq=False, repr=True)
 class GetBankAccountsRequest(_grpc_helpers.Message):
     pass
@@ -3632,3 +3707,26 @@ class PayInRequest(_grpc_helpers.Message):
 @dataclass(eq=False, repr=True)
 class PayInResponse(_grpc_helpers.Message):
     pass
+
+
+@dataclass(eq=False, repr=True)
+class GetAccountValuesRequest(_grpc_helpers.Message):
+    accounts: List[str] = _grpc_helpers.message_field(1)
+    values: List["AccountValue"] = _grpc_helpers.message_field(2)
+
+
+@dataclass(eq=False, repr=True)
+class GetAccountValuesResponse(_grpc_helpers.Message):
+    accounts: List["AccountValuesWithParameters"] = _grpc_helpers.message_field(1)
+
+
+@dataclass(eq=False, repr=True)
+class AccountValuesWithParameters(_grpc_helpers.Message):
+    account_id: str = _grpc_helpers.string_field(1)
+    values: List["InstrumentParameter"] = _grpc_helpers.message_field(2)
+
+
+@dataclass(eq=False, repr=True)
+class InstrumentParameter(_grpc_helpers.Message):
+    name: AccountValue = _grpc_helpers.message_field(1)
+    value: "MoneyValue" = _grpc_helpers.message_field(2)

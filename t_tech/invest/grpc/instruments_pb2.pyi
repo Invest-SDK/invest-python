@@ -177,9 +177,11 @@ class _InstrumentIdTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrappe
     """Уникальный идентификатор."""
     INSTRUMENT_ID_TYPE_POSITION_UID: _InstrumentIdType.ValueType  # 4
     """Идентификатор позиции."""
+    INSTRUMENT_ID_TYPE_ID: _InstrumentIdType.ValueType  # 5
+    """Универсальный тип идентификатора инструмента."""
 
 class InstrumentIdType(_InstrumentIdType, metaclass=_InstrumentIdTypeEnumTypeWrapper):
-    """Тип идентификатора инструмента. [Подробнее об идентификации инструментов](./faq_identification/)."""
+    """Тип идентификатора инструмента. [Подробнее об идентификации инструментов](/invest/intro/intro/faq_identification)."""
 
 INSTRUMENT_ID_UNSPECIFIED: InstrumentIdType.ValueType  # 0
 """Значение не определено."""
@@ -191,6 +193,8 @@ INSTRUMENT_ID_TYPE_UID: InstrumentIdType.ValueType  # 3
 """Уникальный идентификатор."""
 INSTRUMENT_ID_TYPE_POSITION_UID: InstrumentIdType.ValueType  # 4
 """Идентификатор позиции."""
+INSTRUMENT_ID_TYPE_ID: InstrumentIdType.ValueType  # 5
+"""Универсальный тип идентификатора инструмента."""
 global___InstrumentIdType = InstrumentIdType
 
 class _ShareType:
@@ -610,7 +614,7 @@ class InstrumentRequest(google.protobuf.message.Message):
     CLASS_CODE_FIELD_NUMBER: builtins.int
     ID_FIELD_NUMBER: builtins.int
     id_type: global___InstrumentIdType.ValueType
-    """Тип идентификатора инструмента. Возможные значения — `figi`, `ticker`. [Подробнее об идентификации инструментов](./faq_identification/)."""
+    """Тип идентификатора инструмента. Возможные значения — `figi`, `ticker`. [Подробнее об идентификации инструментов](/invest/intro/intro/faq_identification)."""
     class_code: builtins.str
     """Идентификатор `class_code`. Обязательный, если `id_type = ticker`."""
     id: builtins.str
@@ -742,7 +746,7 @@ class GetBondCouponsRequest(google.protobuf.message.Message):
     figi: builtins.str
     """FIGI-идентификатор инструмента."""
     instrument_id: builtins.str
-    """Идентификатор инструмента — `figi` или `instrument_uid`."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     @property
     def to(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Окончание запрашиваемого периода по UTC. Фильтрация по `coupon_date` — дата выплаты купона."""
@@ -876,7 +880,7 @@ class GetBondEventsResponse(google.protobuf.message.Message):
         COUPON_PERIOD_FIELD_NUMBER: builtins.int
         COUPON_INTEREST_RATE_FIELD_NUMBER: builtins.int
         instrument_id: builtins.str
-        """Идентификатор инструмента."""
+        """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
         event_number: builtins.int
         """Номер события для данного типа события."""
         event_type: global___GetBondEventsRequest.EventType.ValueType
@@ -3108,7 +3112,7 @@ class GetAccruedInterestsRequest(google.protobuf.message.Message):
     figi: builtins.str
     """FIGI-идентификатор инструмента."""
     instrument_id: builtins.str
-    """Идентификатор инструмента — `figi` или `instrument_uid`."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     @property
     def to(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Окончание запрашиваемого периода по UTC."""
@@ -3195,7 +3199,7 @@ class GetFuturesMarginRequest(google.protobuf.message.Message):
     figi: builtins.str
     """Идентификатор инструмента."""
     instrument_id: builtins.str
-    """Идентификатор инструмента — `figi` или `instrument_uid`."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     def __init__(
         self,
         *,
@@ -3476,7 +3480,7 @@ class GetDividendsRequest(google.protobuf.message.Message):
     figi: builtins.str
     """FIGI-идентификатор инструмента."""
     instrument_id: builtins.str
-    """Идентификатор инструмента — `figi` или `instrument_uid`."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     @property
     def to(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Окончание запрашиваемого периода по UTC. Фильтрация происходит по параметру `record_date` — дата фиксации реестра."""
@@ -5446,7 +5450,7 @@ class GetAssetReportsRequest(google.protobuf.message.Message):
     FROM_FIELD_NUMBER: builtins.int
     TO_FIELD_NUMBER: builtins.int
     instrument_id: builtins.str
-    """Идентификатор инструмента в формате UID."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     @property
     def to(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Окончание запрашиваемого периода по UTC."""
@@ -5680,7 +5684,7 @@ class GetForecastRequest(google.protobuf.message.Message):
 
     INSTRUMENT_ID_FIELD_NUMBER: builtins.int
     instrument_id: builtins.str
-    """Идентификатор инструмента."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     def __init__(
         self,
         *,
@@ -5858,7 +5862,7 @@ class RiskRatesRequest(google.protobuf.message.Message):
     INSTRUMENT_ID_FIELD_NUMBER: builtins.int
     @property
     def instrument_id(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
-        """Идентификаторы инструментов."""
+        """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
 
     def __init__(
         self,
@@ -6012,8 +6016,11 @@ class GetInsiderDealsRequest(google.protobuf.message.Message):
     LIMIT_FIELD_NUMBER: builtins.int
     NEXT_CURSOR_FIELD_NUMBER: builtins.int
     instrument_id: builtins.str
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     limit: builtins.int
+    """Количество выводимых записей в ответе, не больше 100."""
     next_cursor: builtins.str
+    """Курсор."""
     def __init__(
         self,
         *,
@@ -6150,3 +6157,213 @@ class GetInsiderDealsResponse(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing.Literal["_next_cursor", b"_next_cursor"]) -> typing.Literal["next_cursor"] | None: ...
 
 global___GetInsiderDealsResponse = GetInsiderDealsResponse
+
+@typing.final
+class DfasRequest(google.protobuf.message.Message):
+    """Запрос цифровых активов"""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    def __init__(
+        self,
+    ) -> None: ...
+
+global___DfasRequest = DfasRequest
+
+@typing.final
+class DfaResponse(google.protobuf.message.Message):
+    """Цифровой актив"""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing.final
+    class BasicAsset(google.protobuf.message.Message):
+        """Базовый актив."""
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        UID_FIELD_NUMBER: builtins.int
+        uid: builtins.str
+        """UID базового актива"""
+        def __init__(
+            self,
+            *,
+            uid: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing.Literal["uid", b"uid"]) -> None: ...
+
+    @typing.final
+    class ForecastYield(google.protobuf.message.Message):
+        """Прогнозная доходность смарт-портфелей."""
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        MIN_VALUE_FIELD_NUMBER: builtins.int
+        MAX_VALUE_FIELD_NUMBER: builtins.int
+        @property
+        def min_value(self) -> t_tech.invest.grpc.common_pb2.Quotation:
+            """Минимальное значение прогнозной доходности в %"""
+
+        @property
+        def max_value(self) -> t_tech.invest.grpc.common_pb2.Quotation:
+            """Максимальное значение прогнозной доходности в %"""
+
+        def __init__(
+            self,
+            *,
+            min_value: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
+            max_value: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing.Literal["max_value", b"max_value", "min_value", b"min_value"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing.Literal["max_value", b"max_value", "min_value", b"min_value"]) -> None: ...
+
+    UID_FIELD_NUMBER: builtins.int
+    TICKER_FIELD_NUMBER: builtins.int
+    NAME_FIELD_NUMBER: builtins.int
+    POSITION_UID_FIELD_NUMBER: builtins.int
+    MIN_PRICE_INCREMENT_FIELD_NUMBER: builtins.int
+    LOT_FIELD_NUMBER: builtins.int
+    NOMINAL_FIELD_NUMBER: builtins.int
+    CURRENCY_FIELD_NUMBER: builtins.int
+    MATURITY_DATE_FIELD_NUMBER: builtins.int
+    SHORT_ENABLED_FLAG_FIELD_NUMBER: builtins.int
+    API_TRADE_AVAILABLE_FLAG_FIELD_NUMBER: builtins.int
+    BUY_AVAILABLE_FLAG_FIELD_NUMBER: builtins.int
+    SELL_AVAILABLE_FLAG_FIELD_NUMBER: builtins.int
+    LIMIT_ORDER_AVAILABLE_FLAG_FIELD_NUMBER: builtins.int
+    MARKET_ORDER_AVAILABLE_FLAG_FIELD_NUMBER: builtins.int
+    BESTPRICE_ORDER_AVAILABLE_FLAG_FIELD_NUMBER: builtins.int
+    FOR_IIS_FLAG_FIELD_NUMBER: builtins.int
+    FOR_QUAL_INVESTOR_FLAG_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    BASIC_ASSETS_FIELD_NUMBER: builtins.int
+    FORECAST_YIELD_FIELD_NUMBER: builtins.int
+    YIELD_TO_MATURITY_FIELD_NUMBER: builtins.int
+    COUPON_VALUE_FIELD_NUMBER: builtins.int
+    COUPON_PAYMENT_FREQUENCY_FIELD_NUMBER: builtins.int
+    COUPON_PAYMENT_DATE_FIELD_NUMBER: builtins.int
+    ACI_VALUE_FIELD_NUMBER: builtins.int
+    uid: builtins.str
+    """Уникальный идентификатор инструмента."""
+    ticker: builtins.str
+    """Тикер инструмента."""
+    name: builtins.str
+    """Название инструмента."""
+    position_uid: builtins.str
+    """Уникальный идентификатор позиции."""
+    lot: builtins.int
+    """Количество лотов."""
+    currency: builtins.str
+    """Валюта."""
+    short_enabled_flag: builtins.bool
+    """Признак доступности для операций шорт."""
+    api_trade_available_flag: builtins.bool
+    """Признак доступности торгов по бумаге через API."""
+    buy_available_flag: builtins.bool
+    """Признак доступности для покупки."""
+    sell_available_flag: builtins.bool
+    """Признак доступности для продажи."""
+    limit_order_available_flag: builtins.bool
+    """Признак доступности выставления лимитной заявки по инструменту."""
+    market_order_available_flag: builtins.bool
+    """Признак доступности выставления рыночной заявки по инструменту."""
+    bestprice_order_available_flag: builtins.bool
+    """Признак доступности выставления bestprice заявки по инструменту."""
+    for_iis_flag: builtins.bool
+    """Возможность покупки/продажи на ИИС."""
+    for_qual_investor_flag: builtins.bool
+    """Флаг отображающий доступность торговли инструментом только для квалифицированных инвесторов."""
+    type: builtins.str
+    """Тип актива. Возможные значения: credit_portfolio_dfa, debt_dfa."""
+    coupon_payment_frequency: builtins.int
+    """Количество выплат в год."""
+    @property
+    def min_price_increment(self) -> t_tech.invest.grpc.common_pb2.Quotation:
+        """Шаг цены."""
+
+    @property
+    def nominal(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+        """Номинал."""
+
+    @property
+    def maturity_date(self) -> google.protobuf.timestamp_pb2.Timestamp:
+        """Дата погашения ЦФА в формате UTC."""
+
+    @property
+    def basic_assets(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___DfaResponse.BasicAsset]:
+        """Базовые активы, входящие в ЦФА."""
+
+    @property
+    def forecast_yield(self) -> global___DfaResponse.ForecastYield:
+        """Прогнозная доходность смарт-портфелей, в виде интервала в %."""
+
+    @property
+    def yield_to_maturity(self) -> t_tech.invest.grpc.common_pb2.Quotation:
+        """Доходность к погашению в %."""
+
+    @property
+    def coupon_value(self) -> t_tech.invest.grpc.common_pb2.Quotation:
+        """Величина купона."""
+
+    @property
+    def coupon_payment_date(self) -> google.protobuf.timestamp_pb2.Timestamp:
+        """Дата выплаты купона."""
+
+    @property
+    def aci_value(self) -> t_tech.invest.grpc.common_pb2.Quotation:
+        """Значение НКД (накопленного купонного дохода) на дату."""
+
+    def __init__(
+        self,
+        *,
+        uid: builtins.str = ...,
+        ticker: builtins.str = ...,
+        name: builtins.str = ...,
+        position_uid: builtins.str = ...,
+        min_price_increment: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
+        lot: builtins.int = ...,
+        nominal: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
+        currency: builtins.str = ...,
+        maturity_date: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        short_enabled_flag: builtins.bool = ...,
+        api_trade_available_flag: builtins.bool = ...,
+        buy_available_flag: builtins.bool = ...,
+        sell_available_flag: builtins.bool = ...,
+        limit_order_available_flag: builtins.bool = ...,
+        market_order_available_flag: builtins.bool = ...,
+        bestprice_order_available_flag: builtins.bool = ...,
+        for_iis_flag: builtins.bool = ...,
+        for_qual_investor_flag: builtins.bool = ...,
+        type: builtins.str = ...,
+        basic_assets: collections.abc.Iterable[global___DfaResponse.BasicAsset] | None = ...,
+        forecast_yield: global___DfaResponse.ForecastYield | None = ...,
+        yield_to_maturity: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
+        coupon_value: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
+        coupon_payment_frequency: builtins.int = ...,
+        coupon_payment_date: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        aci_value: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["aci_value", b"aci_value", "coupon_payment_date", b"coupon_payment_date", "coupon_value", b"coupon_value", "forecast_yield", b"forecast_yield", "maturity_date", b"maturity_date", "min_price_increment", b"min_price_increment", "nominal", b"nominal", "yield_to_maturity", b"yield_to_maturity"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["aci_value", b"aci_value", "api_trade_available_flag", b"api_trade_available_flag", "basic_assets", b"basic_assets", "bestprice_order_available_flag", b"bestprice_order_available_flag", "buy_available_flag", b"buy_available_flag", "coupon_payment_date", b"coupon_payment_date", "coupon_payment_frequency", b"coupon_payment_frequency", "coupon_value", b"coupon_value", "currency", b"currency", "for_iis_flag", b"for_iis_flag", "for_qual_investor_flag", b"for_qual_investor_flag", "forecast_yield", b"forecast_yield", "limit_order_available_flag", b"limit_order_available_flag", "lot", b"lot", "market_order_available_flag", b"market_order_available_flag", "maturity_date", b"maturity_date", "min_price_increment", b"min_price_increment", "name", b"name", "nominal", b"nominal", "position_uid", b"position_uid", "sell_available_flag", b"sell_available_flag", "short_enabled_flag", b"short_enabled_flag", "ticker", b"ticker", "type", b"type", "uid", b"uid", "yield_to_maturity", b"yield_to_maturity"]) -> None: ...
+
+global___DfaResponse = DfaResponse
+
+@typing.final
+class DfasResponse(google.protobuf.message.Message):
+    """Цифровые активы"""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    INSTRUMENTS_FIELD_NUMBER: builtins.int
+    @property
+    def instruments(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___DfaResponse]:
+        """Массив инструментов."""
+
+    def __init__(
+        self,
+        *,
+        instruments: collections.abc.Iterable[global___DfaResponse] | None = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing.Literal["instruments", b"instruments"]) -> None: ...
+
+global___DfasResponse = DfasResponse

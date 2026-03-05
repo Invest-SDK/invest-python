@@ -59,6 +59,9 @@ from .schemas import (
     CurrencyTransferResponse,
     DeleteFavoriteGroupRequest,
     DeleteFavoriteGroupResponse,
+    DfaResponse,
+    DfasRequest,
+    DfasResponse,
     EditFavoritesActionType,
     EditFavoritesRequest,
     EditFavoritesRequestInstrument,
@@ -75,6 +78,8 @@ from .schemas import (
     GenerateDividendsForeignIssuerReportRequest,
     GetAccountsRequest,
     GetAccountsResponse,
+    GetAccountValuesRequest,
+    GetAccountValuesResponse,
     GetAccruedInterestsRequest,
     GetAccruedInterestsResponse,
     GetAssetFundamentalsRequest,
@@ -164,6 +169,7 @@ from .schemas import (
     LastPriceType,
     MarketDataRequest,
     MarketDataResponse,
+    MarketDataServerSideStreamRequest,
     MoneyValue,
     OpenSandboxAccountRequest,
     OpenSandboxAccountResponse,
@@ -222,7 +228,7 @@ from .schemas import (
     TradingSchedulesRequest,
     TradingSchedulesResponse,
     WithdrawLimitsRequest,
-    WithdrawLimitsResponse, MarketDataServerSideStreamRequest,
+    WithdrawLimitsResponse,
 )
 from .typedefs import AccountId
 from .utils import get_intervals, now
@@ -1087,6 +1093,31 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "StructuredNotes")
         return _grpc_helpers.protobuf_to_dataclass(response, StructuredNotesResponse)
 
+    @handle_aio_request_error("Dfas")
+    async def get_dfas(self) -> DfasResponse:
+        request = DfasRequest()
+        response_coro = self.stub.Dfas(
+            request=_grpc_helpers.dataclass_to_protobuff(
+                request, instruments_pb2.DfasRequest()
+            ),
+            metadata=self.metadata,
+        )
+        response = await response_coro
+        log_request(await get_tracking_id_from_coro(response_coro), "Dfas")
+        return _grpc_helpers.protobuf_to_dataclass(response, DfasResponse)
+
+    @handle_aio_request_error("DfaBy")
+    async def get_dfa_by(self, request: InstrumentRequest) -> DfaResponse:
+        response_coro = self.stub.DfaBy(
+            request=_grpc_helpers.dataclass_to_protobuff(
+                request, instruments_pb2.InstrumentRequest()
+            ),
+            metadata=self.metadata,
+        )
+        response = await response_coro
+        log_request(await get_tracking_id_from_coro(response_coro), "DfaBy")
+        return _grpc_helpers.protobuf_to_dataclass(response, DfaResponse)
+
 
 class MarketDataService(_grpc_helpers.Service):
     _stub_factory = marketdata_pb2_grpc.MarketDataServiceStub
@@ -1302,10 +1333,10 @@ class MarketDataStreamService(_grpc_helpers.Service):
 
     @staticmethod
     async def _convert_market_data_server_side_stream_request(
-            request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
+        request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
     ) -> AsyncIterable[marketdata_pb2.MarketDataServerSideStreamRequest]:
         async for request in request_iterator:
-            yield _grpc_helpers.dataclass_to_protobuf(
+            yield _grpc_helpers.dataclass_to_protobuff(
                 request, marketdata_pb2.MarketDataServerSideStreamRequest()
             )
 
@@ -1324,14 +1355,14 @@ class MarketDataStreamService(_grpc_helpers.Service):
     @handle_aio_error_hub_gen()
     @handle_aio_request_error_gen("MarketDataServerSideStream")
     async def market_data_server_side_stream(
-            self,
-            request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
+        self,
+        request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
     ) -> AsyncIterable[MarketDataResponse]:
         async for response in self.stub.MarketDataServerSideStream(
-                request_iterator=self._convert_market_data_server_side_stream_request(
-                    request_iterator
-                ),
-                metadata=self.metadata,
+            request_iterator=self._convert_market_data_server_side_stream_request(
+                request_iterator
+            ),
+            metadata=self.metadata,
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, MarketDataResponse)
 
@@ -1881,6 +1912,20 @@ class UsersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "PayIn")
         return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)
 
+    @handle_aio_request_error("GetAccountValues")
+    async def get_account_values(
+        self, request: GetAccountValuesRequest
+    ) -> GetAccountValuesResponse:
+        response_coro = self.stub.GetAccountValues(
+            request=_grpc_helpers.dataclass_to_protobuff(
+                request, users_pb2.GetAccountValuesRequest()
+            ),
+            metadata=self.metadata,
+        )
+        response = await response_coro
+        log_request(await get_tracking_id_from_coro(response_coro), "GetAccountValues")
+        return _grpc_helpers.protobuf_to_dataclass(response, GetAccountValuesResponse)
+
 
 class SandboxService(_grpc_helpers.Service):
     _stub_factory = sandbox_pb2_grpc.SandboxServiceStub
@@ -2285,6 +2330,7 @@ class StopOrdersService(_grpc_helpers.Service):
         price_type: PriceType = PriceType(0),
         order_id: str = "",
         confirm_margin_trade: bool = False,
+        instant_execution: Optional[bool] = None,
     ) -> PostStopOrderResponse:
         # noinspection DuplicatedCode
         request = PostStopOrderRequest()
@@ -2309,6 +2355,8 @@ class StopOrdersService(_grpc_helpers.Service):
         request.order_id = order_id
         if confirm_margin_trade:
             request.confirm_margin_trade = confirm_margin_trade
+        if instant_execution is not None:
+            request.instant_execution = instant_execution
         response_coro = self.stub.PostStopOrder(
             request=_grpc_helpers.dataclass_to_protobuff(
                 request, stoporders_pb2.PostStopOrderRequest()

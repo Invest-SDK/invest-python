@@ -331,7 +331,7 @@ class PostOrderRequest(google.protobuf.message.Message):
     order_id: builtins.str
     """Идентификатор запроса выставления поручения для целей идемпотентности в формате UID. Максимальная длина 36 символов."""
     instrument_id: builtins.str
-    """Идентификатор инструмента, принимает значения Figi или Instrument_uid."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     time_in_force: global___TimeInForceType.ValueType
     """Алгоритм исполнения поручения, применяется только к лимитной заявке."""
     price_type: t_tech.invest.grpc.common_pb2.PriceType.ValueType
@@ -503,7 +503,7 @@ class PostOrderAsyncRequest(google.protobuf.message.Message):
     PRICE_TYPE_FIELD_NUMBER: builtins.int
     CONFIRM_MARGIN_TRADE_FIELD_NUMBER: builtins.int
     instrument_id: builtins.str
-    """Идентификатор инструмента, принимает значения Figi или Instrument_uid."""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     quantity: builtins.int
     """Количество лотов."""
     direction: global___OrderDirection.ValueType
@@ -903,6 +903,7 @@ class ReplaceOrderRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     ACCOUNT_ID_FIELD_NUMBER: builtins.int
+    ORDER_ID_TYPE_FIELD_NUMBER: builtins.int
     ORDER_ID_FIELD_NUMBER: builtins.int
     IDEMPOTENCY_KEY_FIELD_NUMBER: builtins.int
     QUANTITY_FIELD_NUMBER: builtins.int
@@ -911,6 +912,8 @@ class ReplaceOrderRequest(google.protobuf.message.Message):
     CONFIRM_MARGIN_TRADE_FIELD_NUMBER: builtins.int
     account_id: builtins.str
     """Номер счета."""
+    order_id_type: global___OrderIdType.ValueType
+    """Тип идентификатора заявки."""
     order_id: builtins.str
     """Идентификатор заявки на бирже."""
     idempotency_key: builtins.str
@@ -929,6 +932,7 @@ class ReplaceOrderRequest(google.protobuf.message.Message):
         self,
         *,
         account_id: builtins.str = ...,
+        order_id_type: global___OrderIdType.ValueType | None = ...,
         order_id: builtins.str = ...,
         idempotency_key: builtins.str = ...,
         quantity: builtins.int = ...,
@@ -936,8 +940,10 @@ class ReplaceOrderRequest(google.protobuf.message.Message):
         price_type: t_tech.invest.grpc.common_pb2.PriceType.ValueType | None = ...,
         confirm_margin_trade: builtins.bool = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["_price", b"_price", "_price_type", b"_price_type", "price", b"price", "price_type", b"price_type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["_price", b"_price", "_price_type", b"_price_type", "account_id", b"account_id", "confirm_margin_trade", b"confirm_margin_trade", "idempotency_key", b"idempotency_key", "order_id", b"order_id", "price", b"price", "price_type", b"price_type", "quantity", b"quantity"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["_order_id_type", b"_order_id_type", "_price", b"_price", "_price_type", b"_price_type", "order_id_type", b"order_id_type", "price", b"price", "price_type", b"price_type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["_order_id_type", b"_order_id_type", "_price", b"_price", "_price_type", b"_price_type", "account_id", b"account_id", "confirm_margin_trade", b"confirm_margin_trade", "idempotency_key", b"idempotency_key", "order_id", b"order_id", "order_id_type", b"order_id_type", "price", b"price", "price_type", b"price_type", "quantity", b"quantity"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal["_order_id_type", b"_order_id_type"]) -> typing.Literal["order_id_type"] | None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal["_price", b"_price"]) -> typing.Literal["price"] | None: ...
     @typing.overload
@@ -957,7 +963,7 @@ class GetMaxLotsRequest(google.protobuf.message.Message):
     account_id: builtins.str
     """Номер счета"""
     instrument_id: builtins.str
-    """Идентификатор инструмента, принимает значения Figi или instrument_uid"""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     @property
     def price(self) -> t_tech.invest.grpc.common_pb2.Quotation:
         """Цена инструмента"""
@@ -1071,7 +1077,7 @@ class GetOrderPriceRequest(google.protobuf.message.Message):
     account_id: builtins.str
     """Номер счета"""
     instrument_id: builtins.str
-    """Идентификатор инструмента, принимает значения Figi или instrument_uid"""
+    """Идентификатор инструмента. Принимает значение `figi`, `instrument_uid` или `ticker + '_' + class_code`."""
     direction: global___OrderDirection.ValueType
     """Направление заявки"""
     quantity: builtins.int
