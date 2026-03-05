@@ -1891,6 +1891,8 @@ class HistoricCandle(_grpc_helpers.Message):
     time: datetime = _grpc_helpers.message_field(6)
     is_complete: bool = _grpc_helpers.bool_field(7)
     candle_source: CandleSource = _grpc_helpers.message_field(9)
+    volume_buy: int = _grpc_helpers.int64_field(10)
+    volume_sell: int = _grpc_helpers.int64_field(11)
 
 
 @dataclass(eq=False, repr=True)
