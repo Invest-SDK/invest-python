@@ -87,6 +87,8 @@ class PostStopOrderRequest(_grpc_helpers.Message):
     price_type: 'PriceType' = _grpc_helpers.message_field(14)
     order_id: str = _grpc_helpers.string_field(15)
     confirm_margin_trade: bool = _grpc_helpers.bool_field(16)
+    instant_execution: Optional[bool] = _grpc_helpers.bool_field(17,
+        optional=True)
 
 
     @dataclass
@@ -150,6 +152,7 @@ class StopOrder(_grpc_helpers.Message):
         optional=True)
     ticker: str = _grpc_helpers.string_field(18)
     class_code: str = _grpc_helpers.string_field(19)
+    instant_execution: bool = _grpc_helpers.bool_field(20)
 
 
     @dataclass

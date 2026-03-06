@@ -22,6 +22,7 @@ class AccountType(_grpc_helpers.Enum):
     ACCOUNT_TYPE_INVEST_FUND = 4
     ACCOUNT_TYPE_DEBIT = 5
     ACCOUNT_TYPE_SAVING = 6
+    ACCOUNT_TYPE_DFA = 7
 
 
 class AccountStatus(_grpc_helpers.Enum):
@@ -37,6 +38,12 @@ class AccessLevel(_grpc_helpers.Enum):
     ACCOUNT_ACCESS_LEVEL_FULL_ACCESS = 1
     ACCOUNT_ACCESS_LEVEL_READ_ONLY = 2
     ACCOUNT_ACCESS_LEVEL_NO_ACCESS = 3
+
+
+class AccountValue(_grpc_helpers.Enum):
+    ACCOUNT_VALUE_UNSPECIFIED = 0
+    ACCOUNT_VALUE_MARGIN_FEE = 1
+    ACCOUNT_VALUE_AMOUNT_WITHOUT_EXTRA_FEE = 2
 
 
 @dataclass
@@ -74,6 +81,7 @@ class GetMarginAttributesResponse(_grpc_helpers.Message):
     funds_sufficiency_level: 'Quotation' = _grpc_helpers.message_field(4)
     amount_of_missing_funds: 'MoneyValue' = _grpc_helpers.message_field(5)
     corrected_margin: 'MoneyValue' = _grpc_helpers.message_field(6)
+    guarantee_for_futures: 'MoneyValue' = _grpc_helpers.message_field(7)
 
 
 @dataclass
@@ -161,6 +169,30 @@ class PayInResponse(_grpc_helpers.Message):
     pass
 
 
+@dataclass
+class GetAccountValuesRequest(_grpc_helpers.Message):
+    accounts: List[str] = _grpc_helpers.string_field(1)
+    values: List['AccountValue'] = _grpc_helpers.message_field(2)
+
+
+@dataclass
+class GetAccountValuesResponse(_grpc_helpers.Message):
+    accounts: List['AccountValuesWithParameters'
+        ] = _grpc_helpers.message_field(1)
+
+
+@dataclass
+class AccountValuesWithParameters(_grpc_helpers.Message):
+    account_id: str = _grpc_helpers.string_field(1)
+    values: List['InstrumentParameter'] = _grpc_helpers.message_field(2)
+
+
+@dataclass
+class InstrumentParameter(_grpc_helpers.Message):
+    name: 'AccountValue' = _grpc_helpers.message_field(1)
+    value: 'MoneyValue' = _grpc_helpers.message_field(2)
+
+
 class UsersService(BaseService):
     """/*С помощью сервиса можно получить: <br/> 1.
                        список счетов пользователя; <br/> 2. маржинальные показатели по счeту.*/"""
@@ -241,6 +273,17 @@ class UsersService(BaseService):
             protobuf_request, metadata=self._metadata)
         log_request(get_tracking_id_from_call(call), 'PayIn')
         return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)
+
+    @handle_request_error('GetAccountValues')
+    def get_account_values(self, request: 'GetAccountValuesRequest'=
+        GetAccountValuesRequest()) ->'GetAccountValuesResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.GetAccountValuesRequest())
+        response, call = self._stub.GetAccountValues.with_call(request=
+            protobuf_request, metadata=self._metadata)
+        log_request(get_tracking_id_from_call(call), 'GetAccountValues')
+        return _grpc_helpers.protobuf_to_dataclass(response,
+            GetAccountValuesResponse)
 
 
 class AsyncUsersService(BaseService):
@@ -336,3 +379,16 @@ class AsyncUsersService(BaseService):
         response = await response_coro
         log_request(await get_tracking_id_from_coro(response_coro), 'PayIn')
         return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)
+
+    @handle_aio_request_error('GetAccountValues')
+    async def get_account_values(self, request: 'GetAccountValuesRequest'=
+        GetAccountValuesRequest()) ->'GetAccountValuesResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.GetAccountValuesRequest())
+        response_coro = self._stub.GetAccountValues(request=
+            protobuf_request, metadata=self._metadata)
+        response = await response_coro
+        log_request(await get_tracking_id_from_coro(response_coro),
+            'GetAccountValues')
+        return _grpc_helpers.protobuf_to_dataclass(response,
+            GetAccountValuesResponse)

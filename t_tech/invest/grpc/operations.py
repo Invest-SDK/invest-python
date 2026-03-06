@@ -200,6 +200,7 @@ class PortfolioResponse(_grpc_helpers.Message):
         ] = _grpc_helpers.message_field(12)
     daily_yield: 'MoneyValue' = _grpc_helpers.message_field(15)
     daily_yield_relative: 'Quotation' = _grpc_helpers.message_field(16)
+    total_amount_dfa: 'MoneyValue' = _grpc_helpers.message_field(17)
 
 
 @dataclass
@@ -345,6 +346,7 @@ class GetBrokerReportResponse(_grpc_helpers.Message):
     itemsCount: int = _grpc_helpers.int32_field(2)
     pagesCount: int = _grpc_helpers.int32_field(3)
     page: int = _grpc_helpers.int32_field(4)
+    task_id: str = _grpc_helpers.string_field(5)
 
 
 @dataclass

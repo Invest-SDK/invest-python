@@ -65,6 +65,7 @@ class InstrumentIdType(_grpc_helpers.Enum):
     INSTRUMENT_ID_TYPE_TICKER = 2
     INSTRUMENT_ID_TYPE_UID = 3
     INSTRUMENT_ID_TYPE_POSITION_UID = 4
+    INSTRUMENT_ID_TYPE_ID = 5
 
 
 class ShareType(_grpc_helpers.Enum):
@@ -1487,6 +1488,57 @@ class GetInsiderDealsResponse(_grpc_helpers.Message):
         disclosure_date: datetime = _grpc_helpers.message_field(13)
 
 
+@dataclass
+class DfasRequest(_grpc_helpers.Message):
+    pass
+
+
+@dataclass
+class DfaResponse(_grpc_helpers.Message):
+    uid: str = _grpc_helpers.string_field(1)
+    ticker: str = _grpc_helpers.string_field(2)
+    name: str = _grpc_helpers.string_field(3)
+    position_uid: str = _grpc_helpers.string_field(4)
+    min_price_increment: 'Quotation' = _grpc_helpers.message_field(5)
+    lot: int = _grpc_helpers.int32_field(6)
+    nominal: 'MoneyValue' = _grpc_helpers.message_field(7)
+    currency: str = _grpc_helpers.string_field(8)
+    maturity_date: datetime = _grpc_helpers.message_field(9)
+    short_enabled_flag: bool = _grpc_helpers.bool_field(10)
+    api_trade_available_flag: bool = _grpc_helpers.bool_field(11)
+    buy_available_flag: bool = _grpc_helpers.bool_field(12)
+    sell_available_flag: bool = _grpc_helpers.bool_field(13)
+    limit_order_available_flag: bool = _grpc_helpers.bool_field(14)
+    market_order_available_flag: bool = _grpc_helpers.bool_field(15)
+    bestprice_order_available_flag: bool = _grpc_helpers.bool_field(16)
+    for_iis_flag: bool = _grpc_helpers.bool_field(17)
+    for_qual_investor_flag: bool = _grpc_helpers.bool_field(18)
+    type: str = _grpc_helpers.string_field(19)
+    basic_assets: List['BasicAsset'] = _grpc_helpers.message_field(20)
+    forecast_yield: 'ForecastYield' = _grpc_helpers.message_field(21)
+    yield_to_maturity: 'Quotation' = _grpc_helpers.message_field(22)
+    coupon_value: 'Quotation' = _grpc_helpers.message_field(23)
+    coupon_payment_frequency: int = _grpc_helpers.int32_field(24)
+    coupon_payment_date: datetime = _grpc_helpers.message_field(25)
+    aci_value: 'Quotation' = _grpc_helpers.message_field(26)
+
+
+    @dataclass
+    class BasicAsset(_grpc_helpers.Message):
+        uid: str = _grpc_helpers.string_field(1)
+
+
+    @dataclass
+    class ForecastYield(_grpc_helpers.Message):
+        min_value: 'Quotation' = _grpc_helpers.message_field(1)
+        max_value: 'Quotation' = _grpc_helpers.message_field(2)
+
+
+@dataclass
+class DfasResponse(_grpc_helpers.Message):
+    instruments: List['DfaResponse'] = _grpc_helpers.message_field(1)
+
+
 class InstrumentsService(BaseService):
     """/*Методы сервиса предназначены для получения:<br/>1. Информации об инструментах.<br/>2.
                             Расписания торговых сессий.<br/>3. Календаря выплат купонов по облигациям.<br/>4.
@@ -1658,6 +1710,25 @@ class InstrumentsService(BaseService):
             protobuf_request, metadata=self._metadata)
         log_request(get_tracking_id_from_call(call), 'Shares')
         return _grpc_helpers.protobuf_to_dataclass(response, SharesResponse)
+
+    @handle_request_error('DfaBy')
+    def dfa_by(self, request: 'InstrumentRequest'=InstrumentRequest()
+        ) ->'DfaResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.InstrumentRequest())
+        response, call = self._stub.DfaBy.with_call(request=
+            protobuf_request, metadata=self._metadata)
+        log_request(get_tracking_id_from_call(call), 'DfaBy')
+        return _grpc_helpers.protobuf_to_dataclass(response, DfaResponse)
+
+    @handle_request_error('Dfas')
+    def dfas(self, request: 'DfasRequest'=DfasRequest()) ->'DfasResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.DfasRequest())
+        response, call = self._stub.Dfas.with_call(request=protobuf_request,
+            metadata=self._metadata)
+        log_request(get_tracking_id_from_call(call), 'Dfas')
+        return _grpc_helpers.protobuf_to_dataclass(response, DfasResponse)
 
     @handle_request_error('Indicatives')
     def indicatives(self, request: 'IndicativesRequest'=IndicativesRequest()
@@ -2111,6 +2182,28 @@ class AsyncInstrumentsService(BaseService):
         response = await response_coro
         log_request(await get_tracking_id_from_coro(response_coro), 'Shares')
         return _grpc_helpers.protobuf_to_dataclass(response, SharesResponse)
+
+    @handle_aio_request_error('DfaBy')
+    async def dfa_by(self, request: 'InstrumentRequest'=InstrumentRequest()
+        ) ->'DfaResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.InstrumentRequest())
+        response_coro = self._stub.DfaBy(request=protobuf_request, metadata
+            =self._metadata)
+        response = await response_coro
+        log_request(await get_tracking_id_from_coro(response_coro), 'DfaBy')
+        return _grpc_helpers.protobuf_to_dataclass(response, DfaResponse)
+
+    @handle_aio_request_error('Dfas')
+    async def dfas(self, request: 'DfasRequest'=DfasRequest()
+        ) ->'DfasResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.DfasRequest())
+        response_coro = self._stub.Dfas(request=protobuf_request, metadata=
+            self._metadata)
+        response = await response_coro
+        log_request(await get_tracking_id_from_coro(response_coro), 'Dfas')
+        return _grpc_helpers.protobuf_to_dataclass(response, DfasResponse)
 
     @handle_aio_request_error('Indicatives')
     async def indicatives(self, request: 'IndicativesRequest'=

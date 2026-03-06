@@ -247,6 +247,8 @@ class OrderStage(_grpc_helpers.Message):
 @dataclass
 class ReplaceOrderRequest(_grpc_helpers.Message):
     account_id: str = _grpc_helpers.string_field(1)
+    order_id_type: Optional['OrderIdType'] = _grpc_helpers.message_field(5,
+        optional=True)
     order_id: str = _grpc_helpers.string_field(6)
     idempotency_key: str = _grpc_helpers.string_field(7)
     quantity: int = _grpc_helpers.int64_field(11)
