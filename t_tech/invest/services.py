@@ -1083,12 +1083,13 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "StructuredNotes")
         return _grpc_helpers.protobuf_to_dataclass(response, StructuredNotesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_request_error("Dfas")
     def dfas(
         self,
     ) -> DfasResponse:
         response, call = self.stub.Dfas.with_call(
-            request=_grpc_helpers.dataclass_to_protobuff(
+            request=_grpc_helpers.dataclass_to_protobuf(
                 DfasRequest(), instruments_pb2.DfasRequest()
             ),
             metadata=self.metadata,
@@ -1096,13 +1097,14 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Dfas")
         return _grpc_helpers.protobuf_to_dataclass(response, DfasResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_request_error("DfaBy")
     def dfa_by(
         self,
         request: InstrumentRequest,
     ) -> DfaResponse:
         response, call = self.stub.DfaBy.with_call(
-            request=_grpc_helpers.dataclass_to_protobuff(
+            request=_grpc_helpers.dataclass_to_protobuf(
                 request, instruments_pb2.InstrumentRequest()
             ),
             metadata=self.metadata,
@@ -1911,12 +1913,13 @@ class UsersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "PayIn")
         return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_request_error("GetAccountValues")
     def get_account_values(
         self, request: GetAccountValuesRequest
     ) -> GetAccountValuesResponse:
         response, call = self.stub.GetAccountValues.with_call(
-            request=_grpc_helpers.dataclass_to_protobuff(
+            request=_grpc_helpers.dataclass_to_protobuf(
                 request, users_pb2.GetAccountValuesRequest()
             ),
             metadata=self.metadata,

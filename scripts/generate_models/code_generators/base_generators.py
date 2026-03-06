@@ -19,6 +19,7 @@ from iprotopy.imports import ImportFrom
 from iprotopy.service_method_generator import (
     BaseServiceMethodGenerator as DefaultBaseServiceMethodGenerator,
 )
+from proto_schema_parser.ast import Option
 
 from scripts.generate_models.code_generators.imports_resolver import ProtobufImporter
 
@@ -135,6 +136,20 @@ class BaseServiceMethodGenerator(DefaultBaseServiceMethodGenerator):
         self._add_function_body_imports()
 
         decorator_list: list[expr] = []
+
+        if Option(name="deprecated", value=True) in method.elements:
+            self._importer.add_import(
+                ImportFrom(
+                    module="deprecation", names=[alias(name="deprecated")], level=0
+                )
+            )
+            decorator_list.append(
+                Call(
+                    func=Name(id="deprecated", ctx=Load()),
+                    args=[],
+                    keywords=[],
+                )
+            )
 
         if self.error_hub_handler:
             decorator_list.append(

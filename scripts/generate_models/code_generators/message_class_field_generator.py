@@ -5,27 +5,38 @@ from ast import (
     Attribute,
     Call,
     ClassDef,
+    Compare,
     Constant,
+    Expr,
+    For,
+    FormattedValue,
+    FunctionDef,
+    If,
+    IsNot,
+    JoinedStr,
+    List as AstList,
     Load,
     Name,
     Pass,
     Store,
     Subscript,
     alias,
+    arg,
+    arguments,
     keyword,
     stmt,
 )
-from typing import List
+from typing import Any, List
 
 from iprotopy.domestic_importer import DomesticImporter
-from iprotopy.imports import ImportFrom
+from iprotopy.imports import Import, ImportFrom
 from iprotopy.message_class_generator import (
     MessageClassGenerator as DefaultMessageClassGenerator,
 )
 from iprotopy.one_of_generator import OneOfGenerator
 from iprotopy.type_mapper import TypeMapper
 from proto_schema_parser import Field, FieldCardinality, Message
-from proto_schema_parser.ast import Comment, Enum, OneOf, Reserved
+from proto_schema_parser.ast import Comment, Enum, OneOf, Option, Reserved
 
 from scripts.generate_models.code_generators.annotation_generator import (
     AnnotationGenerator,
@@ -164,7 +175,7 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
         self._one_of_generator = OneOfGenerator(self._class_field_generator)
 
     def process_proto_message(self, current_element, **kwargs) -> ClassDef:
-        class_body: list[stmt] = []
+        class_body: List[stmt] = []
         elements = current_element.elements
         elements.sort(
             key=lambda x: 0
@@ -180,34 +191,23 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
             for element in elements
             if isinstance(element, Message) or isinstance(element, Enum)
         )
+        deprecated_fields: List[str] = []
         for element in elements:
-            if isinstance(element, Field):
-                class_body.append(
-                    self._class_field_generator.process_field(
-                        element,
-                        outer_class_name=kwargs.get("outer_class_name"),
-                        inner_classes=inner_classes,
-                    )
+            self._process_element(
+                element,
+                class_body,
+                inner_classes,
+                class_name,
+                deprecated_fields,
+                kwargs.get("outer_class_name"),
+            )
+        if deprecated_fields:
+            self._importer.add_import(Import(names=[alias(name="warnings")]))
+            class_body.append(
+                self._get_post_import_deprecation_warning(
+                    deprecated_fields,
                 )
-            elif isinstance(element, Comment):
-                continue
-            elif isinstance(element, Enum):
-                proto_enum_processor = EnumGenerator(self._importer)
-                class_body.append(proto_enum_processor.process_enum(element))
-            elif isinstance(element, OneOf):
-                class_body.extend(self._one_of_generator.process(element))
-            elif isinstance(element, Message):
-                class_body.append(
-                    self.process_proto_message(
-                        element,
-                        outer_class_name=class_name,
-                        inner_classes=inner_classes,
-                    )
-                )
-            elif isinstance(element, Reserved):
-                continue
-            else:
-                raise NotImplementedError(f"Unknown element {element}")
+            )
         if not class_body:
             class_body.append(Pass())
         self._importer.add_import(
@@ -239,3 +239,129 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
             )
         )
         return message
+
+    def _process_element(
+        self,
+        element: Any,
+        class_body: List[stmt],
+        inner_classes: List[str],
+        class_name: str,
+        deprecated_fields: List[str],
+        outer_class_name: Any | None,
+    ) -> None:
+        if isinstance(element, Field):
+            new_field = self._class_field_generator.process_field(
+                element,
+                outer_class_name=outer_class_name,
+                inner_classes=inner_classes,
+            )
+            class_body.append(new_field)
+            if Option(name="deprecated", value=True) in element.options:
+                if isinstance(new_field.target, Name):
+                    deprecated_fields.append(new_field.target.id)
+        elif isinstance(element, Comment):
+            return
+        elif isinstance(element, Enum):
+            proto_enum_processor = EnumGenerator(self._importer)
+            class_body.append(proto_enum_processor.process_enum(element))
+        elif isinstance(element, OneOf):
+            class_body.extend(self._one_of_generator.process(element))
+        elif isinstance(element, Message):
+            class_body.append(
+                self.process_proto_message(
+                    element,
+                    outer_class_name=class_name,
+                    inner_classes=inner_classes,
+                )
+            )
+        elif isinstance(element, Reserved):
+            return
+        else:
+            raise NotImplementedError(f"Unknown element {element}")
+
+    def _get_post_import_deprecation_warning(
+        self, deprecated_fields: List[str]
+    ) -> FunctionDef:
+        class_name_expr = Attribute(
+            value=Attribute(
+                value=Name(id="self", ctx=Load()),
+                attr="__class__",
+                ctx=Load(),
+            ),
+            attr="__name__",
+            ctx=Load(),
+        )
+
+        message_fstring = JoinedStr(
+            values=[
+                FormattedValue(value=class_name_expr, conversion=-1),
+                Constant("."),
+                FormattedValue(
+                    value=Name(id="deprecated_field", ctx=Load()), conversion=-1
+                ),
+                Constant(" is deprecated"),
+            ]
+        )
+
+        return FunctionDef(
+            name="__post_init__",
+            args=arguments(
+                posonlyargs=[],
+                args=[arg(arg="self")],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[],
+            ),
+            body=[
+                For(
+                    target=Name(id="deprecated_field", ctx=Store()),
+                    iter=AstList(
+                        elts=[Constant(f) for f in deprecated_fields],
+                        ctx=Load(),
+                    ),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Name(id="getattr", ctx=Load()),
+                                    args=[
+                                        Name(id="self", ctx=Load()),
+                                        Name(id="deprecated_field", ctx=Load()),
+                                    ],
+                                    keywords=[],
+                                ),
+                                ops=[IsNot()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id="_grpc_helpers", ctx=Load()),
+                                        attr="PLACEHOLDER",
+                                        ctx=Load(),
+                                    )
+                                ],
+                            ),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id="warnings", ctx=Load()),
+                                            attr="warn",
+                                            ctx=Load(),
+                                        ),
+                                        args=[
+                                            message_fstring,
+                                            Name(id="DeprecationWarning", ctx=Load()),
+                                        ],
+                                        keywords=[
+                                            keyword(arg="stacklevel", value=Constant(2))
+                                        ],
+                                    )
+                                )
+                            ],
+                            orelse=[],
+                        )
+                    ],
+                    orelse=[],
+                )
+            ],
+            decorator_list=[],
+        )

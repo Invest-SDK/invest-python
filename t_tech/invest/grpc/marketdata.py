@@ -1,3 +1,4 @@
+import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from typing import AsyncIterable, Iterable, List, Optional
@@ -202,6 +203,14 @@ class CandleInstrument(_grpc_helpers.Message):
     interval: 'SubscriptionInterval' = _grpc_helpers.message_field(2)
     instrument_id: str = _grpc_helpers.string_field(3)
 
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class SubscribeCandlesResponse(_grpc_helpers.Message):
@@ -239,6 +248,14 @@ class OrderBookInstrument(_grpc_helpers.Message):
     instrument_id: str = _grpc_helpers.string_field(3)
     order_book_type: 'OrderBookType' = _grpc_helpers.message_field(4)
 
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class SubscribeOrderBookResponse(_grpc_helpers.Message):
@@ -274,6 +291,14 @@ class TradeInstrument(_grpc_helpers.Message):
     figi: str = _grpc_helpers.string_field(1)
     instrument_id: str = _grpc_helpers.string_field(2)
 
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class SubscribeTradesResponse(_grpc_helpers.Message):
@@ -307,6 +332,14 @@ class InfoInstrument(_grpc_helpers.Message):
     figi: str = _grpc_helpers.string_field(1)
     instrument_id: str = _grpc_helpers.string_field(2)
 
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class SubscribeInfoResponse(_grpc_helpers.Message):
@@ -337,6 +370,14 @@ class SubscribeLastPriceRequest(_grpc_helpers.Message):
 class LastPriceInstrument(_grpc_helpers.Message):
     figi: str = _grpc_helpers.string_field(1)
     instrument_id: str = _grpc_helpers.string_field(2)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -441,6 +482,14 @@ class GetCandlesRequest(_grpc_helpers.Message):
         CANDLE_SOURCE_EXCHANGE = 1
         CANDLE_SOURCE_INCLUDE_WEEKEND = 3
 
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class GetCandlesResponse(_grpc_helpers.Message):
@@ -468,6 +517,14 @@ class GetLastPricesRequest(_grpc_helpers.Message):
     last_price_type: 'LastPriceType' = _grpc_helpers.message_field(3)
     instrument_status: Optional['InstrumentStatus'
         ] = _grpc_helpers.message_field(9, optional=True)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -501,6 +558,14 @@ class GetOrderBookRequest(_grpc_helpers.Message):
     depth: int = _grpc_helpers.int32_field(2)
     instrument_id: Optional[str] = _grpc_helpers.string_field(3, optional=True)
 
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class GetOrderBookResponse(_grpc_helpers.Message):
@@ -524,6 +589,14 @@ class GetOrderBookResponse(_grpc_helpers.Message):
 class GetTradingStatusRequest(_grpc_helpers.Message):
     figi: Optional[str] = _grpc_helpers.string_field(1, optional=True)
     instrument_id: Optional[str] = _grpc_helpers.string_field(2, optional=True)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -558,6 +631,14 @@ class GetLastTradesRequest(_grpc_helpers.Message):
     to: datetime = _grpc_helpers.message_field(3)
     instrument_id: Optional[str] = _grpc_helpers.string_field(4, optional=True)
     trade_source: 'TradeSourceType' = _grpc_helpers.message_field(5)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass

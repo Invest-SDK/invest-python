@@ -40,7 +40,7 @@ class Client:
         options: Optional[ChannelArgumentType] = None,
         app_name: Optional[str] = None,
         interceptors: Optional[List[ClientInterceptor]] = None,
-        instrument_methods_to_cache: Iterable[InstrumentCacheableMethods] = (
+        instrument_methods_to_cache: Iterable[InstrumentCacheableMethods] = (  # type: ignore[assignment]
             InstrumentCacheableMethods.SHARES,
             InstrumentCacheableMethods.BONDS,
             InstrumentCacheableMethods.ETFS,
@@ -145,7 +145,7 @@ class AsyncClient:
         options: Optional[ChannelArgumentType] = None,
         app_name: Optional[str] = None,
         interceptors: Optional[List[ClientInterceptor]] = None,
-        instrument_methods_to_cache: Iterable[InstrumentCacheableMethods] = (
+        instrument_methods_to_cache: Iterable[InstrumentCacheableMethods] = (  # type: ignore[assignment]
             InstrumentCacheableMethods.SHARES,
             InstrumentCacheableMethods.BONDS,
             InstrumentCacheableMethods.ETFS,

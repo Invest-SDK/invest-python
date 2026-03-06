@@ -257,7 +257,7 @@ class AsyncServices:
     ) -> AsyncGenerator[HistoricCandle, None]:
         to = to or now()
 
-        for local_from_, local_to in get_intervals(interval, # type: ignore
+        for local_from_, local_to in get_intervals(interval,  # type: ignore
                                                    from_, to):
             candles_response = await self.market_data.get_candles(
                 GetCandlesRequest(
@@ -273,7 +273,7 @@ class AsyncServices:
                 yield candle  # pylint: disable=invalid-type
     
     async def warmup_instruments_cache(self):
-        async with asyncio.TaskGroup() as group:
+        async with asyncio.TaskGroup() as group:  # type: ignore[attr-defined]
             for method in self._warmup_cache_methods:
                 logger.info("Warming up %s cache", method.value)
                 if method == InstrumentCacheableMethods.SHARES:

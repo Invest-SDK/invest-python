@@ -1139,11 +1139,12 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "StructuredNotes")
         return _grpc_helpers.protobuf_to_dataclass(response, StructuredNotesResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("Dfas")
     async def get_dfas(self) -> DfasResponse:
         request = DfasRequest()
         response_coro = self.stub.Dfas(
-            request=_grpc_helpers.dataclass_to_protobuff(
+            request=_grpc_helpers.dataclass_to_protobuf(
                 request, instruments_pb2.DfasRequest()
             ),
             metadata=self.metadata,
@@ -1152,10 +1153,11 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "Dfas")
         return _grpc_helpers.protobuf_to_dataclass(response, DfasResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("DfaBy")
     async def get_dfa_by(self, request: InstrumentRequest) -> DfaResponse:
         response_coro = self.stub.DfaBy(
-            request=_grpc_helpers.dataclass_to_protobuff(
+            request=_grpc_helpers.dataclass_to_protobuf(
                 request, instruments_pb2.InstrumentRequest()
             ),
             metadata=self.metadata,
@@ -1393,7 +1395,7 @@ class MarketDataStreamService(_grpc_helpers.Service):
         request_iterator: AsyncIterable[MarketDataServerSideStreamRequest],
     ) -> AsyncIterable[marketdata_pb2.MarketDataServerSideStreamRequest]:
         async for request in request_iterator:
-            yield _grpc_helpers.dataclass_to_protobuff(
+            yield _grpc_helpers.dataclass_to_protobuf(
                 request, marketdata_pb2.MarketDataServerSideStreamRequest()
             )
 
@@ -2003,12 +2005,13 @@ class UsersService(_grpc_helpers.Service):
         log_request(await get_tracking_id_from_coro(response_coro), "PayIn")
         return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)
 
+    @deprecated(deprecated_in="0.4.0")
     @handle_aio_request_error("GetAccountValues")
     async def get_account_values(
         self, request: GetAccountValuesRequest
     ) -> GetAccountValuesResponse:
         response_coro = self.stub.GetAccountValues(
-            request=_grpc_helpers.dataclass_to_protobuff(
+            request=_grpc_helpers.dataclass_to_protobuf(
                 request, users_pb2.GetAccountValuesRequest()
             ),
             metadata=self.metadata,

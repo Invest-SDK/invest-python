@@ -1,6 +1,9 @@
+import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional
+
+from deprecation import deprecated
 
 from t_tech.invest import _grpc_helpers
 from t_tech.invest._errors import handle_aio_request_error, handle_request_error
@@ -205,6 +208,14 @@ class GetBondCouponsRequest(_grpc_helpers.Message):
     to: Optional[datetime] = _grpc_helpers.message_field(3, optional=True)
     instrument_id: str = _grpc_helpers.string_field(4)
 
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class GetBondCouponsResponse(_grpc_helpers.Message):
@@ -362,6 +373,14 @@ class Option(_grpc_helpers.Message):
     api_trade_available_flag: bool = _grpc_helpers.bool_field(409)
     required_tests: List[str] = _grpc_helpers.string_field(410)
 
+    def __post_init__(self):
+        for deprecated_field in ['klong', 'kshort']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class ShareResponse(_grpc_helpers.Message):
@@ -443,6 +462,14 @@ class Bond(_grpc_helpers.Message):
     dlong_client: 'Quotation' = _grpc_helpers.message_field(90)
     dshort_client: 'Quotation' = _grpc_helpers.message_field(91)
 
+    def __post_init__(self):
+        for deprecated_field in ['klong', 'kshort']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class Currency(_grpc_helpers.Message):
@@ -485,6 +512,14 @@ class Currency(_grpc_helpers.Message):
     brand: 'BrandData' = _grpc_helpers.message_field(60)
     dlong_client: 'Quotation' = _grpc_helpers.message_field(90)
     dshort_client: 'Quotation' = _grpc_helpers.message_field(91)
+
+    def __post_init__(self):
+        for deprecated_field in ['klong', 'kshort']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -535,6 +570,14 @@ class Etf(_grpc_helpers.Message):
     brand: 'BrandData' = _grpc_helpers.message_field(60)
     dlong_client: 'Quotation' = _grpc_helpers.message_field(90)
     dshort_client: 'Quotation' = _grpc_helpers.message_field(91)
+
+    def __post_init__(self):
+        for deprecated_field in ['klong', 'kshort']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -587,6 +630,14 @@ class Future(_grpc_helpers.Message):
     dlong_client: 'Quotation' = _grpc_helpers.message_field(90)
     dshort_client: 'Quotation' = _grpc_helpers.message_field(91)
 
+    def __post_init__(self):
+        for deprecated_field in ['klong', 'kshort']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class Share(_grpc_helpers.Message):
@@ -637,6 +688,14 @@ class Share(_grpc_helpers.Message):
     brand: 'BrandData' = _grpc_helpers.message_field(60)
     dlong_client: 'Quotation' = _grpc_helpers.message_field(90)
     dshort_client: 'Quotation' = _grpc_helpers.message_field(91)
+
+    def __post_init__(self):
+        for deprecated_field in ['klong', 'kshort']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -738,6 +797,14 @@ class GetAccruedInterestsRequest(_grpc_helpers.Message):
     to: datetime = _grpc_helpers.message_field(3)
     instrument_id: str = _grpc_helpers.string_field(4)
 
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class GetAccruedInterestsResponse(_grpc_helpers.Message):
@@ -756,6 +823,14 @@ class AccruedInterest(_grpc_helpers.Message):
 class GetFuturesMarginRequest(_grpc_helpers.Message):
     figi: str = _grpc_helpers.string_field(1)
     instrument_id: str = _grpc_helpers.string_field(4)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -813,6 +888,14 @@ class Instrument(_grpc_helpers.Message):
     dlong_client: 'Quotation' = _grpc_helpers.message_field(490)
     dshort_client: 'Quotation' = _grpc_helpers.message_field(491)
 
+    def __post_init__(self):
+        for deprecated_field in ['klong', 'kshort']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
+
 
 @dataclass
 class GetDividendsRequest(_grpc_helpers.Message):
@@ -820,6 +903,14 @@ class GetDividendsRequest(_grpc_helpers.Message):
     from_: Optional[datetime] = _grpc_helpers.message_field(2, optional=True)
     to: Optional[datetime] = _grpc_helpers.message_field(3, optional=True)
     instrument_id: str = _grpc_helpers.string_field(4)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -1086,6 +1177,14 @@ class EditFavoritesRequest(_grpc_helpers.Message):
 class EditFavoritesRequestInstrument(_grpc_helpers.Message):
     figi: Optional[str] = _grpc_helpers.string_field(1, optional=True)
     instrument_id: str = _grpc_helpers.string_field(2)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
@@ -1671,6 +1770,7 @@ class InstrumentsService(BaseService):
         log_request(get_tracking_id_from_call(call), 'OptionBy')
         return _grpc_helpers.protobuf_to_dataclass(response, OptionResponse)
 
+    @deprecated()
     @handle_request_error('Options')
     def options(self, request: 'InstrumentsRequest'=InstrumentsRequest()
         ) ->'OptionsResponse':
@@ -2138,6 +2238,7 @@ class AsyncInstrumentsService(BaseService):
         log_request(await get_tracking_id_from_coro(response_coro), 'OptionBy')
         return _grpc_helpers.protobuf_to_dataclass(response, OptionResponse)
 
+    @deprecated()
     @handle_aio_request_error('Options')
     async def options(self, request: 'InstrumentsRequest'=InstrumentsRequest()
         ) ->'OptionsResponse':

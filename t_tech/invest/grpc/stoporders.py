@@ -1,3 +1,4 @@
+import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional
@@ -97,6 +98,14 @@ class PostStopOrderRequest(_grpc_helpers.Message):
         indent_type: 'TrailingValueType' = _grpc_helpers.message_field(2)
         spread: 'Quotation' = _grpc_helpers.message_field(3)
         spread_type: 'TrailingValueType' = _grpc_helpers.message_field(4)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass

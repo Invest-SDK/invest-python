@@ -1,3 +1,4 @@
+import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from typing import AsyncIterable, Iterable, List, Optional
@@ -252,6 +253,14 @@ class PortfolioPosition(_grpc_helpers.Message):
     daily_yield: 'MoneyValue' = _grpc_helpers.message_field(31)
     ticker: str = _grpc_helpers.string_field(32)
     class_code: str = _grpc_helpers.string_field(33)
+
+    def __post_init__(self):
+        for deprecated_field in ['average_position_price_pt', 'quantity_lots']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass

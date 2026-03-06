@@ -1,3 +1,4 @@
+import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from typing import AsyncIterable, Iterable, List, Optional
@@ -111,6 +112,14 @@ class PostOrderRequest(_grpc_helpers.Message):
     time_in_force: 'TimeInForceType' = _grpc_helpers.message_field(9)
     price_type: 'PriceType' = _grpc_helpers.message_field(10)
     confirm_margin_trade: bool = _grpc_helpers.bool_field(11)
+
+    def __post_init__(self):
+        for deprecated_field in ['figi']:
+            if getattr(self, deprecated_field
+                ) is not _grpc_helpers.PLACEHOLDER:
+                warnings.warn(
+                    f'{self.__class__.__name__}.{deprecated_field} is deprecated'
+                    , DeprecationWarning, stacklevel=2)
 
 
 @dataclass
