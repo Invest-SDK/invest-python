@@ -7,7 +7,7 @@ requires-python = ">=3.8"
 
 [tool.poetry]
 name = "t-tech-investments"
-version = "0.3.3"
+version = "0.3.4"
 description = "T-Invest Python SDK"
 authors = ["Invest Public API Team <t-tech.python@ya.ru>"]
 license = "Apache-2.0"
