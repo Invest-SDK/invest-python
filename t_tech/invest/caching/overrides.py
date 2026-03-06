@@ -1,5 +1,9 @@
 import time
-from enum import StrEnum
+
+try:
+    from enum import StrEnum
+except ImportError:
+    from backports.strenum import StrEnum  # py3.10- compatible
 
 from cachetools import TTLCache as TTLCacheBase
 
