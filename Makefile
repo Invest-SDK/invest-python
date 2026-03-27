@@ -65,7 +65,7 @@ bump-version:
 
 .PHONY: install-poetry
 install-poetry:
-	pip install poetry==1.7.1
+	pip install poetry==2.3.2
 
 .PHONY: install-docs
 install-docs:

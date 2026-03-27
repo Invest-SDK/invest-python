@@ -16,7 +16,7 @@ def main() -> None:
 def get_current_version():
     with open("pyproject.toml", "r", encoding="utf-8") as f:
         pyproject = loads(f.read())
-    current_version: str = pyproject["tool"]["poetry"]["version"]  # type:ignore
+    current_version: str = pyproject["project"]["version"]  # type:ignore
     return current_version
 
 

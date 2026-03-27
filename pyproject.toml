@@ -4,16 +4,17 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 requires-python = ">=3.8"
-
-[tool.poetry]
 name = "t-tech-investments"
 version = "0.3.4"
 description = "T-Invest Python SDK"
-authors = ["Invest Public API Team <t-tech.python@ya.ru>"]
+authors = [{name="Invest Public API Team", email="t-tech.python@ya.ru>"}]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://opensource.tbank.ru/invest/invest-python"
 homepage = "https://developer.tbank.ru/invest/intro/intro"
+
+[tool.poetry]
+
 packages = [
   {include = "t_tech"}
 ]
@@ -22,14 +23,41 @@ exclude = ["t_tech/__init__.py"]
 [tool.poetry.dependencies]
 python = "^3.8.1"
 cachetools = "^5.2.0"
-grpcio = "^1.59.3"
-protobuf = "^4.25.1"
+grpcio = [
+  {version = "^1.59.3", python = "<3.11"},
+  {version = "^1.75.0", python = ">=3.11"}
+]
+protobuf = [
+  {version = "^4.25.1", python = "<3.11"},
+  {version = "^6.31.1", python = ">=3.11"}
+]
 python-dateutil = "^2.8.2"
 deprecation = "^2.1.0"
-matplotlib = {version = "^3.5.1", optional = true}
-numpy = {version = "^1.22.2", optional = true}
-pandas = {version = ">=1.4.0", optional = true}
+matplotlib = [
+  {version = "^3.5.1", python = "<3.11", optional = true },
+  {version = "^3.10.0", python = ">=3.11", optional = true }
+]
+numpy = [
+    { version = "^1.22.2", python = "<3.11", optional = true },
+    { version = "^2.0.0", python = ">=3.11", optional = true }
+]
+pandas = [
+    { version = "^1.4.0", python = "<3.11", optional = true },
+    { version = "^2.3.3", python = ">=3.11", optional = true }
+]
 mplfinance = {version = "^0.12.8-beta.9", optional = true}
+pillow = [
+  { version = "^10.4.0", python = "<3.11", optional = true },
+  { version = "^12.0.0", python = ">=3.11", optional = true }
+]
+kiwisolver = [
+  { version = "^1.4.7", python = "<3.11", optional = true },
+  { version = "^1.5.0", python = ">=3.11", optional = true }
+]
+contourpy = [
+  { version = "^1.1.1", python = "<3.11", optional = true },
+  { version = "^1.3.3", python = ">=3.11", optional = true }
+]
 sentry-sdk = "^2.47.0"
 
 [tool.poetry.extras]
@@ -42,7 +70,10 @@ tomlkit = "^0.12.3"
 [tool.poetry.group.dev.dependencies]
 black = {extras = ["jupyter"], version = "^23.7.0"}
 codecov = "^2.1.12"
-grpcio-tools = "^1.59.3"
+grpcio-tools = [
+  {version = "^1.59.3", python = "<3.11"},
+  {version = "^1.75.0", python = ">=3.11"}
+]
 ipython = "^8.1.1"
 isort = "^5.10.1"
 mypy = "^1.7.1"
@@ -63,9 +94,9 @@ types-requests = "^2.27.7"
 mplfinance = "^0.12.8-beta.9"
 
 [tool.poetry.group.docs.dependencies]
-mkdocs = "1.5.3"
+mkdocs = "1.6.0"
 mkdocs-include-markdown-plugin = "^6.0.4"
-mkdocs-material = "^9.4.14"
+mkdocs-material = "^9.7.0"
 mkdocstrings = {version = "0.24.0", extras = ["python"]}
 termynal = "^0.11.1"
 griffe = "0.38.0"

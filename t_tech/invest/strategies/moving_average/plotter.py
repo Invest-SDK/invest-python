@@ -135,7 +135,7 @@ class MovingAverageStrategyPlotter(StrategyPlotter):
         was_executed_flag: bool,
     ) -> Optional[PlotKwargs]:
         style = self._signal_type_to_style_map[signal_type]
-        price = [np.NAN] * len(data_events)
+        price = [np.nan] * len(data_events)
         color = style["color"]
         has_signal = False
         for index, signal_event in signal_event_types_to_event_index[
