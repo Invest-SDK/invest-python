@@ -1,5 +1,30 @@
 # Breaking changes
-## 0.4.0
+## 1.0.0
+- В новой версии мы реализовали генерацию кода для ускорения выпуска новых версий и устранения вероятностей ошибок.
+  - Автогенерация кода потребовала привести интерфейс функций к единому виду. Поэтому, чтобы сохранить 
+работоспособность старых версий кода при переходе на новую версию, мы пометили как устаревшие те сервисы, которые 
+использовались в предыдущих версиях библиотеки. Эти сервисы больше не будут поддерживаться, новые методы добавляться 
+не будут.
+  - Для миграции на новые версии созданных сервисов необходимо выполнить следующие шаги:
+    - Заменить импорты `from t_tech.invest` и `from t_tech.invest.services` на `from t_tech.invest.grpc`
+    - Заменить импорты `from t_tech.invest.schemas` на `from t_tech.invest.grpc.schemas`
+    - Обратите внимание на параметры функций, которые могут быть перемещены во враппер `request`.  
+      Например, параметры `client.orders.post_order` обернуты в класс `PostOrderRequest`. Внутренние поля этого класса 
+      имеют те же названия, что и старые параметры.  
+      Ниже приведен краткий список часто используемых функций и их изменения:
+      - `client.orders.post_order` -> `client.orders.post_order(request=PostOrderRequest(...))` 
+      - `client.orders.cancel_order` -> `client.orders.cancel_order(request=CancelOrderRequest(...))`
+      - `client.orders.get_order_state` -> `client.orders.get_order_state(request=GetOrderStateRequest(...))`
+      - `client.orders.get_orders` -> `client.orders.get_orders(request=GetOrdersRequest(...))` 
+         Более подробно об изменении: `account_id` был перемещен в параметр `request`, а остальные параметры обернуты в класс `GetOrdersRequestFilters`.
+      - `client.operations.get_operations` -> `clients.operation.get_operations(request=OperationsRequest(...))` 
+      - `client.operations.get_positions` -> `client.operations.get_positions(request=PositionsRequest(...))`
+      - `client.operations.get_portfolio` -> `client.operations.get_portfolio(request=PortfolioRequest(...))`
+      - Большая часть функций из модуля `client.intruments` была обернута параметром `request`.
+      - `client.operations_stream.portfolio_stream` -> `client.operations_stream.portfolio_stream(request=PortfolioStreamRequest(...))`
+      - `client.operations_stream.positions_stream` -> `client.operations_stream.positions_stream(request=PositionsStreamRequest(...))`
+      - `client.orders_stream.trade_stream` -> `client.orders_stream.trade_stream(request=TradeStreamRequest(...))`
+      - Также проверьте другие функции, не перечисленные выше.
 - We have implemented code generation to increase new version delivery velocity
   - This change required us to mark as deprecated the services that were used in older versions. These services
 will not be supported in the future, and new functions will not be added.
@@ -24,30 +49,6 @@ will not be supported in the future, and new functions will not be added.
       - `client.operations_stream.positions_stream` -> `client.operations_stream.positions_stream(request=PositionsStreamRequest(...))`
       - `client.orders_stream.trade_stream` -> `client.orders_stream.trade_stream(request=TradeStreamRequest(...))`
       - Check the other functions not listed above.
-- In Russian:
-  В новой версии мы реализовали генерацию кода для ускорения выпуска новых версий.
-  - Мы были вынуждены пометить как устаревшие те сервисы, которые использовались в старых версиях. Эти сервисы
-больше не будут поддерживаться, новые методы добавляться не будут.
-  - Для миграции на новые версии созданных сервисов необходимо выполнить следующие шаги:
-    - Заменить импорты `from t_tech.invest` и `from t_tech.invest.services` на `from t_tech.invest.grpc`
-    - Заменить импорты `from t_tech.invest.schemas` на `from t_tech.invest.grpc.schemas`
-    - Обратить внимание на параметры функций, которые могут быть перемещены во враппер `request`.  
-      Например, параметры `client.orders.post_order` обернуты в класс `PostOrderRequest`. Внутренние поля этого класса 
-      имеют те же названия, что и старые параметры.  
-      Ниже приведен краткий список часто используемых функций и их изменения:
-      - `client.orders.post_order` -> `client.orders.post_order(request=PostOrderRequest(...))` 
-      - `client.orders.cancel_order` -> `client.orders.cancel_order(request=CancelOrderRequest(...))`
-      - `client.orders.get_order_state` -> `client.orders.get_order_state(request=GetOrderStateRequest(...))`
-      - `client.orders.get_orders` -> `client.orders.get_orders(request=GetOrdersRequest(...))` 
-         Более подробно об изменении: `account_id` был перемещен в параметр `request`, а остальные параметры обернуты в класс `GetOrdersRequestFilters`.
-      - `client.operations.get_operations` -> `clients.operation.get_operations(request=OperationsRequest(...))` 
-      - `client.operations.get_positions` -> `client.operations.get_positions(request=PositionsRequest(...))`
-      - `client.operations.get_portfolio` -> `client.operations.get_portfolio(request=PortfolioRequest(...))`
-      - Большая часть функций из модуля `client.intruments` была обернута параметром `request`.
-      - `client.operations_stream.portfolio_stream` -> `client.operations_stream.portfolio_stream(request=PortfolioStreamRequest(...))`
-      - `client.operations_stream.positions_stream` -> `client.operations_stream.positions_stream(request=PositionsStreamRequest(...))`
-      - `client.orders_stream.trade_stream` -> `client.orders_stream.trade_stream(request=TradeStreamRequest(...))`
-      - Также проверьте другие функции, не перечисленные выше.
 ## 0.3.0
 - Package naming changed to `t_tech` with all corresponding subpackages
 ## 0.2.0-beta60
