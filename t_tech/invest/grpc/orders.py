@@ -200,7 +200,7 @@ class GetOrderStateRequest(_grpc_helpers.Message):
 @dataclass
 class GetOrdersRequest(_grpc_helpers.Message):
     account_id: str = _grpc_helpers.string_field(1)
-    advanced_filters: Optional['GetOrdersRequestFilters'
+    advanced_filters: Optional['GetOrdersRequest.GetOrdersRequestFilters'
         ] = _grpc_helpers.message_field(2, optional=True)
 
 
@@ -279,10 +279,14 @@ class GetMaxLotsRequest(_grpc_helpers.Message):
 @dataclass
 class GetMaxLotsResponse(_grpc_helpers.Message):
     currency: str = _grpc_helpers.string_field(1)
-    buy_limits: 'BuyLimitsView' = _grpc_helpers.message_field(2)
-    buy_margin_limits: 'BuyLimitsView' = _grpc_helpers.message_field(3)
-    sell_limits: 'SellLimitsView' = _grpc_helpers.message_field(4)
-    sell_margin_limits: 'SellLimitsView' = _grpc_helpers.message_field(5)
+    buy_limits: 'GetMaxLotsResponse.BuyLimitsView' = (_grpc_helpers.
+        message_field(2))
+    buy_margin_limits: 'GetMaxLotsResponse.BuyLimitsView' = (_grpc_helpers.
+        message_field(3))
+    sell_limits: 'GetMaxLotsResponse.SellLimitsView' = (_grpc_helpers.
+        message_field(4))
+    sell_margin_limits: 'GetMaxLotsResponse.SellLimitsView' = (_grpc_helpers
+        .message_field(5))
 
 
     @dataclass
@@ -315,10 +319,10 @@ class GetOrderPriceResponse(_grpc_helpers.Message):
     executed_commission_rub: 'MoneyValue' = _grpc_helpers.message_field(8)
     service_commission: 'MoneyValue' = _grpc_helpers.message_field(9)
     deal_commission: 'MoneyValue' = _grpc_helpers.message_field(10)
-    extra_bond: Optional['ExtraBond'] = _grpc_helpers.message_field(12,
-        optional=True)
-    extra_future: Optional['ExtraFuture'] = _grpc_helpers.message_field(13,
-        optional=True)
+    extra_bond: Optional['GetOrderPriceResponse.ExtraBond'
+        ] = _grpc_helpers.message_field(12, optional=True)
+    extra_future: Optional['GetOrderPriceResponse.ExtraFuture'
+        ] = _grpc_helpers.message_field(13, optional=True)
 
 
     @dataclass
@@ -351,8 +355,8 @@ class SubscriptionResponse(_grpc_helpers.Message):
 
 @dataclass
 class OrderStateStreamResponse(_grpc_helpers.Message):
-    order_state: Optional['OrderState'] = _grpc_helpers.message_field(1,
-        optional=True)
+    order_state: Optional['OrderStateStreamResponse.OrderState'
+        ] = _grpc_helpers.message_field(1, optional=True)
     ping: Optional['Ping'] = _grpc_helpers.message_field(2, optional=True)
     subscription: Optional['SubscriptionResponse'
         ] = _grpc_helpers.message_field(3, optional=True)

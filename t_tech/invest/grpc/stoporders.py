@@ -84,7 +84,8 @@ class PostStopOrderRequest(_grpc_helpers.Message):
     instrument_id: str = _grpc_helpers.string_field(10)
     exchange_order_type: 'ExchangeOrderType' = _grpc_helpers.message_field(11)
     take_profit_type: 'TakeProfitType' = _grpc_helpers.message_field(12)
-    trailing_data: 'TrailingData' = _grpc_helpers.message_field(13)
+    trailing_data: 'PostStopOrderRequest.TrailingData' = (_grpc_helpers.
+        message_field(13))
     price_type: 'PriceType' = _grpc_helpers.message_field(14)
     order_id: str = _grpc_helpers.string_field(15)
     confirm_margin_trade: bool = _grpc_helpers.bool_field(16)
@@ -154,7 +155,7 @@ class StopOrder(_grpc_helpers.Message):
     stop_price: 'MoneyValue' = _grpc_helpers.message_field(11)
     instrument_uid: str = _grpc_helpers.string_field(12)
     take_profit_type: 'TakeProfitType' = _grpc_helpers.message_field(13)
-    trailing_data: 'TrailingData' = _grpc_helpers.message_field(14)
+    trailing_data: 'StopOrder.TrailingData' = _grpc_helpers.message_field(14)
     status: 'StopOrderStatusOption' = _grpc_helpers.message_field(15)
     exchange_order_type: 'ExchangeOrderType' = _grpc_helpers.message_field(16)
     exchange_order_id: Optional[str] = _grpc_helpers.string_field(17,

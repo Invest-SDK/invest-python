@@ -3,7 +3,7 @@ import logging
 import types
 from dataclasses import dataclass, fields
 from datetime import datetime
-from typing import Any, AsyncGenerator, Generator, Iterable, Optional, Set
+from typing import Any, AsyncGenerator, Generator, Iterable, Optional, Union
 
 import grpc
 
@@ -291,7 +291,7 @@ class AsyncServices:
 
 
 def init_instruments_cache(
-    instruments_service: InstrumentsService | AsyncInstrumentsService,
+    instruments_service: Union[InstrumentsService, AsyncInstrumentsService],
     method_names: Iterable[InstrumentCacheableMethods],
     warmup_cache_methods: Iterable[InstrumentCacheableMethodsToWarmup],
 ) -> None:

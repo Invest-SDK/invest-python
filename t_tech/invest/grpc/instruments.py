@@ -227,7 +227,7 @@ class GetBondEventsRequest(_grpc_helpers.Message):
     from_: Optional[datetime] = _grpc_helpers.message_field(2, optional=True)
     to: Optional[datetime] = _grpc_helpers.message_field(3, optional=True)
     instrument_id: str = _grpc_helpers.string_field(4)
-    type: 'EventType' = _grpc_helpers.message_field(5)
+    type: 'GetBondEventsRequest.EventType' = _grpc_helpers.message_field(5)
 
 
     class EventType(_grpc_helpers.Enum):
@@ -240,7 +240,8 @@ class GetBondEventsRequest(_grpc_helpers.Message):
 
 @dataclass
 class GetBondEventsResponse(_grpc_helpers.Message):
-    events: List['BondEvent'] = _grpc_helpers.message_field(1)
+    events: List['GetBondEventsResponse.BondEvent'
+        ] = _grpc_helpers.message_field(1)
 
 
     @dataclass
@@ -738,16 +739,18 @@ class StructuredNote(_grpc_helpers.Message):
     first_1day_candle_date: datetime = _grpc_helpers.message_field(36)
     borrow_name: str = _grpc_helpers.string_field(37)
     type: str = _grpc_helpers.string_field(38)
-    logic_portfolio: 'LogicPortfolio' = _grpc_helpers.message_field(39)
+    logic_portfolio: 'StructuredNote.LogicPortfolio' = (_grpc_helpers.
+        message_field(39))
     asset_type: 'AssetType' = _grpc_helpers.message_field(40)
-    basic_assets: List['BasicAsset'] = _grpc_helpers.message_field(41)
+    basic_assets: List['StructuredNote.BasicAsset'
+        ] = _grpc_helpers.message_field(41)
     safety_barrier: 'Quotation' = _grpc_helpers.message_field(42)
     coupon_period_base: str = _grpc_helpers.string_field(43)
-    observation_principle: 'ObservationPrinciple' = (_grpc_helpers.
-        message_field(44))
+    observation_principle: 'StructuredNote.ObservationPrinciple' = (
+        _grpc_helpers.message_field(44))
     observation_frequency: str = _grpc_helpers.string_field(45)
     initial_price_fixing_date: datetime = _grpc_helpers.message_field(46)
-    yield_: List['Yield'] = _grpc_helpers.message_field(47)
+    yield_: List['StructuredNote.Yield'] = _grpc_helpers.message_field(47)
     coupon_saving_flag: bool = _grpc_helpers.bool_field(48)
     sector: str = _grpc_helpers.string_field(49)
     country_of_risk: str = _grpc_helpers.string_field(50)
@@ -1225,7 +1228,8 @@ class GetFavoriteGroupsRequest(_grpc_helpers.Message):
 
 @dataclass
 class GetFavoriteGroupsResponse(_grpc_helpers.Message):
-    groups: List['FavoriteGroup'] = _grpc_helpers.message_field(1)
+    groups: List['GetFavoriteGroupsResponse.FavoriteGroup'
+        ] = _grpc_helpers.message_field(1)
 
 
     @dataclass
@@ -1338,7 +1342,8 @@ class GetAssetFundamentalsRequest(_grpc_helpers.Message):
 
 @dataclass
 class GetAssetFundamentalsResponse(_grpc_helpers.Message):
-    fundamentals: List['StatisticResponse'] = _grpc_helpers.message_field(1)
+    fundamentals: List['GetAssetFundamentalsResponse.StatisticResponse'
+        ] = _grpc_helpers.message_field(1)
 
 
     @dataclass
@@ -1417,7 +1422,8 @@ class GetAssetReportsRequest(_grpc_helpers.Message):
 
 @dataclass
 class GetAssetReportsResponse(_grpc_helpers.Message):
-    events: List['GetAssetReportsEvent'] = _grpc_helpers.message_field(1)
+    events: List['GetAssetReportsResponse.GetAssetReportsEvent'
+        ] = _grpc_helpers.message_field(1)
 
 
     class AssetReportPeriodType(_grpc_helpers.Enum):
@@ -1445,7 +1451,8 @@ class GetConsensusForecastsRequest(_grpc_helpers.Message):
 
 @dataclass
 class GetConsensusForecastsResponse(_grpc_helpers.Message):
-    items: List['ConsensusForecastsItem'] = _grpc_helpers.message_field(1)
+    items: List['GetConsensusForecastsResponse.ConsensusForecastsItem'
+        ] = _grpc_helpers.message_field(1)
     page: 'PageResponse' = _grpc_helpers.message_field(2)
 
 
@@ -1472,8 +1479,10 @@ class GetForecastRequest(_grpc_helpers.Message):
 
 @dataclass
 class GetForecastResponse(_grpc_helpers.Message):
-    targets: List['TargetItem'] = _grpc_helpers.message_field(1)
-    consensus: 'ConsensusItem' = _grpc_helpers.message_field(2)
+    targets: List['GetForecastResponse.TargetItem'
+        ] = _grpc_helpers.message_field(1)
+    consensus: 'GetForecastResponse.ConsensusItem' = (_grpc_helpers.
+        message_field(2))
 
 
     @dataclass
@@ -1512,7 +1521,7 @@ class RiskRatesRequest(_grpc_helpers.Message):
 
 @dataclass
 class RiskRatesResponse(_grpc_helpers.Message):
-    instrument_risk_rates: List['RiskRateResult'
+    instrument_risk_rates: List['RiskRatesResponse.RiskRateResult'
         ] = _grpc_helpers.message_field(1)
 
 
@@ -1539,7 +1548,7 @@ class RiskRatesResponse(_grpc_helpers.Message):
 @dataclass
 class TradingInterval(_grpc_helpers.Message):
     type: str = _grpc_helpers.string_field(1)
-    interval: 'TimeInterval' = _grpc_helpers.message_field(2)
+    interval: 'TradingInterval.TimeInterval' = _grpc_helpers.message_field(2)
 
 
     @dataclass
@@ -1557,7 +1566,8 @@ class GetInsiderDealsRequest(_grpc_helpers.Message):
 
 @dataclass
 class GetInsiderDealsResponse(_grpc_helpers.Message):
-    insider_deals: List['InsiderDeal'] = _grpc_helpers.message_field(1)
+    insider_deals: List['GetInsiderDealsResponse.InsiderDeal'
+        ] = _grpc_helpers.message_field(1)
     next_cursor: Optional[str] = _grpc_helpers.string_field(2, optional=True)
 
 
@@ -1613,8 +1623,10 @@ class DfaResponse(_grpc_helpers.Message):
     for_iis_flag: bool = _grpc_helpers.bool_field(17)
     for_qual_investor_flag: bool = _grpc_helpers.bool_field(18)
     type: str = _grpc_helpers.string_field(19)
-    basic_assets: List['BasicAsset'] = _grpc_helpers.message_field(20)
-    forecast_yield: 'ForecastYield' = _grpc_helpers.message_field(21)
+    basic_assets: List['DfaResponse.BasicAsset'] = _grpc_helpers.message_field(
+        20)
+    forecast_yield: 'DfaResponse.ForecastYield' = _grpc_helpers.message_field(
+        21)
     yield_to_maturity: 'Quotation' = _grpc_helpers.message_field(22)
     coupon_value: 'Quotation' = _grpc_helpers.message_field(23)
     coupon_payment_frequency: int = _grpc_helpers.int32_field(24)

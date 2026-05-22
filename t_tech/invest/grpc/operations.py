@@ -174,8 +174,8 @@ class OperationTrade(_grpc_helpers.Message):
 @dataclass
 class PortfolioRequest(_grpc_helpers.Message):
     account_id: str = _grpc_helpers.string_field(1)
-    currency: Optional['CurrencyRequest'] = _grpc_helpers.message_field(2,
-        optional=True)
+    currency: Optional['PortfolioRequest.CurrencyRequest'
+        ] = _grpc_helpers.message_field(2, optional=True)
 
 
     class CurrencyRequest(_grpc_helpers.Enum):

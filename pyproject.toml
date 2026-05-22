@@ -7,14 +7,21 @@ requires-python = ">=3.8"
 name = "t-tech-investments"
 version = "0.3.5"
 description = "T-Invest Python SDK"
-authors = [{name="Invest Public API Team", email="t-tech.python@ya.ru>"}]
+authors = [{name="Invest Public API Team", email="t-tech.python@ya.ru"}]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://opensource.tbank.ru/invest/invest-python"
 homepage = "https://developer.tbank.ru/invest/intro/intro"
 
 [tool.poetry]
-
+name = "t-tech-investments"
+version = "0.3.4"
+description = "T-Invest Python SDK"
+authors = ["Invest Public API Team <t-tech.python@ya.ru>"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://opensource.tbank.ru/invest/invest-python"
+homepage = "https://developer.tbank.ru/invest/intro/intro"
 packages = [
   {include = "t_tech"}
 ]
@@ -51,7 +58,8 @@ matplotlib = [
   {version = ">=3.8",  optional = true, python = ">=3.12"}
 ]
 numpy = [
-  {version = "^1.22.2", optional = true, python = "<3.12"},
+  { version = "^1.21.0", optional = true, python = "<3.9" },
+  { version = "^1.22.2", optional = true, python = ">=3.9,<3.12" },
   {version = ">=1.26,<3", optional = true, python = ">=3.12"}  # можно и ">=2" если хочешь
 ]
 pandas = [

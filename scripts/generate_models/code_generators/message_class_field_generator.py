@@ -26,14 +26,13 @@ from ast import (
     keyword,
     stmt,
 )
-from typing import Any, List
+from typing import Any, Iterable, List
 
 from iprotopy.domestic_importer import DomesticImporter
 from iprotopy.imports import Import, ImportFrom
 from iprotopy.message_class_generator import (
     MessageClassGenerator as DefaultMessageClassGenerator,
 )
-from iprotopy.one_of_generator import OneOfGenerator
 from iprotopy.type_mapper import TypeMapper
 from proto_schema_parser import Field, FieldCardinality, Message
 from proto_schema_parser.ast import Comment, Enum, OneOf, Option, Reserved
@@ -165,6 +164,27 @@ class ClassFieldGenerator:
         return self._construct_field(field, annotation, is_optional)
 
 
+class OneOfGenerator:
+    def __init__(self, class_field_generator: ClassFieldGenerator):
+        self._class_field_generator = class_field_generator
+
+    def process(self, one_of: OneOf, **kwargs) -> Iterable[AnnAssign]:
+        for element in one_of.elements:
+            if isinstance(element, Field):
+                field = Field(
+                    name=element.name,
+                    number=element.number,
+                    type=element.type,
+                    cardinality=FieldCardinality.OPTIONAL,
+                    options=element.options,
+                )
+                yield self._class_field_generator.process_field(field, **kwargs)
+            elif isinstance(element, Comment):
+                pass
+            else:
+                raise NotImplementedError(f"Unknown element {element}")
+
+
 class MessageClassGenerator(DefaultMessageClassGenerator):
     def __init__(self, importer: DomesticImporter, type_mapper: TypeMapper):
         self._importer = importer
@@ -252,7 +272,7 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
         if isinstance(element, Field):
             new_field = self._class_field_generator.process_field(
                 element,
-                outer_class_name=outer_class_name,
+                outer_class_name=outer_class_name or class_name,
                 inner_classes=inner_classes,
             )
             class_body.append(new_field)
@@ -265,7 +285,14 @@ class MessageClassGenerator(DefaultMessageClassGenerator):
             proto_enum_processor = EnumGenerator(self._importer)
             class_body.append(proto_enum_processor.process_enum(element))
         elif isinstance(element, OneOf):
-            class_body.extend(self._one_of_generator.process(element))
+            # noinspection LongLine
+            class_body.extend(
+                self._one_of_generator.process(
+                    element,
+                    outer_class_name=outer_class_name or class_name,
+                    inner_classes=inner_classes,
+                )
+            )
         elif isinstance(element, Message):
             class_body.append(
                 self.process_proto_message(

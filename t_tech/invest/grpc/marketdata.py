@@ -472,8 +472,8 @@ class GetCandlesRequest(_grpc_helpers.Message):
     to: datetime = _grpc_helpers.message_field(3)
     interval: 'CandleInterval' = _grpc_helpers.message_field(4)
     instrument_id: Optional[str] = _grpc_helpers.string_field(5, optional=True)
-    candle_source_type: Optional['CandleSource'] = _grpc_helpers.message_field(
-        7, optional=True)
+    candle_source_type: Optional['GetCandlesRequest.CandleSource'
+        ] = _grpc_helpers.message_field(7, optional=True)
     limit: Optional[int] = _grpc_helpers.int32_field(10, optional=True)
 
 
@@ -684,15 +684,20 @@ class InstrumentClosePriceResponse(_grpc_helpers.Message):
 
 @dataclass
 class GetTechAnalysisRequest(_grpc_helpers.Message):
-    indicator_type: 'IndicatorType' = _grpc_helpers.message_field(1)
+    indicator_type: 'GetTechAnalysisRequest.IndicatorType' = (_grpc_helpers
+        .message_field(1))
     instrument_uid: str = _grpc_helpers.string_field(2)
     from_: datetime = _grpc_helpers.message_field(3)
     to: datetime = _grpc_helpers.message_field(4)
-    interval: 'IndicatorInterval' = _grpc_helpers.message_field(5)
-    type_of_price: 'TypeOfPrice' = _grpc_helpers.message_field(6)
+    interval: 'GetTechAnalysisRequest.IndicatorInterval' = (_grpc_helpers.
+        message_field(5))
+    type_of_price: 'GetTechAnalysisRequest.TypeOfPrice' = (_grpc_helpers.
+        message_field(6))
     length: int = _grpc_helpers.int32_field(7)
-    deviation: 'Deviation' = _grpc_helpers.message_field(8)
-    smoothing: 'Smoothing' = _grpc_helpers.message_field(9)
+    deviation: 'GetTechAnalysisRequest.Deviation' = (_grpc_helpers.
+        message_field(8))
+    smoothing: 'GetTechAnalysisRequest.Smoothing' = (_grpc_helpers.
+        message_field(9))
 
 
     class IndicatorInterval(_grpc_helpers.Enum):
@@ -744,7 +749,7 @@ class GetTechAnalysisRequest(_grpc_helpers.Message):
 
 @dataclass
 class GetTechAnalysisResponse(_grpc_helpers.Message):
-    technical_indicators: List['TechAnalysisItem'
+    technical_indicators: List['GetTechAnalysisResponse.TechAnalysisItem'
         ] = _grpc_helpers.message_field(1)
 
 
