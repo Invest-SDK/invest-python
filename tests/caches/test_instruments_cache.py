@@ -50,5 +50,6 @@ class TestInstrumentsCache:
             )
 
         cache = getattr(service.instruments, "_instrument_call_cache", None)
-        assert mocked_instrument_method.called_once()
+        assert mocked_instrument_method.call_count == 2, \
+            f"Expected 2 calls, got {mocked_instrument_method.call_count}"
         assert cache is not None
