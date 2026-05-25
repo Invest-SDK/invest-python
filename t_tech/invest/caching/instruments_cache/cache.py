@@ -7,6 +7,7 @@ from threading import RLock
 from typing import Any, Callable, Optional, TypeVar, cast
 
 from t_tech.invest.caching.overrides import InstrumentIdType, TTLCache
+from t_tech.invest.grpc import InstrumentRequest
 
 TResp = TypeVar("TResp")
 
@@ -106,7 +107,7 @@ def cache_instrument_call(func: Callable[..., TResp]) -> Callable[..., TResp]:
             instrument_name = _get_instrument_name(method_name)
 
             request = args[0] if args else kwargs.get("request", None)
-            if request is not None:
+            if request is not None and isinstance(request, InstrumentRequest):
                 cached = cache.get(
                     instrument_name=instrument_name,
                     id_type=request.id_type,

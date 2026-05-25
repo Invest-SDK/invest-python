@@ -3,7 +3,7 @@ import logging
 import types
 from dataclasses import dataclass, fields
 from datetime import datetime
-from typing import Any, AsyncGenerator, Generator, Iterable, Optional, Union
+from typing import Any, AsyncGenerator, Generator, Iterable, Optional, Union, List
 
 import grpc
 
@@ -273,21 +273,24 @@ class AsyncServices:
                 yield candle  # pylint: disable=invalid-type
     
     async def warmup_instruments_cache(self):
-        async with asyncio.TaskGroup() as group:  # type: ignore[attr-defined]
-            for method in self._warmup_cache_methods:
-                logger.info("Warming up %s cache", method.value)
-                if method == InstrumentCacheableMethods.SHARES:
-                    group.create_task(self.instruments.shares())
-                elif method == InstrumentCacheableMethods.BONDS:
-                    group.create_task(self.instruments.bonds())
-                elif method == InstrumentCacheableMethods.ETFS:
-                    group.create_task(self.instruments.etfs())
-                elif method == InstrumentCacheableMethods.FUTURES:
-                    group.create_task(self.instruments.futures())
-                elif method == InstrumentCacheableMethods.CURRENCIES:
-                    group.create_task(self.instruments.currencies())
-                elif method == InstrumentCacheableMethods.OPTIONS:
-                    group.create_task(self.instruments.options())
+        tasks: List[asyncio.Task] = []
+
+        for method in self._warmup_cache_methods:
+            logger.info("Warming up %s cache", method.value)
+            if method == InstrumentCacheableMethods.SHARES:
+                tasks.append(asyncio.create_task(self.instruments.shares()))
+            elif method == InstrumentCacheableMethods.BONDS:
+                tasks.append(asyncio.create_task(self.instruments.bonds()))
+            elif method == InstrumentCacheableMethods.ETFS:
+                tasks.append(asyncio.create_task(self.instruments.etfs()))
+            elif method == InstrumentCacheableMethods.FUTURES:
+                tasks.append(asyncio.create_task(self.instruments.futures()))
+            elif method == InstrumentCacheableMethods.CURRENCIES:
+                tasks.append(asyncio.create_task(self.instruments.currencies()))
+            elif method == InstrumentCacheableMethods.OPTIONS:
+                tasks.append(asyncio.create_task(self.instruments.options()))
+
+            await asyncio.gather(*tasks)
 
 
 def init_instruments_cache(
