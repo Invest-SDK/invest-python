@@ -248,7 +248,7 @@ __all__ = (
 logger = logging.getLogger(__name__)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class Services:
     def __init__(
         self,
@@ -328,11 +328,11 @@ class Services:
             previous_candles = set(candles_response.candles)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class InstrumentsService(_grpc_helpers.Service):
     _stub_factory = instruments_pb2_grpc.InstrumentsServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("TradingSchedules")
     def trading_schedules(
         self,
@@ -356,7 +356,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "TradingSchedules")
         return _grpc_helpers.protobuf_to_dataclass(response, TradingSchedulesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("BondBy")
     def bond_by(
         self,
@@ -378,7 +378,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "BondBy")
         return _grpc_helpers.protobuf_to_dataclass(response, BondResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("Bonds")
     def bonds(
         self,
@@ -398,7 +398,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Bonds")
         return _grpc_helpers.protobuf_to_dataclass(response, BondsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("CurrencyBy")
     def currency_by(
         self,
@@ -420,7 +420,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "CurrencyBy")
         return _grpc_helpers.protobuf_to_dataclass(response, CurrencyResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("Currencies")
     def currencies(
         self,
@@ -440,7 +440,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Currencies")
         return _grpc_helpers.protobuf_to_dataclass(response, CurrenciesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("EtfBy")
     def etf_by(
         self,
@@ -462,7 +462,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "EtfBy")
         return _grpc_helpers.protobuf_to_dataclass(response, EtfResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("Etfs")
     def etfs(
         self,
@@ -482,7 +482,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Etfs")
         return _grpc_helpers.protobuf_to_dataclass(response, EtfsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("FutureBy")
     def future_by(
         self,
@@ -504,7 +504,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "FutureBy")
         return _grpc_helpers.protobuf_to_dataclass(response, FutureResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("Futures")
     def futures(
         self,
@@ -524,7 +524,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Futures")
         return _grpc_helpers.protobuf_to_dataclass(response, FuturesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("OptionBy")
     def option_by(
         self,
@@ -547,7 +547,7 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, OptionResponse)
 
     @deprecated(details="Use `Client.instruments.options_by(...)` method instead")
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("Options")
     def options(
         self,
@@ -567,7 +567,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Options")
         return _grpc_helpers.protobuf_to_dataclass(response, OptionsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("OptionsBy")
     def options_by(
         self, *, basic_asset_uid: str = "", basic_asset_position_uid: str = ""
@@ -584,7 +584,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "OptionsBy")
         return _grpc_helpers.protobuf_to_dataclass(response, OptionsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("ShareBy")
     def share_by(
         self,
@@ -606,7 +606,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "ShareBy")
         return _grpc_helpers.protobuf_to_dataclass(response, ShareResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("Shares")
     def shares(
         self,
@@ -626,7 +626,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Shares")
         return _grpc_helpers.protobuf_to_dataclass(response, SharesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("Indicatives")
     def indicatives(
         self,
@@ -641,7 +641,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Indicatives")
         return _grpc_helpers.protobuf_to_dataclass(response, IndicativesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetAccruedInterests")
     def get_accrued_interests(
         self,
@@ -669,7 +669,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, GetAccruedInterestsResponse
         )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetFuturesMargin")
     def get_futures_margin(
         self, *, figi: str = "", instrument_id: str = ""
@@ -686,7 +686,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetFuturesMargin")
         return _grpc_helpers.protobuf_to_dataclass(response, GetFuturesMarginResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetInstrumentBy")
     def get_instrument_by(
         self,
@@ -708,7 +708,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetInstrumentBy")
         return _grpc_helpers.protobuf_to_dataclass(response, InstrumentResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetDividends")
     def get_dividends(
         self,
@@ -734,7 +734,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetDividends")
         return _grpc_helpers.protobuf_to_dataclass(response, GetDividendsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetBondCoupons")
     def get_bond_coupons(
         self,
@@ -760,7 +760,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetBondCoupons")
         return _grpc_helpers.protobuf_to_dataclass(response, GetBondCouponsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetBondEvents")
     def get_bond_events(self, request: GetBondEventsRequest) -> GetBondEventsResponse:
         response, call = self.stub.GetBondEvents.with_call(
@@ -772,7 +772,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetBondEvents")
         return _grpc_helpers.protobuf_to_dataclass(response, GetBondEventsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetAssetBy")
     def get_asset_by(
         self,
@@ -790,7 +790,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetAssetBy")
         return _grpc_helpers.protobuf_to_dataclass(response, AssetResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetAssets")
     def get_assets(
         self,
@@ -807,7 +807,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetAssets")
         return _grpc_helpers.protobuf_to_dataclass(response, AssetsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetFavorites")
     def get_favorites(
         self,
@@ -826,7 +826,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetFavorites")
         return _grpc_helpers.protobuf_to_dataclass(response, GetFavoritesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("EditFavorites")
     def edit_favorites(
         self,
@@ -851,7 +851,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "EditFavorites")
         return _grpc_helpers.protobuf_to_dataclass(response, EditFavoritesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("CreateFavoriteGroup")
     def create_favorite_group(
         self,
@@ -868,7 +868,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, CreateFavoriteGroupResponse
         )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("DeleteFavoriteGroup")
     def delete_favorite_group(
         self,
@@ -885,7 +885,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, DeleteFavoriteGroupResponse
         )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetFavoriteGroups")
     def get_favorite_groups(
         self,
@@ -900,7 +900,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetFavoriteGroups")
         return _grpc_helpers.protobuf_to_dataclass(response, GetFavoriteGroupsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetCountries")
     def get_countries(
         self,
@@ -915,7 +915,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetCountries")
         return _grpc_helpers.protobuf_to_dataclass(response, GetCountriesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("FindInstrument")
     def find_instrument(
         self,
@@ -939,7 +939,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "FindInstrument")
         return _grpc_helpers.protobuf_to_dataclass(response, FindInstrumentResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetBrands")
     def get_brands(
         self,
@@ -957,7 +957,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetBrands")
         return _grpc_helpers.protobuf_to_dataclass(response, GetBrandsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetBrandBy")
     def get_brands_by(self, id: str = "") -> Brand:
         request = GetBrandRequest()
@@ -971,7 +971,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetBrandBy")
         return _grpc_helpers.protobuf_to_dataclass(response, Brand)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetAssetFundamentals")
     def get_asset_fundamentals(
         self, request: GetAssetFundamentalsRequest
@@ -987,7 +987,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, GetAssetFundamentalsResponse
         )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetAssetReports")
     def get_asset_reports(
         self, request: GetAssetReportsRequest
@@ -1001,7 +1001,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetAssetReports")
         return _grpc_helpers.protobuf_to_dataclass(response, GetAssetReportsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetConsensusForecasts")
     def get_consensus_forecasts(
         self, request: GetConsensusForecastsRequest
@@ -1017,7 +1017,7 @@ class InstrumentsService(_grpc_helpers.Service):
             response, GetConsensusForecastsResponse
         )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetForecastBy")
     def get_forecast_by(self, request: GetForecastRequest) -> GetForecastResponse:
         response, call = self.stub.GetForecastBy.with_call(
@@ -1029,7 +1029,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetForecastBy")
         return _grpc_helpers.protobuf_to_dataclass(response, GetForecastResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetRiskRates")
     def get_risk_rates(self, request: RiskRatesRequest) -> RiskRatesResponse:
         response, call = self.stub.GetRiskRates.with_call(
@@ -1041,7 +1041,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetRiskRates")
         return _grpc_helpers.protobuf_to_dataclass(response, RiskRatesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetInsiderDeals")
     def get_insider_deals(
         self,
@@ -1056,7 +1056,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetInsiderDeals")
         return _grpc_helpers.protobuf_to_dataclass(response, GetInsiderDealsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("StructuredNoteBy")
     def structured_note_by(self, request: InstrumentRequest) -> StructuredNoteResponse:
         response, call = self.stub.StructuredNoteBy.with_call(
@@ -1068,7 +1068,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "StructuredNoteBy")
         return _grpc_helpers.protobuf_to_dataclass(response, StructuredNoteResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("StructuredNotes")
     def structured_notes(
         self,
@@ -1083,7 +1083,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "StructuredNotes")
         return _grpc_helpers.protobuf_to_dataclass(response, StructuredNotesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("Dfas")
     def dfas(
         self,
@@ -1097,7 +1097,7 @@ class InstrumentsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "Dfas")
         return _grpc_helpers.protobuf_to_dataclass(response, DfasResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("DfaBy")
     def dfa_by(
         self,
@@ -1113,11 +1113,11 @@ class InstrumentsService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, DfaResponse)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class MarketDataService(_grpc_helpers.Service):
     _stub_factory = marketdata_pb2_grpc.MarketDataServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetCandles")
     def get_candles(
         self,
@@ -1150,7 +1150,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetCandles")
         return _grpc_helpers.protobuf_to_dataclass(response, GetCandlesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetLastPrices")
     def get_last_prices(
         self,
@@ -1178,7 +1178,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetLastPrices")
         return _grpc_helpers.protobuf_to_dataclass(response, GetLastPricesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetOrderBook")
     def get_order_book(
         self, *, figi: str = "", depth: int = 0, instrument_id: str = ""
@@ -1196,7 +1196,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetOrderBook")
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrderBookResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetTradingStatus")
     def get_trading_status(
         self, *, figi: str = "", instrument_id: str = ""
@@ -1213,7 +1213,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetTradingStatus")
         return _grpc_helpers.protobuf_to_dataclass(response, GetTradingStatusResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetTradingStatuses")
     def get_trading_statuses(
         self, *, instrument_ids: Optional[List[str]] = None
@@ -1230,7 +1230,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetTradingStatuses")
         return _grpc_helpers.protobuf_to_dataclass(response, GetTradingStatusesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetLastTrades")
     def get_last_trades(
         self,
@@ -1259,7 +1259,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetLastTrades")
         return _grpc_helpers.protobuf_to_dataclass(response, GetLastTradesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetClosePrices")
     def get_close_prices(
         self,
@@ -1281,7 +1281,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetClosePrices")
         return _grpc_helpers.protobuf_to_dataclass(response, GetClosePricesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetTechAnalysis")
     def get_tech_analysis(
         self,
@@ -1297,7 +1297,7 @@ class MarketDataService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetTechAnalysis")
         return _grpc_helpers.protobuf_to_dataclass(response, GetTechAnalysisResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetMarketValues")
     def get_market_values(
         self,
@@ -1314,7 +1314,7 @@ class MarketDataService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetMarketValuesResponse)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class MarketDataStreamService(_grpc_helpers.Service):
     _stub_factory = marketdata_pb2_grpc.MarketDataStreamServiceStub
 
@@ -1327,7 +1327,7 @@ class MarketDataStreamService(_grpc_helpers.Service):
                 request, marketdata_pb2.MarketDataRequest()
             )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_error_hub_gen()
     @handle_request_error_gen("MarketDataStream")
     def market_data_stream(
@@ -1349,7 +1349,7 @@ class MarketDataStreamService(_grpc_helpers.Service):
                 request, marketdata_pb2.MarketDataServerSideStreamRequest()
             )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_error_hub_gen()
     @handle_request_error_gen("MarketDataServerSideStream")
     def market_data_server_side_stream(
@@ -1365,11 +1365,11 @@ class MarketDataStreamService(_grpc_helpers.Service):
             yield _grpc_helpers.protobuf_to_dataclass(response, MarketDataResponse)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class OperationsService(_grpc_helpers.Service):
     _stub_factory = operations_pb2_grpc.OperationsServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetOperations")
     def get_operations(
         self,
@@ -1397,7 +1397,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetOperations")
         return _grpc_helpers.protobuf_to_dataclass(response, OperationsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetPortfolio")
     def get_portfolio(self, *, account_id: str = "") -> PortfolioResponse:
         request = PortfolioRequest()
@@ -1411,7 +1411,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetPortfolio")
         return _grpc_helpers.protobuf_to_dataclass(response, PortfolioResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetPositions")
     def get_positions(self, *, account_id: str = "") -> PositionsResponse:
         request = PositionsRequest()
@@ -1425,7 +1425,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetPositions")
         return _grpc_helpers.protobuf_to_dataclass(response, PositionsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetWithdrawLimits")
     def get_withdraw_limits(self, *, account_id: str = "") -> WithdrawLimitsResponse:
         request = WithdrawLimitsRequest()
@@ -1439,7 +1439,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetWithdrawLimits")
         return _grpc_helpers.protobuf_to_dataclass(response, WithdrawLimitsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetBrokerReport")
     def get_broker_report(
         self,
@@ -1461,7 +1461,7 @@ class OperationsService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetBrokerReport")
         return _grpc_helpers.protobuf_to_dataclass(response, BrokerReportResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetDividendsForeignIssuer")
     def get_dividends_foreign_issuer(
         self,
@@ -1491,7 +1491,7 @@ class OperationsService(_grpc_helpers.Service):
             response, GetDividendsForeignIssuerResponse
         )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetOperationsByCursor")
     def get_operations_by_cursor(
         self,
@@ -1509,11 +1509,11 @@ class OperationsService(_grpc_helpers.Service):
         )
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class OperationsStreamService(_grpc_helpers.Service):
     _stub_factory = operations_pb2_grpc.OperationsStreamServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_error_hub_gen()
     @handle_request_error_gen("PortfolioStream")
     def portfolio_stream(
@@ -1539,7 +1539,7 @@ class OperationsStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, PortfolioStreamResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_error_hub_gen()
     @handle_request_error_gen("PositionsStream")
     def positions_stream(
@@ -1568,7 +1568,7 @@ class OperationsStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, PositionsStreamResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_error_hub_gen()
     @handle_request_error_gen("OperationsStream")
     def operations_stream(
@@ -1586,11 +1586,11 @@ class OperationsStreamService(_grpc_helpers.Service):
             )
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class OrdersStreamService(_grpc_helpers.Service):
     _stub_factory = orders_pb2_grpc.OrdersStreamServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_error_hub_gen()
     @handle_request_error_gen("TradesStream")
     def trades_stream(
@@ -1614,7 +1614,7 @@ class OrdersStreamService(_grpc_helpers.Service):
         ):
             yield _grpc_helpers.protobuf_to_dataclass(response, TradesStreamResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_error_hub_gen()
     @handle_request_error_gen("OrderStateStream")
     def order_state_stream(
@@ -1631,11 +1631,11 @@ class OrdersStreamService(_grpc_helpers.Service):
             )
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class OrdersService(_grpc_helpers.Service):
     _stub_factory = orders_pb2_grpc.OrdersServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("PostOrder")
     def post_order(
         self,
@@ -1681,7 +1681,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "PostOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("PostOrderAsync")
     def post_order_async(
         self, request: PostOrderAsyncRequest
@@ -1701,7 +1701,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "PostOrderAsync")
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderAsyncResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("CancelOrder")
     def cancel_order(
         self,
@@ -1723,7 +1723,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "CancelOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, CancelOrderResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetOrderState")
     def get_order_state(
         self,
@@ -1747,7 +1747,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetOrderState")
         return _grpc_helpers.protobuf_to_dataclass(response, OrderState)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetOrders")
     def get_orders(
         self,
@@ -1776,7 +1776,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetOrders")
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrdersResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("ReplaceOrder")
     def replace_order(self, request: ReplaceOrderRequest) -> PostOrderResponse:
         response, call = self.stub.ReplaceOrder.with_call(
@@ -1788,7 +1788,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "ReplaceOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetMaxLots")
     def get_max_lots(self, request: GetMaxLotsRequest) -> GetMaxLotsResponse:
         response, call = self.stub.GetMaxLots.with_call(
@@ -1800,7 +1800,7 @@ class OrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetMaxLots")
         return _grpc_helpers.protobuf_to_dataclass(response, GetMaxLotsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetOrderPrice")
     def get_order_price(self, request: GetOrderPriceRequest) -> GetOrderPriceResponse:
         response, call = self.stub.GetOrderPrice.with_call(
@@ -1813,11 +1813,11 @@ class OrdersService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrderPriceResponse)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class UsersService(_grpc_helpers.Service):
     _stub_factory = users_pb2_grpc.UsersServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetAccounts")
     def get_accounts(self) -> GetAccountsResponse:
         request = GetAccountsRequest()
@@ -1830,7 +1830,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetAccounts")
         return _grpc_helpers.protobuf_to_dataclass(response, GetAccountsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetMarginAttributes")
     def get_margin_attributes(
         self, *, account_id: str = ""
@@ -1848,7 +1848,7 @@ class UsersService(_grpc_helpers.Service):
             response, GetMarginAttributesResponse
         )
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetUserTariff")
     def get_user_tariff(self) -> GetUserTariffResponse:
         request = GetUserTariffRequest()
@@ -1861,7 +1861,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetUserTariff")
         return _grpc_helpers.protobuf_to_dataclass(response, GetUserTariffResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetInfo")
     def get_info(self) -> GetInfoResponse:
         request = GetInfoRequest()
@@ -1874,7 +1874,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetInfo")
         return _grpc_helpers.protobuf_to_dataclass(response, GetInfoResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetBankAccounts")
     def get_bank_accounts(self) -> GetBankAccountsResponse:
         request = GetBankAccountsRequest()
@@ -1887,7 +1887,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetBankAccounts")
         return _grpc_helpers.protobuf_to_dataclass(response, GetBankAccountsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("CurrencyTransfer")
     def currency_transfer(
         self, request: CurrencyTransferRequest
@@ -1901,7 +1901,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "CurrencyTransfer")
         return _grpc_helpers.protobuf_to_dataclass(response, CurrencyTransferResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("PayIn")
     def pay_in(self, request: PayInRequest) -> PayInResponse:
         response, call = self.stub.PayIn.with_call(
@@ -1913,7 +1913,7 @@ class UsersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "PayIn")
         return _grpc_helpers.protobuf_to_dataclass(response, PayInResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetAccountValues")
     def get_account_values(
         self, request: GetAccountValuesRequest
@@ -1928,11 +1928,11 @@ class UsersService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetAccountValuesResponse)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class SandboxService(_grpc_helpers.Service):
     _stub_factory = sandbox_pb2_grpc.SandboxServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("OpenSandboxAccount")
     def open_sandbox_account(
         self, name: Optional[str] = ""
@@ -1961,7 +1961,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetSandboxAccounts")
         return _grpc_helpers.protobuf_to_dataclass(response, GetAccountsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("CloseSandboxAccount")
     def close_sandbox_account(
         self, *, account_id: str = ""
@@ -2180,7 +2180,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetSandboxPortfolio")
         return _grpc_helpers.protobuf_to_dataclass(response, PortfolioResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("SandboxPayIn")
     def sandbox_pay_in(
         self, *, account_id: str = "", amount: Optional[MoneyValue] = None
@@ -2218,7 +2218,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetSandboxWithdrawLimits")
         return _grpc_helpers.protobuf_to_dataclass(response, WithdrawLimitsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetSandboxMaxLots")
     def get_sandbox_max_lots(
         self,
@@ -2234,7 +2234,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetSandboxMaxLots")
         return _grpc_helpers.protobuf_to_dataclass(response, GetMaxLotsResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("PostSandboxOrderAsync")
     def post_sandbox_order_async(
         self,
@@ -2250,7 +2250,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "PostSandboxOrderAsync")
         return _grpc_helpers.protobuf_to_dataclass(response, PostOrderAsyncResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("PostSandboxStopOrder")
     def post_sandbox_stop_order(
         self,
@@ -2266,7 +2266,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "PostSandboxStopOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, PostStopOrderResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetSandboxStopOrders")
     def get_sandbox_stop_orders(
         self,
@@ -2282,7 +2282,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetSandboxStopOrders")
         return _grpc_helpers.protobuf_to_dataclass(response, GetStopOrdersResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("CancelSandboxStopOrder")
     def cancel_sandbox_stop_order(
         self,
@@ -2298,7 +2298,7 @@ class SandboxService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "CancelSandboxStopOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, CancelStopOrderResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetSandboxOrderPrice")
     def get_sandbox_order_price(
         self, request: GetOrderPriceRequest
@@ -2313,11 +2313,11 @@ class SandboxService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, GetOrderPriceResponse)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class StopOrdersService(_grpc_helpers.Service):
     _stub_factory = stoporders_pb2_grpc.StopOrdersServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("PostStopOrder")
     def post_stop_order(
         self,
@@ -2373,7 +2373,7 @@ class StopOrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "PostStopOrder")
         return _grpc_helpers.protobuf_to_dataclass(response, PostStopOrderResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetStopOrders")
     def get_stop_orders(
         self,
@@ -2399,7 +2399,7 @@ class StopOrdersService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetStopOrders")
         return _grpc_helpers.protobuf_to_dataclass(response, GetStopOrdersResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("CancelStopOrder")
     def cancel_stop_order(
         self, *, account_id: str = "", stop_order_id: str = ""
@@ -2417,11 +2417,11 @@ class StopOrdersService(_grpc_helpers.Service):
         return _grpc_helpers.protobuf_to_dataclass(response, CancelStopOrderResponse)
 
 
-@deprecated(deprecated_in="0.4.0")
+@deprecated(deprecated_in="1.0.0")
 class SignalService(_grpc_helpers.Service):
     _stub_factory = signals_pb2_grpc.SignalServiceStub
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetStrategies")
     def get_strategies(
         self,
@@ -2437,7 +2437,7 @@ class SignalService(_grpc_helpers.Service):
         log_request(get_tracking_id_from_call(call), "GetStrategies")
         return _grpc_helpers.protobuf_to_dataclass(response, GetStrategiesResponse)
 
-    @deprecated(deprecated_in="0.4.0")
+    @deprecated(deprecated_in="1.0.0")
     @handle_request_error("GetSignals")
     def get_signals(
         self,
