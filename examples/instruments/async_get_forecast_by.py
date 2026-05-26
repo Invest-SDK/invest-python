@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import GetForecastRequest
+from t_tech.invest.grpc import AsyncClient, FindInstrumentRequest
+from t_tech.invest.grpc.schemas import GetForecastRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -11,7 +11,9 @@ async def main():
     async with AsyncClient(TOKEN) as client:
         instrument = (
             await client.instruments.find_instrument(
-                query="Сбер Банк - привилегированные акции"
+                FindInstrumentRequest(
+                    query="Сбер Банк - привилегированные акции"
+                )
             )
         ).instruments[0]
         request = GetForecastRequest(instrument_id=instrument.uid)

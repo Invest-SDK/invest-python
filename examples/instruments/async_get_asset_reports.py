@@ -2,8 +2,8 @@ import asyncio
 import os
 from datetime import timedelta
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import GetAssetReportsRequest
+from t_tech.invest.grpc import AsyncClient, FindInstrumentRequest, InstrumentType
+from t_tech.invest.grpc.schemas import GetAssetReportsRequest
 from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
@@ -12,7 +12,10 @@ TOKEN = os.environ["INVEST_TOKEN"]
 async def main():
     async with AsyncClient(TOKEN) as client:
         instruments = await client.instruments.find_instrument(
-            query="Тинькофф Квадратные метры"
+            FindInstrumentRequest(
+                query="Южуралзолото",
+                instrument_kind=InstrumentType.INSTRUMENT_TYPE_SHARE
+            )
         )
         instrument = instruments.instruments[0]
         print(instrument.name)

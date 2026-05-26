@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import InstrumentExchangeType
+from t_tech.invest.grpc import AsyncClient, InstrumentsRequest
+from t_tech.invest.grpc.schemas import InstrumentExchangeType
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -10,7 +10,9 @@ TOKEN = os.environ["INVEST_TOKEN"]
 async def main():
     async with AsyncClient(TOKEN) as client:
         bonds = await client.instruments.bonds(
-            instrument_exchange=InstrumentExchangeType.INSTRUMENT_EXCHANGE_UNSPECIFIED,
+            InstrumentsRequest(
+                instrument_exchange=InstrumentExchangeType.INSTRUMENT_EXCHANGE_UNSPECIFIED,
+            )
         )
         for bond in bonds.instruments:
             print(bond)

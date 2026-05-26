@@ -1,7 +1,7 @@
 import os
 
-from t_tech.invest import Client
-from t_tech.invest.schemas import (
+from t_tech.invest.grpc import Client, EditFavoritesRequest
+from t_tech.invest.grpc.schemas import (
     CreateFavoriteGroupRequest,
     DeleteFavoriteGroupRequest,
     EditFavoritesActionType as At,
@@ -28,13 +28,16 @@ def main():
         print(f"Создана новая группа избранного с ИД: {group_id}")
 
         client.instruments.edit_favorites(
-            instruments=[EditFavoritesRequestInstrument(instrument_id="BBG001M2SC01")],
-            action_type=At.EDIT_FAVORITES_ACTION_TYPE_ADD,
-            group_id=group_id,
+            EditFavoritesRequest(
+                instruments=[EditFavoritesRequestInstrument(
+                    instrument_id="BBG016CSVY38")],
+                action_type=At.EDIT_FAVORITES_ACTION_TYPE_ADD,
+                group_id=group_id,
+            )
         )
 
         request = GetFavoriteGroupsRequest()
-        request.instrument_id = ["BBG001M2SC01"]
+        request.instrument_id = ["BBG016CSVY38"]
         r = client.instruments.get_favorite_groups(request=request)
         print(f"Список групп избранного:")
         for i in r.groups:

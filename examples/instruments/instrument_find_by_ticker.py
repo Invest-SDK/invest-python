@@ -1,6 +1,6 @@
 import os
 
-from t_tech.invest import Client, InstrumentIdType
+from t_tech.invest.grpc import Client, InstrumentIdType, InstrumentRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -8,9 +8,11 @@ TOKEN = os.environ["INVEST_TOKEN"]
 def main():
     with Client(TOKEN) as client:
         r = client.instruments.get_instrument_by(
-            id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER,
-            id="LKOH",
-            class_code="TQBR",
+            InstrumentRequest(
+                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER,
+                id="LKOH",
+                class_code="TQBR",
+            )
         )
         print(r.instrument)
 

@@ -1,14 +1,10 @@
 import os
-from datetime import timedelta
 
-from t_tech.invest import Client
-from t_tech.invest.schemas import (
-    GetAssetReportsRequest,
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import (
     GetConsensusForecastsRequest,
-    InstrumentIdType,
     Page,
 )
-from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -1,14 +1,14 @@
 import asyncio
 import os
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import InstrumentsRequest, InstrumentStatus
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import InstrumentsRequest, InstrumentStatus
 
 
 async def main():
     token = os.environ["INVEST_TOKEN"]
 
-    with AsyncClient(token) as client:
+    async with AsyncClient(token) as client:
         r = await client.instruments.structured_notes(
             request=InstrumentsRequest(
                 instrument_status=InstrumentStatus.INSTRUMENT_STATUS_ALL

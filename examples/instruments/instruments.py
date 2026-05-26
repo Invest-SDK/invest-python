@@ -1,13 +1,17 @@
 import os
 
-from t_tech.invest import Client
+from t_tech.invest.grpc import Client, FindInstrumentRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
 
 def main():
     with Client(TOKEN) as client:
-        r = client.instruments.find_instrument(query="BBG001M2SC01")
+        r = client.instruments.find_instrument(
+            FindInstrumentRequest(
+                query="BBG016CSVY38"
+            )
+        )
         for i in r.instruments:
             print(i)
 

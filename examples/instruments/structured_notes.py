@@ -1,7 +1,7 @@
 import os
 
-from t_tech.invest import Client
-from t_tech.invest.schemas import InstrumentsRequest, InstrumentStatus
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import InstrumentsRequest, InstrumentStatus
 
 
 def main():

@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import AssetsRequest, InstrumentStatus, InstrumentType
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import AssetsRequest, InstrumentStatus, InstrumentType
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -13,7 +13,7 @@ async def main():
             request=AssetsRequest(
                 instrument_type=InstrumentType.INSTRUMENT_TYPE_SHARE,
                 instrument_status=InstrumentStatus.INSTRUMENT_STATUS_BASE,
-            )  # pylint:disable=line-too-long
+            )
         )
         print("BASE SHARE ASSETS")
         for bond in r.assets:
