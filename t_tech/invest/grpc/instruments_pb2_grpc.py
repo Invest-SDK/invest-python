@@ -229,6 +229,11 @@ class InstrumentsServiceStub(object):
                 request_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentsRequest.SerializeToString,
                 response_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.StructuredNotesResponse.FromString,
                 )
+        self.News = channel.unary_unary(
+                '/tinkoff.public.invest.api.contract.v1.InstrumentsService/News',
+                request_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.NewsRequest.SerializeToString,
+                response_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.NewsResponse.FromString,
+                )
 
 
 class InstrumentsServiceServicer(object):
@@ -350,7 +355,7 @@ class InstrumentsServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def DfaBy(self, request, context):
-        """DfaBy — получить цифровой актив по ее идентификатору
+        """DfaBy — получить цифровой актив по его идентификатору
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -527,6 +532,13 @@ class InstrumentsServiceServicer(object):
 
     def StructuredNotes(self, request, context):
         """StructuredNotes — список структурных нот
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def News(self, request, context):
+        """News — получение актуальных новостей
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -744,6 +756,11 @@ def add_InstrumentsServiceServicer_to_server(servicer, server):
                     servicer.StructuredNotes,
                     request_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentsRequest.FromString,
                     response_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.StructuredNotesResponse.SerializeToString,
+            ),
+            'News': grpc.unary_unary_rpc_method_handler(
+                    servicer.News,
+                    request_deserializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.NewsRequest.FromString,
+                    response_serializer=t__tech_dot_invest_dot_grpc_dot_instruments__pb2.NewsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -1469,5 +1486,22 @@ class InstrumentsService(object):
         return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.InstrumentsService/StructuredNotes',
             t__tech_dot_invest_dot_grpc_dot_instruments__pb2.InstrumentsRequest.SerializeToString,
             t__tech_dot_invest_dot_grpc_dot_instruments__pb2.StructuredNotesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def News(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/tinkoff.public.invest.api.contract.v1.InstrumentsService/News',
+            t__tech_dot_invest_dot_grpc_dot_instruments__pb2.NewsRequest.SerializeToString,
+            t__tech_dot_invest_dot_grpc_dot_instruments__pb2.NewsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -11,6 +11,7 @@ import google.protobuf.message
 import google.protobuf.timestamp_pb2
 import sys
 import t_tech.invest.grpc.common_pb2
+import t_tech.invest.grpc.stoporders_pb2
 import typing
 
 if sys.version_info >= (3, 10):
@@ -1447,9 +1448,70 @@ class OrderStateStreamResponse(google.protobuf.message.Message):
         @typing.overload
         def WhichOneof(self, oneof_group: typing_extensions.Literal["_status_info", b"_status_info"]) -> typing_extensions.Literal["status_info"] | None: ...
 
+    @typing_extensions.final
+    class StopOrderState(google.protobuf.message.Message):
+        """Стоп-ордер"""
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        STOP_ORDER_ID_FIELD_NUMBER: builtins.int
+        ACCOUNT_ID_FIELD_NUMBER: builtins.int
+        CREATED_AT_FIELD_NUMBER: builtins.int
+        DIRECTION_FIELD_NUMBER: builtins.int
+        PRICE_FIELD_NUMBER: builtins.int
+        STOP_PRICE_FIELD_NUMBER: builtins.int
+        ORDER_TYPE_FIELD_NUMBER: builtins.int
+        INSTRUMENT_UID_FIELD_NUMBER: builtins.int
+        TICKER_FIELD_NUMBER: builtins.int
+        CLASS_CODE_FIELD_NUMBER: builtins.int
+        STATUS_FIELD_NUMBER: builtins.int
+        stop_order_id: builtins.str
+        """Идентификатор стоп-заявки."""
+        account_id: builtins.str
+        """Номер счёта."""
+        @property
+        def created_at(self) -> google.protobuf.timestamp_pb2.Timestamp:
+            """Дата создания заявки."""
+        direction: global___OrderDirection.ValueType
+        """Направление заявки."""
+        @property
+        def price(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+            """Цена заявки."""
+        @property
+        def stop_price(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+            """Цена активации стоп-заявки."""
+        order_type: global___OrderType.ValueType
+        """Тип дочерней биржевой заявки."""
+        instrument_uid: builtins.str
+        """UID идентификатор инструмента."""
+        ticker: builtins.str
+        """Тикер инструмента."""
+        class_code: builtins.str
+        """Класс-код."""
+        status: t_tech.invest.grpc.stoporders_pb2.StopOrderStatusOption.ValueType
+        """Состояние заявки."""
+        def __init__(
+            self,
+            *,
+            stop_order_id: builtins.str = ...,
+            account_id: builtins.str = ...,
+            created_at: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+            direction: global___OrderDirection.ValueType = ...,
+            price: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
+            stop_price: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
+            order_type: global___OrderType.ValueType = ...,
+            instrument_uid: builtins.str = ...,
+            ticker: builtins.str = ...,
+            class_code: builtins.str = ...,
+            status: t_tech.invest.grpc.stoporders_pb2.StopOrderStatusOption.ValueType = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["created_at", b"created_at", "price", b"price", "stop_price", b"stop_price"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["account_id", b"account_id", "class_code", b"class_code", "created_at", b"created_at", "direction", b"direction", "instrument_uid", b"instrument_uid", "order_type", b"order_type", "price", b"price", "status", b"status", "stop_order_id", b"stop_order_id", "stop_price", b"stop_price", "ticker", b"ticker"]) -> None: ...
+
     ORDER_STATE_FIELD_NUMBER: builtins.int
     PING_FIELD_NUMBER: builtins.int
     SUBSCRIPTION_FIELD_NUMBER: builtins.int
+    STOP_ORDER_STATE_FIELD_NUMBER: builtins.int
     @property
     def order_state(self) -> global___OrderStateStreamResponse.OrderState:
         """Информация об исполнении торгового поручения."""
@@ -1459,15 +1521,19 @@ class OrderStateStreamResponse(google.protobuf.message.Message):
     @property
     def subscription(self) -> global___SubscriptionResponse:
         """Ответ на запрос на подписку."""
+    @property
+    def stop_order_state(self) -> global___OrderStateStreamResponse.StopOrderState:
+        """Стоп-ордер."""
     def __init__(
         self,
         *,
         order_state: global___OrderStateStreamResponse.OrderState | None = ...,
         ping: t_tech.invest.grpc.common_pb2.Ping | None = ...,
         subscription: global___SubscriptionResponse | None = ...,
+        stop_order_state: global___OrderStateStreamResponse.StopOrderState | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["order_state", b"order_state", "payload", b"payload", "ping", b"ping", "subscription", b"subscription"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["order_state", b"order_state", "payload", b"payload", "ping", b"ping", "subscription", b"subscription"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["payload", b"payload"]) -> typing_extensions.Literal["order_state", "ping", "subscription"] | None: ...
+    def HasField(self, field_name: typing_extensions.Literal["order_state", b"order_state", "payload", b"payload", "ping", b"ping", "stop_order_state", b"stop_order_state", "subscription", b"subscription"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["order_state", b"order_state", "payload", b"payload", "ping", b"ping", "stop_order_state", b"stop_order_state", "subscription", b"subscription"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["payload", b"payload"]) -> typing_extensions.Literal["order_state", "ping", "subscription", "stop_order_state"] | None: ...
 
 global___OrderStateStreamResponse = OrderStateStreamResponse

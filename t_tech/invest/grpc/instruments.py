@@ -192,6 +192,12 @@ class FilterOptionsRequest(_grpc_helpers.Message):
 
 
 @dataclass
+class NewsRequest(_grpc_helpers.Message):
+    cursor: Optional[int] = _grpc_helpers.int64_field(1, optional=True)
+    limit: Optional[int] = _grpc_helpers.int32_field(2, optional=True)
+
+
+@dataclass
 class BondResponse(_grpc_helpers.Message):
     instrument: 'Bond' = _grpc_helpers.message_field(1)
 
@@ -401,6 +407,43 @@ class StructuredNoteResponse(_grpc_helpers.Message):
 @dataclass
 class StructuredNotesResponse(_grpc_helpers.Message):
     instruments: List['StructuredNote'] = _grpc_helpers.message_field(1)
+
+
+@dataclass
+class NewsResponse(_grpc_helpers.Message):
+    has_next: bool = _grpc_helpers.bool_field(1)
+    next_cursor: Optional[int] = _grpc_helpers.int64_field(2, optional=True)
+    items: List['NewsItem'] = _grpc_helpers.message_field(3)
+
+
+@dataclass
+class NewsItem(_grpc_helpers.Message):
+    id: int = _grpc_helpers.int64_field(1)
+    source: str = _grpc_helpers.string_field(2)
+    title: str = _grpc_helpers.string_field(3)
+    content: str = _grpc_helpers.string_field(4)
+    summary: Optional[str] = _grpc_helpers.string_field(5, optional=True)
+    tables: List['Table'] = _grpc_helpers.message_field(6)
+    instrument_id: List['NewsInstrument'] = _grpc_helpers.message_field(7)
+    priority: bool = _grpc_helpers.bool_field(8)
+    ts: datetime = _grpc_helpers.message_field(9)
+
+
+@dataclass
+class Table(_grpc_helpers.Message):
+    table: str = _grpc_helpers.string_field(1)
+
+
+@dataclass
+class NewsInstrument(_grpc_helpers.Message):
+    instrument: 'NewsInstrumentInfo' = _grpc_helpers.message_field(1)
+
+
+@dataclass
+class NewsInstrumentInfo(_grpc_helpers.Message):
+    instrument_uid: str = _grpc_helpers.string_field(1)
+    ticker: str = _grpc_helpers.string_field(2)
+    class_code: str = _grpc_helpers.string_field(3)
 
 
 @dataclass
@@ -1274,6 +1317,14 @@ class IndicativeResponse(_grpc_helpers.Message):
     uid: str = _grpc_helpers.string_field(14)
     buy_available_flag: bool = _grpc_helpers.bool_field(404)
     sell_available_flag: bool = _grpc_helpers.bool_field(405)
+    index_composition: List['IndexInstrument'] = _grpc_helpers.message_field(
+        406)
+
+
+@dataclass
+class IndexInstrument(_grpc_helpers.Message):
+    uid: str = _grpc_helpers.string_field(1)
+    weight: 'Quotation' = _grpc_helpers.message_field(2)
 
 
 @dataclass
@@ -2102,6 +2153,15 @@ class InstrumentsService(BaseService):
         return _grpc_helpers.protobuf_to_dataclass(response,
             StructuredNotesResponse)
 
+    @handle_request_error('News')
+    def news(self, request: 'NewsRequest'=NewsRequest()) ->'NewsResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.NewsRequest())
+        response, call = self._stub.News.with_call(request=protobuf_request,
+            metadata=self._metadata)
+        log_request(get_tracking_id_from_call(call), 'News')
+        return _grpc_helpers.protobuf_to_dataclass(response, NewsResponse)
+
 
 class AsyncInstrumentsService(BaseService):
     """//TradingSchedules — расписания торговых площадок"""
@@ -2629,3 +2689,14 @@ class AsyncInstrumentsService(BaseService):
             'StructuredNotes')
         return _grpc_helpers.protobuf_to_dataclass(response,
             StructuredNotesResponse)
+
+    @handle_aio_request_error('News')
+    async def news(self, request: 'NewsRequest'=NewsRequest()
+        ) ->'NewsResponse':
+        protobuf_request = _grpc_helpers.dataclass_to_protobuf(request,
+            self._protobuf.NewsRequest())
+        response_coro = self._stub.News(request=protobuf_request, metadata=
+            self._metadata)
+        response = await response_coro
+        log_request(await get_tracking_id_from_coro(response_coro), 'News')
+        return _grpc_helpers.protobuf_to_dataclass(response, NewsResponse)

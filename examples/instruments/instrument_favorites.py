@@ -29,8 +29,9 @@ def main():
 
         client.instruments.edit_favorites(
             EditFavoritesRequest(
-                instruments=[EditFavoritesRequestInstrument(
-                    instrument_id="BBG016CSVY38")],
+                instruments=[
+                    EditFavoritesRequestInstrument(instrument_id="BBG016CSVY38")
+                ],
                 action_type=At.EDIT_FAVORITES_ACTION_TYPE_ADD,
                 group_id=group_id,
             )

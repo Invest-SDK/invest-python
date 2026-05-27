@@ -11,9 +11,7 @@ async def main():
     async with AsyncClient(TOKEN) as client:
         instrument = (
             await client.instruments.find_instrument(
-                FindInstrumentRequest(
-                    query="Сбер Банк - привилегированные акции"
-                )
+                FindInstrumentRequest(query="Сбер Банк - привилегированные акции")
             )
         ).instruments[0]
         request = GetForecastRequest(instrument_id=instrument.uid)

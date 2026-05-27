@@ -188,6 +188,8 @@ class _OperationTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._
     """погашение ЦФА-токена;"""
     OPERATION_TYPE_PRIMARY_ORDER: _OperationType.ValueType  # 69
     """ отмена заявки на первичное размещение по ЦФА;"""
+    OPERATION_TYPE_FUNDING: _OperationType.ValueType  # 70
+    """Списание фандинга."""
 
 class OperationType(_OperationType, metaclass=_OperationTypeEnumTypeWrapper):
     """Тип операции."""
@@ -326,6 +328,8 @@ OPERATION_TYPE_DFA_REDEMPTION: OperationType.ValueType  # 68
 """погашение ЦФА-токена;"""
 OPERATION_TYPE_PRIMARY_ORDER: OperationType.ValueType  # 69
 """ отмена заявки на первичное размещение по ЦФА;"""
+OPERATION_TYPE_FUNDING: OperationType.ValueType  # 70
+"""Списание фандинга."""
 global___OperationType = OperationType
 
 class _PortfolioSubscriptionStatus:
@@ -868,6 +872,7 @@ class PortfolioPosition(google.protobuf.message.Message):
     DAILY_YIELD_FIELD_NUMBER: builtins.int
     TICKER_FIELD_NUMBER: builtins.int
     CLASS_CODE_FIELD_NUMBER: builtins.int
+    VAR_MARGIN_SETTLED_FIELD_NUMBER: builtins.int
     figi: builtins.str
     """FIGI-идентификатор инструмента."""
     instrument_type: builtins.str
@@ -918,6 +923,9 @@ class PortfolioPosition(google.protobuf.message.Message):
     """Тикер инструмента."""
     class_code: builtins.str
     """Класс-код (секция торгов)."""
+    @property
+    def var_margin_settled(self) -> t_tech.invest.grpc.common_pb2.MoneyValue:
+        """Вариационная маржа (расчетная)."""
     def __init__(
         self,
         *,
@@ -940,9 +948,11 @@ class PortfolioPosition(google.protobuf.message.Message):
         daily_yield: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
         ticker: builtins.str = ...,
         class_code: builtins.str = ...,
+        var_margin_settled: t_tech.invest.grpc.common_pb2.MoneyValue | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "average_position_price_pt", b"average_position_price_pt", "blocked_lots", b"blocked_lots", "current_nkd", b"current_nkd", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "quantity", b"quantity", "quantity_lots", b"quantity_lots", "var_margin", b"var_margin"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "average_position_price_pt", b"average_position_price_pt", "blocked", b"blocked", "blocked_lots", b"blocked_lots", "class_code", b"class_code", "current_nkd", b"current_nkd", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "figi", b"figi", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "quantity", b"quantity", "quantity_lots", b"quantity_lots", "ticker", b"ticker", "var_margin", b"var_margin"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_var_margin_settled", b"_var_margin_settled", "average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "average_position_price_pt", b"average_position_price_pt", "blocked_lots", b"blocked_lots", "current_nkd", b"current_nkd", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "quantity", b"quantity", "quantity_lots", b"quantity_lots", "var_margin", b"var_margin", "var_margin_settled", b"var_margin_settled"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_var_margin_settled", b"_var_margin_settled", "average_position_price", b"average_position_price", "average_position_price_fifo", b"average_position_price_fifo", "average_position_price_pt", b"average_position_price_pt", "blocked", b"blocked", "blocked_lots", b"blocked_lots", "class_code", b"class_code", "current_nkd", b"current_nkd", "current_price", b"current_price", "daily_yield", b"daily_yield", "expected_yield", b"expected_yield", "expected_yield_fifo", b"expected_yield_fifo", "figi", b"figi", "instrument_type", b"instrument_type", "instrument_uid", b"instrument_uid", "position_uid", b"position_uid", "quantity", b"quantity", "quantity_lots", b"quantity_lots", "ticker", b"ticker", "var_margin", b"var_margin", "var_margin_settled", b"var_margin_settled"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_var_margin_settled", b"_var_margin_settled"]) -> typing_extensions.Literal["var_margin_settled"] | None: ...
 
 global___PortfolioPosition = PortfolioPosition
 

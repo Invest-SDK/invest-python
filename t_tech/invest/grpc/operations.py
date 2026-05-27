@@ -102,6 +102,7 @@ class OperationType(_grpc_helpers.Enum):
     OPERATION_TYPE_OTHER = 67
     OPERATION_TYPE_DFA_REDEMPTION = 68
     OPERATION_TYPE_PRIMARY_ORDER = 69
+    OPERATION_TYPE_FUNDING = 70
 
 
 class PortfolioSubscriptionStatus(_grpc_helpers.Enum):
@@ -253,6 +254,8 @@ class PortfolioPosition(_grpc_helpers.Message):
     daily_yield: 'MoneyValue' = _grpc_helpers.message_field(31)
     ticker: str = _grpc_helpers.string_field(32)
     class_code: str = _grpc_helpers.string_field(33)
+    var_margin_settled: Optional['MoneyValue'] = _grpc_helpers.message_field(
+        34, optional=True)
 
     def __post_init__(self):
         for deprecated_field in ['average_position_price_pt', 'quantity_lots']:
@@ -745,7 +748,7 @@ class OperationsService(BaseService):
 
 
 class AsyncOperationsService(BaseService):
-    """//GetOperations — список операций по счету"""
+    """//Deprecated GetOperations — список операций по счету"""
     _protobuf = operations_pb2
     _protobuf_grpc = operations_pb2_grpc
     _protobuf_stub = _protobuf_grpc.OperationsServiceStub

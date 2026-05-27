@@ -674,6 +674,33 @@ class FilterOptionsRequest(google.protobuf.message.Message):
 global___FilterOptionsRequest = FilterOptionsRequest
 
 @typing_extensions.final
+class NewsRequest(google.protobuf.message.Message):
+    """Запрос получения актуальных новостей"""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    CURSOR_FIELD_NUMBER: builtins.int
+    LIMIT_FIELD_NUMBER: builtins.int
+    cursor: builtins.int
+    """Идентификатор элемента, с которого начать формировать ответ."""
+    limit: builtins.int
+    """Лимит количества новостей в ответе. По умолчанию 1000."""
+    def __init__(
+        self,
+        *,
+        cursor: builtins.int | None = ...,
+        limit: builtins.int | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_cursor", b"_cursor", "_limit", b"_limit", "cursor", b"cursor", "limit", b"limit"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_cursor", b"_cursor", "_limit", b"_limit", "cursor", b"cursor", "limit", b"limit"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_cursor", b"_cursor"]) -> typing_extensions.Literal["cursor"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_limit", b"_limit"]) -> typing_extensions.Literal["limit"] | None: ...
+
+global___NewsRequest = NewsRequest
+
+@typing_extensions.final
 class BondResponse(google.protobuf.message.Message):
     """Информация об облигации."""
 
@@ -1467,6 +1494,154 @@ class StructuredNotesResponse(google.protobuf.message.Message):
 global___StructuredNotesResponse = StructuredNotesResponse
 
 @typing_extensions.final
+class NewsResponse(google.protobuf.message.Message):
+    """Данные по актуальным новостям."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    HAS_NEXT_FIELD_NUMBER: builtins.int
+    NEXT_CURSOR_FIELD_NUMBER: builtins.int
+    ITEMS_FIELD_NUMBER: builtins.int
+    has_next: builtins.bool
+    """Признак, есть ли еще новости."""
+    next_cursor: builtins.int
+    """Следующий курсор."""
+    @property
+    def items(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___NewsItem]:
+        """Массив новостей."""
+    def __init__(
+        self,
+        *,
+        has_next: builtins.bool = ...,
+        next_cursor: builtins.int | None = ...,
+        items: collections.abc.Iterable[global___NewsItem] | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_next_cursor", b"_next_cursor", "next_cursor", b"next_cursor"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_next_cursor", b"_next_cursor", "has_next", b"has_next", "items", b"items", "next_cursor", b"next_cursor"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_next_cursor", b"_next_cursor"]) -> typing_extensions.Literal["next_cursor"] | None: ...
+
+global___NewsResponse = NewsResponse
+
+@typing_extensions.final
+class NewsItem(google.protobuf.message.Message):
+    """Объект новости."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    ID_FIELD_NUMBER: builtins.int
+    SOURCE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
+    CONTENT_FIELD_NUMBER: builtins.int
+    SUMMARY_FIELD_NUMBER: builtins.int
+    TABLES_FIELD_NUMBER: builtins.int
+    INSTRUMENT_ID_FIELD_NUMBER: builtins.int
+    PRIORITY_FIELD_NUMBER: builtins.int
+    TS_FIELD_NUMBER: builtins.int
+    id: builtins.int
+    """Уникальный идентификатор новости."""
+    source: builtins.str
+    """Источник новости."""
+    title: builtins.str
+    """Заголовок новости."""
+    content: builtins.str
+    """Содержание новости."""
+    summary: builtins.str
+    """Обобщенная информация."""
+    @property
+    def tables(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Table]:
+        """Табличные данные."""
+    @property
+    def instrument_id(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___NewsInstrument]:
+        """Инструменты из новости."""
+    priority: builtins.bool
+    """Флаг, указывающий, важная ли новость."""
+    @property
+    def ts(self) -> google.protobuf.timestamp_pb2.Timestamp:
+        """Время новости."""
+    def __init__(
+        self,
+        *,
+        id: builtins.int = ...,
+        source: builtins.str = ...,
+        title: builtins.str = ...,
+        content: builtins.str = ...,
+        summary: builtins.str | None = ...,
+        tables: collections.abc.Iterable[global___Table] | None = ...,
+        instrument_id: collections.abc.Iterable[global___NewsInstrument] | None = ...,
+        priority: builtins.bool = ...,
+        ts: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_summary", b"_summary", "summary", b"summary", "ts", b"ts"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_summary", b"_summary", "content", b"content", "id", b"id", "instrument_id", b"instrument_id", "priority", b"priority", "source", b"source", "summary", b"summary", "tables", b"tables", "title", b"title", "ts", b"ts"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_summary", b"_summary"]) -> typing_extensions.Literal["summary"] | None: ...
+
+global___NewsItem = NewsItem
+
+@typing_extensions.final
+class Table(google.protobuf.message.Message):
+    """Объект табличных данных."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    TABLE_FIELD_NUMBER: builtins.int
+    table: builtins.str
+    """Таблица."""
+    def __init__(
+        self,
+        *,
+        table: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["table", b"table"]) -> None: ...
+
+global___Table = Table
+
+@typing_extensions.final
+class NewsInstrument(google.protobuf.message.Message):
+    """Объект инструмента из новости."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    INSTRUMENT_FIELD_NUMBER: builtins.int
+    @property
+    def instrument(self) -> global___NewsInstrumentInfo:
+        """Информация по инструменту."""
+    def __init__(
+        self,
+        *,
+        instrument: global___NewsInstrumentInfo | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["instrument", b"instrument"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["instrument", b"instrument"]) -> None: ...
+
+global___NewsInstrument = NewsInstrument
+
+@typing_extensions.final
+class NewsInstrumentInfo(google.protobuf.message.Message):
+    """Объект информации по инструменту из новости."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    INSTRUMENT_UID_FIELD_NUMBER: builtins.int
+    TICKER_FIELD_NUMBER: builtins.int
+    CLASS_CODE_FIELD_NUMBER: builtins.int
+    instrument_uid: builtins.str
+    """Уникальный идентификатор инструмента."""
+    ticker: builtins.str
+    """Тикер инструмента."""
+    class_code: builtins.str
+    """Класс-код (секция торгов)."""
+    def __init__(
+        self,
+        *,
+        instrument_uid: builtins.str = ...,
+        ticker: builtins.str = ...,
+        class_code: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["class_code", b"class_code", "instrument_uid", b"instrument_uid", "ticker", b"ticker"]) -> None: ...
+
+global___NewsInstrumentInfo = NewsInstrumentInfo
+
+@typing_extensions.final
 class Bond(google.protobuf.message.Message):
     """Объект передачи информации об облигации."""
 
@@ -1657,7 +1832,7 @@ class Bond(google.protobuf.message.Message):
     """Тип облигации."""
     @property
     def call_date(self) -> google.protobuf.timestamp_pb2.Timestamp:
-        """Дата погашения облигации."""
+        """Дата оферты."""
     @property
     def dlong_client(self) -> t_tech.invest.grpc.common_pb2.Quotation:
         """Ставка риска в лонг с учетом текущего уровня риска портфеля клиента. [Подробнее про ставки риска](https://www.tbank.ru/invest/help/brokerage/account/margin/about/#q5)."""
@@ -4626,6 +4801,7 @@ class IndicativeResponse(google.protobuf.message.Message):
     UID_FIELD_NUMBER: builtins.int
     BUY_AVAILABLE_FLAG_FIELD_NUMBER: builtins.int
     SELL_AVAILABLE_FLAG_FIELD_NUMBER: builtins.int
+    INDEX_COMPOSITION_FIELD_NUMBER: builtins.int
     figi: builtins.str
     """FIGI-идентификатор инструмента."""
     ticker: builtins.str
@@ -4646,6 +4822,9 @@ class IndicativeResponse(google.protobuf.message.Message):
     """Признак доступности для покупки."""
     sell_available_flag: builtins.bool
     """Признак доступности для продажи."""
+    @property
+    def index_composition(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___IndexInstrument]:
+        """Состав индекса."""
     def __init__(
         self,
         *,
@@ -4659,10 +4838,35 @@ class IndicativeResponse(google.protobuf.message.Message):
         uid: builtins.str = ...,
         buy_available_flag: builtins.bool = ...,
         sell_available_flag: builtins.bool = ...,
+        index_composition: collections.abc.Iterable[global___IndexInstrument] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["buy_available_flag", b"buy_available_flag", "class_code", b"class_code", "currency", b"currency", "exchange", b"exchange", "figi", b"figi", "instrument_kind", b"instrument_kind", "name", b"name", "sell_available_flag", b"sell_available_flag", "ticker", b"ticker", "uid", b"uid"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["buy_available_flag", b"buy_available_flag", "class_code", b"class_code", "currency", b"currency", "exchange", b"exchange", "figi", b"figi", "index_composition", b"index_composition", "instrument_kind", b"instrument_kind", "name", b"name", "sell_available_flag", b"sell_available_flag", "ticker", b"ticker", "uid", b"uid"]) -> None: ...
 
 global___IndicativeResponse = IndicativeResponse
+
+@typing_extensions.final
+class IndexInstrument(google.protobuf.message.Message):
+    """Инструмент в составе индекса"""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    UID_FIELD_NUMBER: builtins.int
+    WEIGHT_FIELD_NUMBER: builtins.int
+    uid: builtins.str
+    """Идентификатор инструмента."""
+    @property
+    def weight(self) -> t_tech.invest.grpc.common_pb2.Quotation:
+        """Вес инструмента в составе индекса в %."""
+    def __init__(
+        self,
+        *,
+        uid: builtins.str = ...,
+        weight: t_tech.invest.grpc.common_pb2.Quotation | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["weight", b"weight"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["uid", b"uid", "weight", b"weight"]) -> None: ...
+
+global___IndexInstrument = IndexInstrument
 
 @typing_extensions.final
 class CountryResponse(google.protobuf.message.Message):

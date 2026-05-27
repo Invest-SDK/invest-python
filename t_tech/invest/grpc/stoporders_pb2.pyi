@@ -384,7 +384,7 @@ global___PostStopOrderResponse = PostStopOrderResponse
 
 @typing_extensions.final
 class GetStopOrdersRequest(google.protobuf.message.Message):
-    """Запрос получения списка активных стоп-заявок."""
+    """Запрос получения списка стоп-заявок."""
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -413,7 +413,7 @@ global___GetStopOrdersRequest = GetStopOrdersRequest
 
 @typing_extensions.final
 class GetStopOrdersResponse(google.protobuf.message.Message):
-    """Список активных стоп-заявок."""
+    """Список стоп-заявок."""
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 

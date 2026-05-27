@@ -8,8 +8,10 @@ TOKEN = os.environ["INVEST_TOKEN"]
 
 def main():
     with Client(TOKEN) as client:
-        r = client.instruments.bonds(InstrumentsRequest(
-            instrument_exchange=InstrumentExchangeType.INSTRUMENT_EXCHANGE_UNSPECIFIED)
+        r = client.instruments.bonds(
+            InstrumentsRequest(
+                instrument_exchange=InstrumentExchangeType.INSTRUMENT_EXCHANGE_UNSPECIFIED
+            )
         )
         for bond in r.instruments:
             print(bond)

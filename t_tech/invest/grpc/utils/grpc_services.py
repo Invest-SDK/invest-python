@@ -3,7 +3,7 @@ import logging
 import types
 from dataclasses import dataclass, fields
 from datetime import datetime
-from typing import Any, AsyncGenerator, Generator, Iterable, Optional, Union, List
+from typing import Any, AsyncGenerator, Generator, Iterable, List, Optional, Union
 
 import grpc
 

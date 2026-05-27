@@ -8,9 +8,7 @@ TOKEN = os.environ["INVEST_TOKEN"]
 def main():
     with Client(TOKEN) as client:
         r = client.instruments.find_instrument(
-            FindInstrumentRequest(
-                query="BBG016CSVY38"
-            )
+            FindInstrumentRequest(query="BBG016CSVY38")
         )
         for i in r.instruments:
             print(i)

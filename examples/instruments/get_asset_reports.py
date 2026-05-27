@@ -13,7 +13,7 @@ def main():
         instruments = client.instruments.find_instrument(
             FindInstrumentRequest(
                 query="Южуралзолото",
-                instrument_kind=InstrumentType.INSTRUMENT_TYPE_SHARE
+                instrument_kind=InstrumentType.INSTRUMENT_TYPE_SHARE,
             )
         )
         instrument = instruments.instruments[0]

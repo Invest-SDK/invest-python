@@ -22,6 +22,7 @@ from t_tech.invest.grpc.common import (
     ResponseMetadata,
     ResultSubscriptionStatus,
 )
+from t_tech.invest.grpc.stoporders import StopOrderStatusOption
 from t_tech.invest.logging import (
     get_tracking_id_from_call,
     get_tracking_id_from_coro,
@@ -360,6 +361,8 @@ class OrderStateStreamResponse(_grpc_helpers.Message):
     ping: Optional['Ping'] = _grpc_helpers.message_field(2, optional=True)
     subscription: Optional['SubscriptionResponse'
         ] = _grpc_helpers.message_field(3, optional=True)
+    stop_order_state: Optional['OrderStateStreamResponse.StopOrderState'
+        ] = _grpc_helpers.message_field(4, optional=True)
 
 
     class MarkerType(_grpc_helpers.Enum):
@@ -420,6 +423,21 @@ class OrderStateStreamResponse(_grpc_helpers.Message):
         completion_time: datetime = _grpc_helpers.message_field(35)
         exchange: str = _grpc_helpers.string_field(36)
         instrument_uid: str = _grpc_helpers.string_field(41)
+
+
+    @dataclass
+    class StopOrderState(_grpc_helpers.Message):
+        stop_order_id: str = _grpc_helpers.string_field(1)
+        account_id: str = _grpc_helpers.string_field(2)
+        created_at: datetime = _grpc_helpers.message_field(3)
+        direction: 'OrderDirection' = _grpc_helpers.message_field(4)
+        price: 'MoneyValue' = _grpc_helpers.message_field(5)
+        stop_price: 'MoneyValue' = _grpc_helpers.message_field(6)
+        order_type: 'OrderType' = _grpc_helpers.message_field(7)
+        instrument_uid: str = _grpc_helpers.string_field(8)
+        ticker: str = _grpc_helpers.string_field(9)
+        class_code: str = _grpc_helpers.string_field(10)
+        status: 'StopOrderStatusOption' = _grpc_helpers.message_field(11)
 
 
 class OrdersStreamService(BaseService):

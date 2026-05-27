@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from t_tech.invest.grpc import AsyncClient, InstrumentType, FindInstrumentRequest
+from t_tech.invest.grpc import AsyncClient, FindInstrumentRequest, InstrumentType
 from t_tech.invest.grpc.schemas import GetBondEventsRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
