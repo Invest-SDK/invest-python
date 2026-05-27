@@ -1,7 +1,7 @@
 import os
 
-from t_tech.invest.sandbox.client import SandboxClient
-from t_tech.invest.schemas import (
+from t_tech.invest.grpc import SandboxClient
+from t_tech.invest.grpc import (
     CancelStopOrderRequest,
     CancelStopOrderResponse,
     GetStopOrdersRequest,

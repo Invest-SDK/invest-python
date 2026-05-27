@@ -4,8 +4,8 @@ import os
 from _decimal import Decimal
 
 from t_tech.invest import utils
-from t_tech.invest.sandbox.async_client import AsyncSandboxClient
-from t_tech.invest.schemas import (
+from t_tech.invest.grpc import AsyncSandboxClient
+from t_tech.invest.grpc import (
     GetOrderPriceRequest,
     GetOrderPriceResponse,
     OrderDirection,

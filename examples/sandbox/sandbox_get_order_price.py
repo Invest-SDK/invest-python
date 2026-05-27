@@ -3,8 +3,8 @@ import os
 from _decimal import Decimal
 
 from t_tech.invest import utils
-from t_tech.invest.sandbox.client import SandboxClient
-from t_tech.invest.schemas import (
+from t_tech.invest.grpc import SandboxClient
+from t_tech.invest.grpc import (
     GetOrderPriceRequest,
     GetOrderPriceResponse,
     OrderDirection,

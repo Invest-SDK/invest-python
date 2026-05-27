@@ -3,15 +3,14 @@ import uuid
 
 from _decimal import Decimal
 
-from t_tech.invest import (
+from t_tech.invest.grpc import (
     PostStopOrderRequest,
-    PostStopOrderRequestTrailingData,
     PostStopOrderResponse,
     StopOrderExpirationType,
     StopOrderType,
 )
-from t_tech.invest.sandbox.client import SandboxClient
-from t_tech.invest.schemas import Quotation, StopOrderDirection, TrailingValueType
+from t_tech.invest.grpc import SandboxClient
+from t_tech.invest.grpc import Quotation, StopOrderDirection, TrailingValueType
 from t_tech.invest.utils import decimal_to_quotation
 
 
@@ -46,7 +45,7 @@ def post_stop_order(
             expiration_type=StopOrderExpirationType.STOP_ORDER_EXPIRATION_TYPE_GOOD_TILL_CANCEL,
             stop_price=price,
             stop_order_type=StopOrderType.STOP_ORDER_TYPE_TAKE_PROFIT,
-            trailing_data=PostStopOrderRequestTrailingData(
+            trailing_data=PostStopOrderRequest.TrailingData(
                 indent_type=TrailingValueType.TRAILING_VALUE_RELATIVE,
                 indent=decimal_to_quotation(Decimal(1)),
             ),

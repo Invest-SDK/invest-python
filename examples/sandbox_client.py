@@ -1,6 +1,6 @@
 import os
 
-from t_tech.invest.sandbox.client import SandboxClient
+from t_tech.invest.grpc import SandboxClient
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
