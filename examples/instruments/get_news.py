@@ -1,6 +1,7 @@
 import os
 
-from t_tech.invest.grpc import Client, NewsRequest
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import NewsRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -8,9 +9,7 @@ TOKEN = os.environ["INVEST_TOKEN"]
 def main():
     with Client(TOKEN) as client:
         # получаем список новостей
-        news_response = client.instruments.news(
-            NewsRequest(limit=10)
-        )
+        news_response = client.instruments.news(NewsRequest(limit=10))
         news = news_response.items
 
         if news_response.has_next:

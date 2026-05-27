@@ -5,7 +5,7 @@ from _decimal import Decimal
 
 from t_tech.invest import utils
 from t_tech.invest.grpc import AsyncSandboxClient
-from t_tech.invest.grpc import (
+from t_tech.invest.grpc.schemas import (
     GetOrderPriceRequest,
     GetOrderPriceResponse,
     OrderDirection,

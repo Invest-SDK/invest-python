@@ -7,7 +7,7 @@ from threading import RLock
 from typing import Any, Callable, Optional, TypeVar, cast
 
 from t_tech.invest.caching.overrides import InstrumentIdType, TTLCache
-from t_tech.invest.grpc import InstrumentRequest
+from t_tech.invest.grpc.schemas import InstrumentRequest
 
 TResp = TypeVar("TResp")
 

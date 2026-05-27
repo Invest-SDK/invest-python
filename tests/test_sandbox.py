@@ -87,7 +87,7 @@ def quantity() -> int:
 
 @pytest.fixture()
 def price() -> Quotation:
-    return Quotation(units=6, nano=200000000)
+    return Quotation(units=6, nano=100000000)
 
 
 @pytest.fixture()

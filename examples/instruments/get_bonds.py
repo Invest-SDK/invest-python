@@ -1,7 +1,7 @@
 import os
 
-from t_tech.invest.grpc import Client, InstrumentsRequest
-from t_tech.invest.grpc.schemas import InstrumentExchangeType
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import InstrumentExchangeType, InstrumentsRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

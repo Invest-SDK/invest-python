@@ -3,14 +3,16 @@ import uuid
 
 from _decimal import Decimal
 
-from t_tech.invest.grpc import (
+from t_tech.invest.grpc import SandboxClient
+from t_tech.invest.grpc.schemas import (
     PostStopOrderRequest,
     PostStopOrderResponse,
+    Quotation,
+    StopOrderDirection,
     StopOrderExpirationType,
     StopOrderType,
+    TrailingValueType,
 )
-from t_tech.invest.grpc import SandboxClient
-from t_tech.invest.grpc import Quotation, StopOrderDirection, TrailingValueType
 from t_tech.invest.utils import decimal_to_quotation
 
 

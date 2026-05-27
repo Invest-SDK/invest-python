@@ -1,10 +1,11 @@
 import os
 
-from t_tech.invest.grpc import Client, EditFavoritesRequest
+from t_tech.invest.grpc import Client
 from t_tech.invest.grpc.schemas import (
     CreateFavoriteGroupRequest,
     DeleteFavoriteGroupRequest,
     EditFavoritesActionType as At,
+    EditFavoritesRequest,
     EditFavoritesRequestInstrument,
     GetFavoriteGroupsRequest,
 )

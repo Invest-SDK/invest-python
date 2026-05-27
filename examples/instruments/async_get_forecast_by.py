@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from t_tech.invest.grpc import AsyncClient, FindInstrumentRequest
-from t_tech.invest.grpc.schemas import GetForecastRequest
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import FindInstrumentRequest, GetForecastRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
