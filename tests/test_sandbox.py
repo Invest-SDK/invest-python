@@ -1,6 +1,7 @@
 # pylint: disable=redefined-outer-name,unused-variable
 
 import os
+import time
 import uuid
 from datetime import datetime
 
@@ -40,6 +41,11 @@ from t_tech.invest.grpc.schemas import (
 )
 from t_tech.invest.utils import money_to_decimal
 from tests.utils import skip_when
+
+
+@pytest.fixture
+def wait_for_ratelimit():
+    time.sleep(1)
 
 
 @pytest.fixture()
@@ -87,7 +93,7 @@ def quantity() -> int:
 
 @pytest.fixture()
 def price() -> Quotation:
-    return Quotation(units=6, nano=100000000)
+    return Quotation(units=5, nano=800000000)
 
 
 @pytest.fixture()
@@ -223,6 +229,7 @@ class TestSandboxOperations:
         assert response.order_request_id == async_order_id
 
     @skip_when_exchange_closed
+    @pytest.mark.usefixtures("wait_for_ratelimit")
     def test_get_sandbox_orders(self, sandbox_service, order, account_id):
         response = sandbox_service.orders.post_order(PostOrderRequest(**order))
         assert response
@@ -238,6 +245,7 @@ class TestSandboxOperations:
         assert isinstance(response.time, datetime)
 
     @skip_when_exchange_closed
+    @pytest.mark.usefixtures("wait_for_ratelimit")
     def test_get_sandbox_order_state(
         self, sandbox_service, order, account_id, instrument_id, direction, quantity
     ):

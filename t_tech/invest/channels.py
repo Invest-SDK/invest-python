@@ -1,4 +1,6 @@
 import itertools
+import os
+from importlib.resources import files
 from typing import Any, Optional, Sequence
 
 import grpc
@@ -31,7 +33,15 @@ def create_channel(
     compression: Optional[grpc.Compression] = None,
     interceptors: Optional[Sequence[ClientInterceptor]] = None,
 ) -> Any:
-    creds = grpc.ssl_channel_credentials()
+    root_certs = None
+    if os.getenv("SSL_TBANK_VERIFY", "false").lower() == "true":
+        root_certs = (
+            files("t_tech.invest.certs")
+            .joinpath("RussianTrustedRootCA.pem")
+            .read_bytes()
+        )
+
+    creds = grpc.ssl_channel_credentials(root_certificates=root_certs)
     target = target or INVEST_GRPC_API
     if options is None:
         options = []
