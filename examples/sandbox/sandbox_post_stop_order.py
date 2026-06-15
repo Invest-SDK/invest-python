@@ -49,7 +49,7 @@ def post_stop_order(
             stop_order_type=StopOrderType.STOP_ORDER_TYPE_TAKE_PROFIT,
             trailing_data=PostStopOrderRequest.TrailingData(
                 indent_type=TrailingValueType.TRAILING_VALUE_RELATIVE,
-                indent=decimal_to_quotation(Decimal(1)),
+                indent=decimal_to_quotation(Decimal(1)),  # type: ignore[arg-type]
             ),
         )
     )

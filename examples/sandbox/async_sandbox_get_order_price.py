@@ -31,7 +31,7 @@ async def get_async_order_price(
             instrument_id="BBG004730ZJ9",
             direction=OrderDirection.ORDER_DIRECTION_BUY,
             quantity=1,
-            price=utils.decimal_to_quotation(Decimal(price)),
+            price=utils.decimal_to_quotation(Decimal(price)),  # type: ignore[arg-type]
         )
     )
 

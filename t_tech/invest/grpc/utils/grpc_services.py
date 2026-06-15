@@ -156,7 +156,7 @@ class Services:
                     from_=current_from,
                     to=current_to,
                     instrument_id=instrument_id,
-                    candle_source_type=candle_source_type,
+                    candle_source_type=candle_source_type, # type: ignore[arg-type]
                 )
             )
 
@@ -266,7 +266,7 @@ class AsyncServices:
                     from_=local_from_,
                     to=local_to,
                     instrument_id=instrument_id,
-                    candle_source_type=candle_source_type,
+                    candle_source_type=candle_source_type, # type: ignore[arg-type]
                 )
             )
             for candle in candles_response.candles:

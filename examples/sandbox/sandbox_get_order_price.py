@@ -30,7 +30,7 @@ def get_order_price(
             instrument_id=instrument_id,
             direction=OrderDirection.ORDER_DIRECTION_BUY,
             quantity=1,
-            price=utils.decimal_to_quotation(Decimal(price)),
+            price=utils.decimal_to_quotation(Decimal(price)),  # type: ignore[arg-type]
         )
     )
 

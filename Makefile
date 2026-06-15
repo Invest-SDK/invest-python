@@ -22,6 +22,9 @@ test-fast:
 test-sandbox:
 	$(TEST) --test-sandbox --cov
 
+test-all:
+	nox -f scripts/noxfile.py -- --cov
+
 .PHONY: lint
 lint:
 	$(POETRY_RUN) ruff $(CODE)
