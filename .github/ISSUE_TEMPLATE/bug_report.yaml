@@ -32,6 +32,7 @@ body:
     label: T-Tech Invest Version
     description: Какая версия библиотеки используется?
     options:
+    - 1.49.2
     - 1.49.1
     - 1.49.0
     - 1.0.0
