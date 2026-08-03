@@ -1,6 +1,6 @@
 INVEST_GRPC_API = "invest-public-api.tbank.ru"
 INVEST_GRPC_API_SANDBOX = "sandbox-invest-public-api.tbank.ru"
-APP_VERSION = "1.49.2"
+APP_VERSION = "1.49.3"
 APP_NAME = f"t-tech.invest-python-{APP_VERSION}"
 PACKAGE_NAME = f"t-tech.invest@{APP_VERSION.replace('-beta', '+')}"
 X_TRACKING_ID = "x-tracking-id"
