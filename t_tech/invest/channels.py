@@ -40,7 +40,7 @@ def create_channel(
     interceptors: Optional[Sequence[ClientInterceptor]] = None,
 ) -> Any:
     root_certs = None
-    if os.getenv("SSL_TBANK_VERIFY", "false").lower() == "true":
+    if os.getenv("SSL_TBANK_VERIFY", "true").lower() == "true":
         root_certs = (
             files("t_tech.invest.certs")
             .joinpath("RussianTrustedRootCA.pem")
