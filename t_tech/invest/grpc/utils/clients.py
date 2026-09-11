@@ -1,9 +1,11 @@
 import asyncio
+import warnings
 from typing import Iterable, List, Optional
 
 import grpc
 from grpc.aio import ClientInterceptor
 
+from t_tech.invest._version_checker import get_version_warning
 from t_tech.invest.caching.overrides import (
     InstrumentCacheableMethods,
     InstrumentCacheableMethodsToWarmup,
@@ -62,10 +64,13 @@ class Client:
             InstrumentCacheableMethods.CURRENCY_BY,
             InstrumentCacheableMethods.OPTION_BY,
             InstrumentCacheableMethods.GET_INSTRUMENT_BY,
-
         ),
         warmup_cache_methods: Iterable[InstrumentCacheableMethodsToWarmup] = tuple(),
+        check_sdk_version: bool = True,
     ):
+        if check_sdk_version:
+            self._check_sdk_version()
+
         self._token = token
         self._sandbox_token = sandbox_token
         self._options = options
@@ -85,6 +90,11 @@ class Client:
 
         for interceptor in interceptors:
             self._channel = grpc.intercept_channel(self._channel, interceptor)
+
+    def _check_sdk_version(self) -> None:
+        warning = get_version_warning()
+        if warning:
+            warnings.warn(warning, UserWarning, stacklevel=2)
 
     def __enter__(self) -> Services:
         channel = self._channel.__enter__()
@@ -182,7 +192,11 @@ class AsyncClient:
 
         ),
         warmup_cache_methods: Iterable[InstrumentCacheableMethodsToWarmup] = tuple(),
+        check_sdk_version: bool = True,
     ):
+        if check_sdk_version:
+            self._check_sdk_version()
+
         self._token = token
         self._sandbox_token = sandbox_token
         self._options = options
@@ -202,6 +216,11 @@ class AsyncClient:
             *interceptors,
         ]
 
+
+    def _check_sdk_version(self) -> None:
+        warning = get_version_warning()
+        if warning:
+            warnings.warn(warning, UserWarning, stacklevel=2)
 
     async def __aenter__(self) -> AsyncServices:
         channel = await self._channel.__aenter__()
