@@ -1,10 +1,10 @@
 site_name: T-Invest Python SDK
-site_url: https://RussianInvestments.github.io/invest-python/
+site_url: https://opensource.tbank.ru/invest/invest-python/
 site_description: 'Python SDK, gRPC client, bot examples'
 
-repo_name: 'RussianInvestments/invest-python'
-repo_url: 'https://github.com/RussianInvestments/invest-python'
-edit_uri: "edit/main/docs/"
+repo_name: 'invest/invest-python'
+repo_url: 'https://opensource.tbank.ru/invest/invest-python'
+edit_uri: "-/edit/master/docs/"
 
 copyright: 'Copyright &copy; 2023 T-technologies'
 
@@ -13,6 +13,15 @@ nav:
   - 'Главная': 'README.md'
   - 'API Reference':
     - Clients: api/clients.md
+  - 'Разработка с LLM':
+    - 'Обзор': 'ai/README.md'
+    - 'Карта SDK': 'ai/sdk-map.md'
+    - 'Реальный контур и песочница': 'ai/real-vs-sandbox.md'
+    - 'Безопасность': 'ai/trading-safety.md'
+    - 'Типичные ошибки': 'ai/common-pitfalls.md'
+    - 'Сценарии для агентов':
+      - 'Разработка программы': 'ai/prompts/build-trading-program.md'
+      - 'Ревью программы': 'ai/prompts/review-trading-program.md'
   - 'Примеры': 'examples.md'
   - 'Готовые работы': 'robots.md'
   - 'Список изменений': 'CHANGELOG.md'

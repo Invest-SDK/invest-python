@@ -1,3 +1,3 @@
 # Changelog
 
-You can see [the commits](https://github.com/RussianInvestments/invest-python/commits/main)
+You can see [the commits](https://opensource.tbank.ru/invest/invest-python/-/commits/master)

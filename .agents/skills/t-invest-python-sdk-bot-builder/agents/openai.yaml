@@ -1,0 +1,4 @@
+interface:
+  display_name: "T-Invest Python SDK Bot Builder"
+  short_description: "Разработка и ревью ботов на T-Invest Python SDK"
+  default_prompt: "Используй $t-invest-python-sdk-bot-builder, чтобы создать, изменить или проверить торговую программу на T-Invest Python SDK."

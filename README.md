@@ -20,6 +20,7 @@ architecture, and implementation were created independently.
 
 - [Документация](https://opensource.tbank.ru/invest/invest-python/-/blob/master/README.md?ref_type=heads)
 - [Документация по Invest API](https://developer.tbank.ru/invest/intro/intro)
+- [Разработка с coding-агентами и LLM](https://opensource.tbank.ru/invest/invest-python/-/blob/master/docs/ai/README.md)
 
 ## Начало работы
 
