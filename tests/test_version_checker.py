@@ -198,7 +198,9 @@ class TestClientVersionWarning:
 
     @mock.patch("t_tech.invest.grpc.utils.clients.get_version_warning")
     @mock.patch("t_tech.invest.grpc.utils.clients.create_channel")
-    def test_client_init_shows_version_warning(self, mock_create_channel, mock_get_warning):
+    def test_client_init_shows_version_warning(
+        self, mock_create_channel, mock_get_warning
+    ):
         """Test that Client initialization shows version warning."""
         from t_tech.invest.grpc import Client
 
@@ -213,7 +215,10 @@ class TestClientVersionWarning:
         def mock_channel_ready_future(channel):
             return mock_future
 
-        with mock.patch("t_tech.invest.grpc.utils.clients.grpc.channel_ready_future", mock_channel_ready_future):
+        with mock.patch(
+            "t_tech.invest.grpc.utils.clients.grpc.channel_ready_future",
+            mock_channel_ready_future,
+        ):
             with pytest.warns(UserWarning, match="New version available"):
                 with Client(token="test_token", check_sdk_version=True):
                     pass
@@ -222,7 +227,9 @@ class TestClientVersionWarning:
 
     @mock.patch("t_tech.invest.grpc.utils.clients.get_version_warning")
     @mock.patch("t_tech.invest.grpc.utils.clients.create_channel")
-    def test_client_init_no_warning_when_no_update(self, mock_create_channel, mock_get_warning):
+    def test_client_init_no_warning_when_no_update(
+        self, mock_create_channel, mock_get_warning
+    ):
         """Test that Client initialization does not show warning when no update."""
         from t_tech.invest.grpc import Client
 
@@ -237,20 +244,29 @@ class TestClientVersionWarning:
         def mock_channel_ready_future(channel):
             return mock_future
 
-        with mock.patch("t_tech.invest.grpc.utils.clients.grpc.channel_ready_future", mock_channel_ready_future):
+        with mock.patch(
+            "t_tech.invest.grpc.utils.clients.grpc.channel_ready_future",
+            mock_channel_ready_future,
+        ):
             with warnings.catch_warnings(record=True) as w:
                 warnings.simplefilter("always")
                 with Client(token="test_token", check_sdk_version=True):
                     pass
                 # Check that no UserWarning was raised
-                user_warnings = [warning for warning in w if issubclass(warning.category, UserWarning)]
+                user_warnings = [
+                    warning
+                    for warning in w
+                    if issubclass(warning.category, UserWarning)
+                ]
                 assert len(user_warnings) == 0
 
         mock_get_warning.assert_called_once()
 
     @mock.patch("t_tech.invest.grpc.utils.clients.get_version_warning")
     @mock.patch("t_tech.invest.grpc.utils.clients.create_channel")
-    def test_client_init_version_check_disabled(self, mock_create_channel, mock_get_warning):
+    def test_client_init_version_check_disabled(
+        self, mock_create_channel, mock_get_warning
+    ):
         """Test that Client initialization skips version check when disabled."""
         from t_tech.invest.grpc import Client
 
@@ -264,13 +280,20 @@ class TestClientVersionWarning:
         def mock_channel_ready_future(channel):
             return mock_future
 
-        with mock.patch("t_tech.invest.grpc.utils.clients.grpc.channel_ready_future", mock_channel_ready_future):
+        with mock.patch(
+            "t_tech.invest.grpc.utils.clients.grpc.channel_ready_future",
+            mock_channel_ready_future,
+        ):
             with warnings.catch_warnings(record=True) as w:
                 warnings.simplefilter("always")
                 with Client(token="test_token", check_sdk_version=False):
                     pass
                 # Check that no UserWarning was raised
-                user_warnings = [warning for warning in w if issubclass(warning.category, UserWarning)]
+                user_warnings = [
+                    warning
+                    for warning in w
+                    if issubclass(warning.category, UserWarning)
+                ]
                 assert len(user_warnings) == 0
 
         mock_get_warning.assert_not_called()
@@ -278,7 +301,9 @@ class TestClientVersionWarning:
     @mock.patch("t_tech.invest.grpc.utils.clients.get_version_warning")
     @mock.patch("t_tech.invest.grpc.utils.clients.create_channel")
     @pytest.mark.asyncio
-    async def test_async_client_init_shows_version_warning(self, mock_create_channel, mock_get_warning):
+    async def test_async_client_init_shows_version_warning(
+        self, mock_create_channel, mock_get_warning
+    ):
         """Test that AsyncClient initialization shows version warning."""
         from t_tech.invest.grpc import AsyncClient
 
@@ -298,7 +323,9 @@ class TestClientVersionWarning:
     @mock.patch("t_tech.invest.grpc.utils.clients.get_version_warning")
     @mock.patch("t_tech.invest.grpc.utils.clients.create_channel")
     @pytest.mark.asyncio
-    async def test_async_client_init_no_warning_when_no_update(self, mock_create_channel, mock_get_warning):
+    async def test_async_client_init_no_warning_when_no_update(
+        self, mock_create_channel, mock_get_warning
+    ):
         """Test that AsyncClient initialization does not show warning when no update."""
         from t_tech.invest.grpc import AsyncClient
 
@@ -314,7 +341,9 @@ class TestClientVersionWarning:
             async with AsyncClient(token="test_token", check_sdk_version=True):
                 pass
             # Check that no UserWarning was raised
-            user_warnings = [warning for warning in w if issubclass(warning.category, UserWarning)]
+            user_warnings = [
+                warning for warning in w if issubclass(warning.category, UserWarning)
+            ]
             assert len(user_warnings) == 0
 
         mock_get_warning.assert_called_once()

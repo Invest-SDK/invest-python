@@ -70,7 +70,7 @@ def get_version_warning() -> Optional[str]:
     latest_version = check_version(current_version)
     if latest_version:
         return (
-            f"WARNING: A newer version of t-tech-investments python SDK is available. \n"
+            f"WARNING: A newer version of t-tech-investments python SDK is available. \n"  # noqa: E501
             f"Current: {current_version}, Latest: {latest_version}. \n"
             f"Please consider upgrading."
         )

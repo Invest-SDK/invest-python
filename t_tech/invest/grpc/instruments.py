@@ -505,6 +505,7 @@ class Bond(_grpc_helpers.Message):
     call_date: datetime = _grpc_helpers.message_field(69)
     dlong_client: 'Quotation' = _grpc_helpers.message_field(90)
     dshort_client: 'Quotation' = _grpc_helpers.message_field(91)
+    ratings: List['Rating'] = _grpc_helpers.message_field(92)
 
     def __post_init__(self):
         for deprecated_field in ['klong', 'kshort']:
@@ -513,6 +514,15 @@ class Bond(_grpc_helpers.Message):
                 warnings.warn(
                     f'{self.__class__.__name__}.{deprecated_field} is deprecated'
                     , DeprecationWarning, stacklevel=2)
+
+
+@dataclass
+class Rating(_grpc_helpers.Message):
+    agency_name: str = _grpc_helpers.string_field(1)
+    rating_level: str = _grpc_helpers.string_field(2)
+    rating_date: datetime = _grpc_helpers.message_field(3)
+    forecast: str = _grpc_helpers.string_field(4)
+    is_under_watch: bool = _grpc_helpers.bool_field(5)
 
 
 @dataclass

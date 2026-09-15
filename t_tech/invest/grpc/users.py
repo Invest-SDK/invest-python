@@ -23,6 +23,10 @@ class AccountType(_grpc_helpers.Enum):
     ACCOUNT_TYPE_DEBIT = 5
     ACCOUNT_TYPE_SAVING = 6
     ACCOUNT_TYPE_DFA = 7
+    ACCOUNT_TYPE_SHARED_SAVING = 8
+    ACCOUNT_TYPE_DEPOSIT = 9
+    ACCOUNT_TYPE_OMS = 10
+    ACCOUNT_TYPE_OFP_DEPOSIT = 11
 
 
 class AccountStatus(_grpc_helpers.Enum):

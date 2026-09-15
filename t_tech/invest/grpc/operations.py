@@ -203,6 +203,8 @@ class PortfolioResponse(_grpc_helpers.Message):
     daily_yield: 'MoneyValue' = _grpc_helpers.message_field(15)
     daily_yield_relative: 'Quotation' = _grpc_helpers.message_field(16)
     total_amount_dfa: 'MoneyValue' = _grpc_helpers.message_field(17)
+    total_var_margin: 'MoneyValue' = _grpc_helpers.message_field(18)
+    total_var_margin_settled: 'MoneyValue' = _grpc_helpers.message_field(19)
 
 
 @dataclass

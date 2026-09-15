@@ -494,6 +494,7 @@ class GetCandlesRequest(_grpc_helpers.Message):
 @dataclass
 class GetCandlesResponse(_grpc_helpers.Message):
     candles: List['HistoricCandle'] = _grpc_helpers.message_field(1)
+    price_currency: str = _grpc_helpers.string_field(2)
 
 
 @dataclass
@@ -583,6 +584,7 @@ class GetOrderBookResponse(_grpc_helpers.Message):
     last_price_ts: datetime = _grpc_helpers.message_field(21)
     close_price_ts: datetime = _grpc_helpers.message_field(22)
     orderbook_ts: datetime = _grpc_helpers.message_field(23)
+    price_currency: str = _grpc_helpers.string_field(24)
 
 
 @dataclass
@@ -644,6 +646,7 @@ class GetLastTradesRequest(_grpc_helpers.Message):
 @dataclass
 class GetLastTradesResponse(_grpc_helpers.Message):
     trades: List['Trade'] = _grpc_helpers.message_field(1)
+    price_currency: str = _grpc_helpers.string_field(2)
 
 
 @dataclass
@@ -686,7 +689,8 @@ class InstrumentClosePriceResponse(_grpc_helpers.Message):
 class GetTechAnalysisRequest(_grpc_helpers.Message):
     indicator_type: 'GetTechAnalysisRequest.IndicatorType' = (_grpc_helpers
         .message_field(1))
-    instrument_uid: str = _grpc_helpers.string_field(2)
+    instrument_uid: Optional[str] = _grpc_helpers.string_field(2, optional=True
+        )
     from_: datetime = _grpc_helpers.message_field(3)
     to: datetime = _grpc_helpers.message_field(4)
     interval: 'GetTechAnalysisRequest.IndicatorInterval' = (_grpc_helpers.
@@ -698,6 +702,8 @@ class GetTechAnalysisRequest(_grpc_helpers.Message):
         message_field(8))
     smoothing: 'GetTechAnalysisRequest.Smoothing' = (_grpc_helpers.
         message_field(9))
+    instrument_id: Optional[str] = _grpc_helpers.string_field(10, optional=True
+        )
 
 
     class IndicatorInterval(_grpc_helpers.Enum):
@@ -785,6 +791,16 @@ class MarketValueInstrument(_grpc_helpers.Message):
     values: List['MarketValue'] = _grpc_helpers.message_field(2)
     ticker: str = _grpc_helpers.string_field(3)
     class_code: str = _grpc_helpers.string_field(4)
+    statistic: 'MarketValueStatistic' = _grpc_helpers.message_field(5)
+    price_currency: str = _grpc_helpers.string_field(6)
+
+
+@dataclass
+class MarketValueStatistic(_grpc_helpers.Message):
+    interested_count: Optional[int] = _grpc_helpers.int32_field(1, optional
+        =True)
+    traded_count: Optional[int] = _grpc_helpers.int32_field(2, optional=True)
+    time: datetime = _grpc_helpers.message_field(3)
 
 
 @dataclass
