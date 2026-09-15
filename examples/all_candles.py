@@ -1,8 +1,8 @@
 import os
 from datetime import timedelta
 
-from t_tech.invest import CandleInterval, Client
-from t_tech.invest.schemas import CandleSource
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import CandleInterval, CandleSource
 from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]

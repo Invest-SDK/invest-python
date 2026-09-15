@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import GetMarketValuesRequest, MarketValueType
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import GetMarketValuesRequest, MarketValueType
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -1,11 +1,12 @@
 import asyncio
 import os
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import (
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import (
     CreateFavoriteGroupRequest,
     DeleteFavoriteGroupRequest,
     EditFavoritesActionType as At,
+    EditFavoritesRequest,
     EditFavoritesRequestInstrument,
     GetFavoriteGroupsRequest,
 )
@@ -29,13 +30,17 @@ async def main():
         print(f"Создана новая группа избранного с ИД: {group_id}")
 
         await client.instruments.edit_favorites(
-            instruments=[EditFavoritesRequestInstrument(instrument_id="BBG001M2SC01")],
-            action_type=At.EDIT_FAVORITES_ACTION_TYPE_ADD,
-            group_id=group_id,
+            EditFavoritesRequest(
+                instruments=[
+                    EditFavoritesRequestInstrument(instrument_id="BBG004730ZJ9")
+                ],
+                action_type=At.EDIT_FAVORITES_ACTION_TYPE_ADD,
+                group_id=group_id,
+            )
         )
 
         request = GetFavoriteGroupsRequest()
-        request.instrument_id = ["BBG001M2SC01"]
+        request.instrument_id = ["BBG004730ZJ9"]
         r = await client.instruments.get_favorite_groups(request=request)
         print(f"Список групп избранного:")
         for i in r.groups:
@@ -45,8 +50,7 @@ async def main():
                 f"{i.contains_instrument} "
             )
 
-        request = DeleteFavoriteGroupRequest()
-        request.group_id = group_id
+        request = DeleteFavoriteGroupRequest(group_id)
         await client.instruments.delete_favorite_group(request=request)
         print(f"Удалена группа избранного с ИД: {group_id}")
 

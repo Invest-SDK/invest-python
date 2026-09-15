@@ -3,8 +3,8 @@ import os
 
 from _decimal import Decimal
 
-from t_tech.invest import AccountType, AsyncClient
-from t_tech.invest.schemas import PayInRequest
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import AccountType, PayInRequest
 from t_tech.invest.utils import decimal_to_money
 
 

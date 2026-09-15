@@ -2,8 +2,8 @@
 import asyncio
 import os
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import GetStrategiesRequest
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import GetStrategiesRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

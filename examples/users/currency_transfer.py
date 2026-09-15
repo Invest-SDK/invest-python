@@ -3,8 +3,8 @@ import uuid
 
 from _decimal import Decimal
 
-from t_tech.invest import AccountType, Client
-from t_tech.invest.schemas import CurrencyTransferRequest
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import AccountType, CurrencyTransferRequest
 from t_tech.invest.utils import decimal_to_money
 
 

@@ -2,8 +2,8 @@ import asyncio
 import os
 from uuid import uuid4
 
-from t_tech.invest import AsyncClient
-from t_tech.invest.schemas import OrderDirection, OrderType, PostOrderAsyncRequest
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import OrderDirection, OrderType, PostOrderAsyncRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
