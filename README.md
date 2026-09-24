@@ -27,8 +27,14 @@ architecture, and implementation were created independently.
 <!-- terminal -->
 
 ```
-$ pip install t-tech-investments --index-url https://opensource.tbank.ru/api/v4/projects/238/packages/pypi/simple
+pip install t-tech-investments --index-url https://opensource.tbank.ru/api/v4/projects/238/packages/pypi/simple
 ```
+
+Для успешной установки пакета необходимо, чтобы в системе были установлены сертификаты МинЦифры. Подробнее об установке 
+сертификатов можно прочитать в [документации](https://developer.tbank.ru/invest/intro/intro/cases#ошибки-с-сертификатом).
+
+В случае, если вы по какой-то причине не можете установить и использовать сертификаты МинЦифры,
+добавьте флаг `--trusted-host opensource.tbank.ru` к команде установки.
 
 ## Возможности
 
