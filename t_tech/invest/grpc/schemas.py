@@ -7,6 +7,7 @@ from .orders import *
 from .signals import *
 from .stoporders import *
 from .users import *
+from .sandbox import *
 
 
 def _get_all_classes():
