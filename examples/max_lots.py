@@ -3,7 +3,8 @@
 import logging
 import os
 
-from t_tech.invest import Client, GetMaxLotsRequest
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import GetMaxLotsRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

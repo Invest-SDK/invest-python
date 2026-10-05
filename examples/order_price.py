@@ -4,7 +4,8 @@ import logging
 import os
 from decimal import Decimal
 
-from t_tech.invest import Client, GetOrderPriceRequest, OrderDirection
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import GetOrderPriceRequest, OrderDirection
 from t_tech.invest.utils import decimal_to_quotation
 
 TOKEN = os.environ["INVEST_TOKEN"]

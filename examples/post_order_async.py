@@ -3,8 +3,8 @@
 import os
 from uuid import uuid4
 
-from t_tech.invest import Client, OrderDirection, OrderType
-from t_tech.invest.schemas import PostOrderAsyncRequest
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import OrderDirection, OrderType, PostOrderAsyncRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -3,8 +3,8 @@ import datetime
 import logging
 import os
 
-from t_tech.invest import Client
-from t_tech.invest.schemas import OrderExecutionReportStatus
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import GetOrdersRequest, OrderExecutionReportStatus
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -20,14 +20,18 @@ def main():
 
         now = datetime.datetime.now()
         orders = client.orders.get_orders(
-            account_id=account_id,
-            from_=now - datetime.timedelta(hours=1),
-            to=now,
-            # filter only executed or partially executed orders
-            execution_status=[
-                OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_FILL,
-                OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_PARTIALLYFILL,
-            ],
+            GetOrdersRequest(
+                account_id=account_id,
+                advanced_filters=GetOrdersRequest.GetOrdersRequestFilters(
+                    from_=now - datetime.timedelta(hours=1),
+                    to=now,
+                    # filter only executed or partially executed orders
+                    execution_status=[
+                        OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_FILL,
+                        OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_PARTIALLYFILL,
+                    ],
+                ),
+            )
         )
     print("Orders list:")
     for order in orders.orders:

@@ -2,7 +2,7 @@ import asyncio
 import os
 from typing import AsyncIterable
 
-from t_tech.invest import (
+from t_tech.invest.grpc import (
     AsyncClient,
     CandleInstrument,
     MarketDataRequest,
@@ -23,7 +23,7 @@ async def main():
                     CandleInstrument(
                         figi="BBG004730N88",
                         interval=SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
-                    )
+                    ),
                 ],
             )
         )

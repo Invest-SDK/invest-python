@@ -1,6 +1,11 @@
 import os
 
-from t_tech.invest import CandleInstrument, Client, InfoInstrument, SubscriptionInterval
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import (
+    CandleInstrument,
+    InfoInstrument,
+    SubscriptionInterval,
+)
 from t_tech.invest.market_data_stream.market_data_stream_manager import (
     MarketDataStreamManager,
 )

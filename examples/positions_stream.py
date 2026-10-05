@@ -1,6 +1,7 @@
 import os
 
-from t_tech.invest import Client
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import PositionsStreamRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -10,7 +11,9 @@ def main():
         response = client.users.get_accounts()
         accounts = [account.id for account in response.accounts]
         for response in client.operations_stream.positions_stream(
-            accounts=accounts, with_initial_positions=True
+            PositionsStreamRequest(
+                accounts=accounts, with_initial_positions=True
+            )
         ):  # noqa:E501 # pylint:disable=line-too-long
             print(response)
 

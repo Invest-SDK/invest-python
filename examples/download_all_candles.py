@@ -3,7 +3,8 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-from t_tech.invest import CandleInterval, Client
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import CandleInterval
 from t_tech.invest.caching.market_data_cache.cache import MarketDataCache
 from t_tech.invest.caching.market_data_cache.cache_settings import (
     MarketDataCacheSettings,

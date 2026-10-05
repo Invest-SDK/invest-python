@@ -1,13 +1,14 @@
 import os
 
-from t_tech.invest.sandbox.client import SandboxClient
+from t_tech.invest.grpc import SandboxClient
+from t_tech.invest.grpc.schemas import OpenSandboxAccountRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
 
 def main():
     with SandboxClient(TOKEN) as client:
-        print(client.sandbox.open_sandbox_account(name="tcs"))
+        print(client.sandbox.open_sandbox_account(OpenSandboxAccountRequest(name="tcs")))
         print(client.users.get_accounts())
 
 

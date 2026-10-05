@@ -5,7 +5,8 @@ from decimal import Decimal
 
 from matplotlib import pyplot as plt
 
-from t_tech.invest import CandleInterval, Client
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import CandleInterval
 from t_tech.invest.strategies.base.account_manager import AccountManager
 from t_tech.invest.strategies.moving_average.plotter import MovingAverageStrategyPlotter
 from t_tech.invest.strategies.moving_average.signal_executor import (

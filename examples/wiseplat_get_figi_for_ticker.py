@@ -4,8 +4,9 @@ import os
 
 from pandas import DataFrame
 
-from t_tech.invest import Client, SecurityTradingStatus
-from t_tech.invest.services import InstrumentsService
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.instruments import InstrumentsService
+from t_tech.invest.grpc.schemas import SecurityTradingStatus
 from t_tech.invest.utils import quotation_to_decimal
 
 TOKEN = os.environ["INVEST_TOKEN"]

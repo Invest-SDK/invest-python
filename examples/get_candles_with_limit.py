@@ -1,6 +1,7 @@
 import os
 
-from t_tech.invest import CandleInterval, Client
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import CandleInterval, GetCandlesRequest
 from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
@@ -9,10 +10,12 @@ TOKEN = os.environ["INVEST_TOKEN"]
 def main():
     with Client(TOKEN) as client:
         for candle in client.market_data.get_candles(
-            instrument_id="BBG004730N88",
-            to=now(),
-            limit=24,
-            interval=CandleInterval.CANDLE_INTERVAL_HOUR,
+            GetCandlesRequest(
+                instrument_id="BBG004730N88",
+                to=now(),
+                limit=24,
+                interval=CandleInterval.CANDLE_INTERVAL_HOUR,
+            )
         ).candles:
             print(candle)
 

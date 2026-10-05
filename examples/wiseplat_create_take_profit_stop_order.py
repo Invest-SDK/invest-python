@@ -3,14 +3,18 @@ import logging
 import os
 from decimal import Decimal
 
-from t_tech.invest import (
-    Client,
+from t_tech.invest import InvestError
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import (
+    GetLastPricesRequest,
+    GetOrdersRequest,
     InstrumentIdType,
+    InstrumentRequest,
+    PostStopOrderRequest,
     StopOrderDirection,
     StopOrderExpirationType,
     StopOrderType,
 )
-from t_tech.invest.exceptions import InvestError
 from t_tech.invest.utils import decimal_to_quotation, quotation_to_decimal
 
 TOKEN = os.environ["INVEST_TOKEN"]
@@ -25,13 +29,18 @@ def main():
         response = client.users.get_accounts()
         account, *_ = response.accounts
         account_id = account.id
-        logger.info("Orders: %s", client.orders.get_orders(account_id=account_id))
+        logger.info(
+            "Orders: %s",
+            client.orders.get_orders(GetOrdersRequest(account_id=account_id)),
+        )
 
         figi = "BBG004730ZJ9"  # BBG004730ZJ9 - VTBR / BBG004730N88 - SBER
 
         # getting the last price for instrument
         last_price = (
-            client.market_data.get_last_prices(figi=[figi]).last_prices[0].price
+            client.market_data.get_last_prices(
+                GetLastPricesRequest(figi=[figi])
+            ).last_prices[0].price
         )
         last_price = quotation_to_decimal(last_price)
         print(f"figi, last price = {last_price}")
@@ -46,7 +55,9 @@ def main():
 
         # getting the min price increment and the number of digits after point
         min_price_increment = client.instruments.get_instrument_by(
-            id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI, id=figi
+            InstrumentRequest(
+                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI, id=figi
+            )
         ).instrument.min_price_increment
         number_digits_after_point = 9 - len(str(min_price_increment.nano)) + 1
         min_price_increment = quotation_to_decimal(min_price_increment)
@@ -72,15 +83,17 @@ def main():
         exp_type = StopOrderExpirationType.STOP_ORDER_EXPIRATION_TYPE_GOOD_TILL_CANCEL
         try:
             response = client.stop_orders.post_stop_order(
-                figi=figi,
-                quantity=1,
-                price=decimal_to_quotation(Decimal(calculated_price)),
-                stop_price=decimal_to_quotation(Decimal(calculated_price)),
-                direction=direction,
-                account_id=account_id,
-                expiration_type=exp_type,
-                stop_order_type=stop_order_type,
-                expire_date=None,
+                PostStopOrderRequest(
+                    figi=figi,
+                    quantity=1,
+                    price=decimal_to_quotation(Decimal(calculated_price)),
+                    stop_price=decimal_to_quotation(Decimal(calculated_price)),
+                    direction=direction,
+                    account_id=account_id,
+                    expiration_type=exp_type,
+                    stop_order_type=stop_order_type,
+                    expire_date=None,
+                )
             )
             print(response)
             print("stop_order_id=", response.stop_order_id)

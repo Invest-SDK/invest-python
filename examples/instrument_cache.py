@@ -4,7 +4,7 @@ from pprint import pprint
 
 from t_tech.invest.caching.overrides import InstrumentCacheableMethods
 from t_tech.invest.grpc import Client
-from t_tech.invest.grpc.instruments import InstrumentIdType, InstrumentRequest
+from t_tech.invest.grpc.schemas import InstrumentIdType, InstrumentRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

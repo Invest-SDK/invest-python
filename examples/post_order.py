@@ -3,8 +3,8 @@
 import os
 from uuid import uuid4
 
-from t_tech.invest import Client, OrderDirection, OrderType
-from t_tech.invest.sandbox.client import SandboxClient
+from t_tech.invest.grpc import Client, SandboxClient
+from t_tech.invest.grpc.schemas import OrderDirection, OrderType, PostOrderRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -22,12 +22,14 @@ def main():
         account_id = accounts.accounts[0].id
 
         response = client.orders.post_order(
-            order_type=OrderType.ORDER_TYPE_MARKET,
-            direction=OrderDirection.ORDER_DIRECTION_BUY,
-            instrument_id="BBG004730ZJ9",
-            quantity=1,
-            account_id=account_id,
-            order_id=str(uuid4()),
+            PostOrderRequest(
+                order_type=OrderType.ORDER_TYPE_MARKET,
+                direction=OrderDirection.ORDER_DIRECTION_BUY,
+                instrument_id="BBG004730ZJ9",
+                quantity=1,
+                account_id=account_id,
+                order_id=str(uuid4()),
+            )
         )
         print(response)
 

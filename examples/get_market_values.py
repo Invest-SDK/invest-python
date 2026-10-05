@@ -1,7 +1,7 @@
 import os
 
-from t_tech.invest import Client
-from t_tech.invest.schemas import GetMarketValuesRequest, MarketValueType
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import GetMarketValuesRequest, MarketValueType
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

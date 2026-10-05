@@ -1,7 +1,9 @@
 import logging
 import os
 
-from t_tech.invest import Client, RequestError
+from t_tech.invest import RequestError
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import GetMarginAttributesRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 
@@ -13,7 +15,9 @@ def main():
     with Client(TOKEN) as client:
         _ = client.users.get_accounts().accounts
         try:
-            client.users.get_margin_attributes(account_id="123")
+            client.users.get_margin_attributes(
+                GetMarginAttributesRequest(account_id="123")
+            )
         except RequestError as err:
             tracking_id = err.metadata.tracking_id if err.metadata else ""
             logger.error("Error tracking_id=%s code=%s", tracking_id, str(err.code))

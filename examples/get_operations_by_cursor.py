@@ -1,7 +1,8 @@
 import os
 from pprint import pprint
 
-from t_tech.invest import Client, GetOperationsByCursorRequest
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import GetOperationsByCursorRequest
 
 token = os.environ["INVEST_TOKEN"]
 

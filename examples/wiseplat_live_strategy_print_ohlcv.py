@@ -11,8 +11,14 @@ import os
 from datetime import timedelta
 from typing import List, Optional
 
-from t_tech.invest import AioRequestError, AsyncClient, CandleInterval, HistoricCandle
-from t_tech.invest.async_services import AsyncServices
+from t_tech.invest import AioRequestError
+from t_tech.invest.grpc import AsyncClient
+from t_tech.invest.grpc.schemas import (
+    CandleInterval,
+    GetTradingStatusRequest,
+    HistoricCandle,
+)
+from t_tech.invest.grpc.utils.grpc_services import AsyncServices
 from t_tech.invest.utils import now
 
 TOKEN = os.environ["INVEST_TOKEN"]
@@ -70,7 +76,7 @@ class LogOnlyCandlesStrategy:
         :return: when instrument is available for trading
         """
         trading_status = await self.client.market_data.get_trading_status(
-            figi=self.figi
+            GetTradingStatusRequest(figi=self.figi)
         )
         while not (
             trading_status.market_order_available_flag
@@ -79,7 +85,7 @@ class LogOnlyCandlesStrategy:
             logger.debug("Waiting for the market to open. figi=%s", self.figi)
             await asyncio.sleep(60)
             trading_status = await self.client.market_data.get_trading_status(
-                figi=self.figi
+                GetTradingStatusRequest(figi=self.figi)
             )
 
     async def main_cycle(self):

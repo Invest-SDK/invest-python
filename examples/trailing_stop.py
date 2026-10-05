@@ -8,19 +8,16 @@ import logging
 import os
 from decimal import Decimal
 
-from t_tech.invest import (
-    Client,
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import (
     ExchangeOrderType,
-    GetStopOrdersRequest,
     PostStopOrderRequest,
-    PostStopOrderRequestTrailingData,
     StopOrderDirection,
     StopOrderExpirationType,
-    StopOrderTrailingData,
     StopOrderType,
     TakeProfitType,
+    TrailingValueType,
 )
-from t_tech.invest.schemas import TrailingValueType
 from t_tech.invest.utils import decimal_to_quotation
 
 TOKEN = os.environ["INVEST_TOKEN"]
@@ -53,22 +50,24 @@ def main():
         )
 
         post_stop_order = client.stop_orders.post_stop_order(
-            quantity=QUANTITY,
-            price=decimal_to_quotation(Decimal(PRICE)),
-            stop_price=decimal_to_quotation(Decimal(STOPPRICE)),
-            direction=StopOrderDirection.STOP_ORDER_DIRECTION_SELL,
-            account_id=account_id,
-            stop_order_type=StopOrderType.STOP_ORDER_TYPE_TAKE_PROFIT,
-            instrument_id=INSTRUMENT_ID,
-            expiration_type=StopOrderExpirationType.STOP_ORDER_EXPIRATION_TYPE_GOOD_TILL_CANCEL,
-            exchange_order_type=ExchangeOrderType.EXCHANGE_ORDER_TYPE_LIMIT,
-            take_profit_type=TakeProfitType.TAKE_PROFIT_TYPE_TRAILING,
-            trailing_data=StopOrderTrailingData(
-                indent=decimal_to_quotation(Decimal(INDENT)),
-                indent_type=TrailingValueType.TRAILING_VALUE_ABSOLUTE,
-                spread=decimal_to_quotation(Decimal(SPREAD)),
-                spread_type=TrailingValueType.TRAILING_VALUE_RELATIVE,
-            ),
+            PostStopOrderRequest(
+                quantity=QUANTITY,
+                price=decimal_to_quotation(Decimal(PRICE)),
+                stop_price=decimal_to_quotation(Decimal(STOPPRICE)),
+                direction=StopOrderDirection.STOP_ORDER_DIRECTION_SELL,
+                account_id=account_id,
+                stop_order_type=StopOrderType.STOP_ORDER_TYPE_TAKE_PROFIT,
+                instrument_id=INSTRUMENT_ID,
+                expiration_type=StopOrderExpirationType.STOP_ORDER_EXPIRATION_TYPE_GOOD_TILL_CANCEL,
+                exchange_order_type=ExchangeOrderType.EXCHANGE_ORDER_TYPE_LIMIT,
+                take_profit_type=TakeProfitType.TAKE_PROFIT_TYPE_TRAILING,
+                trailing_data=PostStopOrderRequest.TrailingData(
+                    indent=decimal_to_quotation(Decimal(INDENT)),
+                    indent_type=TrailingValueType.TRAILING_VALUE_ABSOLUTE,
+                    spread=decimal_to_quotation(Decimal(SPREAD)),
+                    spread_type=TrailingValueType.TRAILING_VALUE_RELATIVE,
+                ),
+            )
         )
 
     print(post_stop_order)

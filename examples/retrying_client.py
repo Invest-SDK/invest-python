@@ -2,7 +2,7 @@ import logging
 import os
 from datetime import timedelta
 
-from t_tech.invest import CandleInterval
+from t_tech.invest.grpc.schemas import CandleInterval
 from t_tech.invest.retrying.settings import RetryClientSettings
 from t_tech.invest.retrying.sync.client import RetryingClient
 from t_tech.invest.utils import now
