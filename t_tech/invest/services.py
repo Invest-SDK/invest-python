@@ -1,7 +1,7 @@
 # pylint:disable=redefined-builtin,too-many-lines
 import logging
 from datetime import datetime
-from typing import Generator, Iterable, Iterator, List, Optional
+from typing import Generator, Iterable, Iterator, List, Optional, Union
 
 import grpc
 from deprecation import deprecated
@@ -28,6 +28,7 @@ from .grpc import (
     users_pb2,
     users_pb2_grpc,
 )
+from .grpc.schemas import CandleInterval as CandleIntervalGrpc
 from .logging import get_tracking_id_from_call, log_request
 from .metadata import get_metadata
 from .schemas import (
@@ -302,7 +303,7 @@ class Services:
         *,
         from_: datetime,
         to: Optional[datetime] = None,
-        interval: CandleInterval = CandleInterval(0),
+        interval: Union[CandleInterval, CandleIntervalGrpc] = CandleInterval(0),
         figi: str = "",
         instrument_id: str = "",
         candle_source_type: Optional[CandleSource] = None,
@@ -310,7 +311,9 @@ class Services:
         to = to or now()
 
         previous_candles = set()
-        for current_from, current_to in get_intervals(interval, from_, to):
+        for current_from, current_to in get_intervals(
+            CandleInterval(interval), from_, to
+        ):
             candles_response: GetCandlesResponse = self.market_data.get_candles(
                 figi=figi,
                 interval=interval,

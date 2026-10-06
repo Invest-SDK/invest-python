@@ -4,10 +4,10 @@ from .instruments import *
 from .marketdata import *
 from .operations import *
 from .orders import *
+from .sandbox import *
 from .signals import *
 from .stoporders import *
 from .users import *
-from .sandbox import *
 
 
 def _get_all_classes():

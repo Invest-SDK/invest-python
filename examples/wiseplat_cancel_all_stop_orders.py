@@ -4,10 +4,7 @@ import os
 
 from t_tech.invest import InvestError
 from t_tech.invest.grpc import Client
-from t_tech.invest.grpc.schemas import (
-    CancelStopOrderRequest,
-    GetStopOrdersRequest,
-)
+from t_tech.invest.grpc.schemas import CancelStopOrderRequest, GetStopOrdersRequest
 
 TOKEN = os.environ["INVEST_TOKEN"]
 

@@ -4,11 +4,11 @@ import time
 from t_tech.invest.grpc import Client
 from t_tech.invest.grpc.schemas import (
     CandleInstrument,
+    CandleSource,
     MarketDataRequest,
     SubscribeCandlesRequest,
     SubscriptionAction,
     SubscriptionInterval,
-    CandleSource
 )
 
 TOKEN = os.environ["INVEST_TOKEN"]

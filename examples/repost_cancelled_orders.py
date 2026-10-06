@@ -31,8 +31,8 @@ from pathlib import Path
 from uuid import uuid4
 from zoneinfo import ZoneInfo
 
-from t_tech.invest.grpc import (
-    Client,
+from t_tech.invest.grpc import Client
+from t_tech.invest.grpc.schemas import (
     ExchangeOrderType,
     GetOrdersRequest,
     OrderDirection,

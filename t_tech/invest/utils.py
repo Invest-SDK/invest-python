@@ -4,7 +4,16 @@ import re
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from enum import Enum
-from typing import Any, Callable, Generator, Iterable, List, Protocol, Tuple
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Generator,
+    Iterable,
+    List,
+    Protocol,
+    Tuple,
+)
 
 import dateutil.parser
 
@@ -15,6 +24,11 @@ from .schemas import (
     Quotation,
     SubscriptionInterval,
 )
+
+if TYPE_CHECKING:
+    from .grpc.schemas import (
+        Quotation as QuotationGrpc,
+    )
 
 __all__ = (
     "get_intervals",
@@ -89,18 +103,18 @@ def quotation_to_decimal(quotation: Quotation) -> Decimal:
     return money_to_decimal(quotation)
 
 
-def decimal_to_quotation(decimal: Decimal) -> Quotation:
-    fractional = decimal % 1
-    return Quotation(units=int(decimal // 1), nano=int(fractional * Decimal("10e8")))
-
-
-def decimal_to_quotation(decimal: Decimal):  # type: ignore[no-redef]  # noqa: F811
+def decimal_to_quotation(decimal: Decimal) -> "QuotationGrpc":
     from .grpc.schemas import Quotation as QuotationGrpc
 
     fractional = decimal % 1
     return QuotationGrpc(
         units=int(decimal // 1), nano=int(fractional * Decimal("10e8"))
     )
+
+
+def decimal_to_quotation(decimal: Decimal) -> Quotation:  # type: ignore[no-redef]  # noqa: F811
+    fractional = decimal % 1
+    return Quotation(units=int(decimal // 1), nano=int(fractional * Decimal("10e8")))
 
 
 def decimal_to_money(decimal: Decimal, currency: str) -> MoneyValue:

@@ -40,7 +40,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 QUANTITY = 1
-INSTRUMENT_ID = "BBG001M2SC01"
+INSTRUMENT_ID = "BBG004730N88"
 TAKE_PROFIT_PERCENTAGE = 0.05
 STOP_LOSS_PERCENTAGE = -0.02
 MIN_PRICE_STEP = 0.02
@@ -50,7 +50,7 @@ EXPIRATION_TYPE = StopOrderExpirationType.STOP_ORDER_EXPIRATION_TYPE_GOOD_TILL_D
 
 def main():
     logger.info("Using Real market")
-    with Client(TOKEN) as client:
+    with Client(token=TOKEN, target="sandbox-invest-public-api.tbank.ru") as client:
         response = client.users.get_accounts()
         account, *_ = response.accounts
         account_id = account.id
@@ -93,9 +93,7 @@ def main():
             client.cancel_all_orders(account_id=account_id)
 
 
-def post_stop_orders(
-    client, account_id: str, post_order_response: PostOrderResponse
-):
+def post_stop_orders(client, account_id: str, post_order_response: PostOrderResponse):
     executed_order_price = money_to_decimal(post_order_response.executed_order_price)
     take_profit_price = executed_order_price * Decimal((1 + TAKE_PROFIT_PERCENTAGE))
     take_profit_price -= take_profit_price % Decimal(MIN_PRICE_STEP)

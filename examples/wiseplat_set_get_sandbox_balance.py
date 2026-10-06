@@ -61,23 +61,31 @@ def main():
         # add initial 2 000 000 to sandbox account
         print(add_money_sandbox(client=client, account_id=account_id, money=2000000))
         logger.info(
-            "positions: %s", client.operations.get_positions(PositionsRequest(account_id=account_id))
+            "positions: %s",
+            client.operations.get_positions(PositionsRequest(account_id=account_id)),
         )
         print(
             "money: ",
             float(
                 quotation_to_decimal(
-                    client.operations.get_positions(PositionsRequest(account_id=account_id)).money[0]
+                    client.operations.get_positions(
+                        PositionsRequest(account_id=account_id)
+                    ).money[0]
                 )
             ),
         )
 
-        logger.info("orders: %s", client.orders.get_orders(GetOrdersRequest(account_id=account_id)))
         logger.info(
-            "positions: %s", client.operations.get_positions(PositionsRequest(account_id=account_id))
+            "orders: %s",
+            client.orders.get_orders(GetOrdersRequest(account_id=account_id)),
         )
         logger.info(
-            "portfolio: %s", client.operations.get_portfolio(PortfolioRequest(account_id=account_id))
+            "positions: %s",
+            client.operations.get_positions(PositionsRequest(account_id=account_id)),
+        )
+        logger.info(
+            "portfolio: %s",
+            client.operations.get_portfolio(PortfolioRequest(account_id=account_id)),
         )
         logger.info(
             "operations: %s",
@@ -91,13 +99,16 @@ def main():
         )
         logger.info(
             "withdraw_limits: %s",
-            client.operations.get_withdraw_limits(WithdrawLimitsRequest(account_id=account_id)),
+            client.operations.get_withdraw_limits(
+                WithdrawLimitsRequest(account_id=account_id)
+            ),
         )
 
         # add + 2 000 000 to sandbox account, total is 4 000 000
         print(add_money_sandbox(client=client, account_id=account_id, money=2000000))
         logger.info(
-            "positions: %s", client.operations.get_positions(PositionsRequest(account_id=account_id))
+            "positions: %s",
+            client.operations.get_positions(PositionsRequest(account_id=account_id)),
         )
 
         # close new sandbox account

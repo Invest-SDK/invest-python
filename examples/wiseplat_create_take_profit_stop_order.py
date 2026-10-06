@@ -38,9 +38,9 @@ def main():
 
         # getting the last price for instrument
         last_price = (
-            client.market_data.get_last_prices(
-                GetLastPricesRequest(figi=[figi])
-            ).last_prices[0].price
+            client.market_data.get_last_prices(GetLastPricesRequest(figi=[figi]))
+            .last_prices[0]
+            .price
         )
         last_price = quotation_to_decimal(last_price)
         print(f"figi, last price = {last_price}")
@@ -55,9 +55,7 @@ def main():
 
         # getting the min price increment and the number of digits after point
         min_price_increment = client.instruments.get_instrument_by(
-            InstrumentRequest(
-                id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI, id=figi
-            )
+            InstrumentRequest(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI, id=figi)
         ).instrument.min_price_increment
         number_digits_after_point = 9 - len(str(min_price_increment.nano)) + 1
         min_price_increment = quotation_to_decimal(min_price_increment)
