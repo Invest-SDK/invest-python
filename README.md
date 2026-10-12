@@ -16,7 +16,7 @@
 
 ## Алтернативный способ установки:
 
-* Скачать пакет `whl` или `tar.gz` (достаточно что-то одно)
+* Скачать пакет [whl](/t_tech_investments-1.51.0-py3-none-any.whl) или [tar.gz](t_tech_investments-1.51.0.tar.gz) (достаточно что-то одно).
 * Установить пакет, используя команду: `pip install <путь к .whl или tar.gz>` (или `python -m pip install <путь к .whl или .tar.gz>`).
 
 
