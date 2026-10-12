@@ -13,6 +13,13 @@
 свободно и не является коммерческим продуктом или официальным выпуском какого-либо стороннего разработчика. Все 
 исходные материалы, архитектура и реализация созданы самостоятельно.
 
+
+## Алтернативный способ установки:
+
+* Скачать пакет `whl` или `tar.gz` (достаточно что-то одно)
+* Установить пакет, используя команду: `pip install <путь к .whl или tar.gz>` (или `python -m pip install <путь к .whl или .tar.gz>`).
+
+
 The project is the result of independent development and is not affiliated with any companies. The library is 
 distributed freely and is not a commercial product or official release of any third-party vendor. All source materials,
 architecture, and implementation were created independently.
